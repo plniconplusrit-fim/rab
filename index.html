@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>RAB Instalasi Fiber Opti</title>
+    <title>RAB Instalasi Fiber Optik</title>
     <style>
         * {
             box-sizing: border-box;
@@ -18,6 +18,31 @@
             max-width: 1400px;
             margin: 0 auto;
         }
+        
+        /* STYLE TOMBOL KEMBALI */
+        .btn-kembali {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #0f0f1a;
+            border: 1px solid #2d2d44;
+            color: #ffffff !important;
+            text-decoration: none !important; /* Menghilangkan garis bawah */
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 20px;
+        }
+        .btn-kembali:hover {
+            background: rgba(0, 229, 160, 0.1); /* Efek sentuhan hijau aksen */
+            color: #00e5a0 !important;
+            border-color: #00e5a0;
+            text-decoration: none !important;
+        }
+
         /* HEADER */
         .header {
             background: linear-gradient(135deg, #0f0f1a, #1a1a2e);
@@ -293,6 +318,9 @@
                 margin: 0;
                 padding: 10px;
             }
+            .btn-kembali {
+                display: none !important; /* Sembunyikan tombol saat cetak */
+            }
             .header {
                 background: #0f0f1a;
                 border: 1px solid #ccc;
@@ -340,11 +368,20 @@
 </head>
 <body>
 <div class="container">
+
+    <a href="DASHBOARD.html" class="btn-kembali">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        <span>Kembali ke Dashboard</span>
+    </a>
+
     <div class="header" id="headerBox">
         <div class="header-content" id="headerContent">
             <div id="headerDisplay">
-                <h1>RAB </h1>
-                <p>Perhitungan RAB – Pekerjaan Instalasi dan Perangkat</p>
+                <h1>RAB Instalasi Jaringan Fiber Optik</h1>
+                <p>Perhitungan Rencana Anggaran Biaya – Pekerjaan Instalasi dan Perangkat</p>
                 <div class="badge-proyek">Wilayah Makassar</div>
                 <div class="edit-header-hint">Klik header untuk edit</div>
             </div>
@@ -380,8 +417,8 @@
                     <td id="subTotalInstalasi" style="text-align:center; color:#00e5a0;">Rp 0</td>
                     <td></td>
                 </tr>
-            </tfoot>
-        }</table>
+            </footer>
+        </table>
     </div>
 
     <div class="section-title">
@@ -400,12 +437,11 @@
                     <td id="subTotalMaterial" style="text-align:center; color:#00e5a0;">Rp 0</td>
                     <td></td>
                 </tr>
-            </tfoot>
-        }</table>
+            </footer>
+        </table>
     </div>
 
     <div class="footer-note">
-
         <div>
             <button class="btn-excel" id="exportExcelBtn">Export ke Excel</button>
             <button class="add-btn" id="cetakBtn" style="background:#2c7a4a; margin-left:10px;">Cetak PDF</button>
@@ -431,7 +467,7 @@
     ];
 
     let dataMaterial = [
-        { id: "m1", no:1, deskripsi:"SWCH,S2510-C-AC,,BDCOM", satuan:"U", qty:1, harga:1122125, autoCalc: false },
+        { id: "m1", no:1, deskripsi:"SWCH,ISCOM2600-12G,4* 1GE SFP,,Raisecom", satuan:"U", qty:1, harga:1100000, autoCalc: false },
         { id: "m2", no:2, deskripsi:"SWCH,SFP 1.25G TX1310nm 40KM DDM,,3TECH", satuan:"U", qty:1, harga:93500, autoCalc: false },
         { id: "m3", no:3, deskripsi:"SWCH,SFP 1.25G TX1550nm 40KM DDM,,3TECH", satuan:"U", qty:1, harga:107200, autoCalc: false },
         { id: "m6", no:6, deskripsi:"FOC,ADSS SS 100m,6/1T Kuning,,FIBERHOME", satuan:"M", qty:600, harga:3310, autoCalc: true, dependsOn: "t3" }
@@ -537,11 +573,6 @@
             harga: item.harga
         });
         
-        if (isMaterial) {
-            renderMaterial();
-        } else {
-            renderInstalasi();
-        }
         renderMaterial();
         renderInstalasi();
     }
@@ -818,159 +849,57 @@
                 <td style="border:1px solid #ddd; padding:8px; text-align:right;">${formatRp(item.qty * item.harga)}</td>
             </tr>
         `).join('');
-        
+
         printWindow.document.write(`
             <!DOCTYPE html>
             <html>
             <head>
-                <title>RAB Instalasi Fiber Optik</title>
-                <meta charset="UTF-8">
+                <title>Cetak RAB</title>
                 <style>
-                    * {
-                        font-family: 'Segoe UI', Arial, sans-serif;
-                        margin: 0;
-                        padding: 0;
-                        box-sizing: border-box;
-                    }
-                    body {
-                        padding: 30px 20px;
-                        background: white;
-                    }
-                    .print-container {
-                        max-width: 1200px;
-                        margin: 0 auto;
-                    }
-                    h1 {
-                        color: #1a4a6f;
-                        margin-bottom: 10px;
-                        font-size: 24px;
-                    }
-                    .subtitle {
-                        color: #555;
-                        margin-bottom: 8px;
-                        font-size: 14px;
-                    }
-                    .badge {
-                        color: #777;
-                        margin-bottom: 20px;
-                        font-size: 12px;
-                    }
-                    h2 {
-                        margin-top: 25px;
-                        margin-bottom: 12px;
-                        color: #1a4a6f;
-                        font-size: 18px;
-                        border-left: 4px solid #1a4a6f;
-                        padding-left: 12px;
-                    }
-                    table {
-                        width: 100%;
-                        border-collapse: collapse;
-                        margin-bottom: 20px;
-                    }
-                    th {
-                        background: #f0f6fa;
-                        border: 1px solid #ddd;
-                        padding: 10px 8px;
-                        text-align: center;
-                        font-weight: bold;
-                    }
-                    td {
-                        border: 1px solid #ddd;
-                        padding: 8px;
-                    }
-                    .total-row {
-                        background: #f8f9fa;
-                        font-weight: bold;
-                    }
-                    .total-rab {
-                        margin-top: 20px;
-                        text-align: right;
-                        font-size: 20px;
-                        font-weight: bold;
-                        color: #b22234;
-                        border-top: 2px solid #ddd;
-                        padding-top: 15px;
-                    }
-                    .footer {
-                        margin-top: 30px;
-                        text-align: center;
-                        font-size: 11px;
-                        color: #888;
-                        border-top: 1px solid #eee;
-                        padding-top: 15px;
-                    }
-                    @media print {
-                        body {
-                            padding: 0;
-                            margin: 0;
-                        }
-                        .no-print {
-                            display: none;
-                        }
-                    }
+                    body { font-family: 'Segoe UI', sans-serif; padding: 20px; color: #333; }
+                    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                    th { background: #f2f2f2; padding: 10px; border: 1px solid #ddd; text-align: center; }
+                    .header-print { margin-bottom: 30px; }
+                    .total-rab { margin-top: 30px; font-size: 1.4rem; font-weight: bold; text-align: right; }
                 </style>
             </head>
             <body>
-                <div class="print-container">
-                    <h1>${escapeHtml(headerData.title)}</h1>
-                    <div class="subtitle">${escapeHtml(headerData.subtitle)}</div>
-                    <div class="badge">${escapeHtml(headerData.badge)}</div>
-                    
-                    <h2>PEKERJAAN INSTALASI & TEKNIS</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th style="width:50px;">No</th>
-                                <th>Deskripsi</th>
-                                <th style="width:80px;">Satuan</th>
-                                <th style="width:80px;">Qty</th>
-                                <th style="width:150px;">Harga Satuan</th>
-                                <th style="width:150px;">Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${instalasiRows}
-                        </tbody>
-                        <tfoot>
-                            <tr class="total-row">
-                                <td colspan="5" style="text-align:right; font-weight:bold;">SUB TOTAL INSTALASI</td>
-                                <td style="text-align:right; font-weight:bold;">${formatRp(totalInst)}</td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                    
-                    <h2>PERANGKAT & MATERIAL KABEL</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th style="width:50px;">No</th>
-                                <th>Deskripsi</th>
-                                <th style="width:80px;">Satuan</th>
-                                <th style="width:80px;">Qty</th>
-                                <th style="width:150px;">Harga Satuan</th>
-                                <th style="width:150px;">Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${materialRows}
-                        </tbody>
-                        <tfoot>
-                            <tr class="total-row">
-                                <td colspan="5" style="text-align:right; font-weight:bold;">SUB TOTAL PERANGKAT</td>
-                                <td style="text-align:right; font-weight:bold;">${formatRp(totalMat)}</td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                    
-                    <div class="total-rab">
-                        GRAND TOTAL RAB : ${formatRp(grandTotal)}
-                    </div>
-                    
-                    <div class="footer">
-                        Dicetak pada: ${new Date().toLocaleString('id-ID')}
-                    </div>
+                <div class="header-print">
+                    <h2>${escapeHtml(headerData.title)}</h2>
+                    <p>${escapeHtml(headerData.subtitle)}</p>
+                    <p style="margin-top:5px;"><strong>Proyek:</strong> ${escapeHtml(headerData.badge)}</p>
                 </div>
+                
+                <h3>PEKERJAAN INSTALASI & TEKNIS</h3>
+                <table>
+                    <thead>
+                        <tr><th>No</th><th>Deskripsi</th><th>Satuan</th><th>Qty</th><th>Harga Satuan</th><th>Total</th></tr>
+                    </thead>
+                    <tbody>${instalasiRows}</tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="5" style="text-align:right; font-weight:bold; padding:8px;">SUB TOTAL INSTALASI</td>
+                            <td style="text-align:right; font-weight:bold; padding:8px;">${formatRp(totalInst)}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <h3 style="margin-top:30px;">PERANGKAT & MATERIAL KABEL</h3>
+                <table>
+                    <thead>
+                        <tr><th>No</th><th>Deskripsi</th><th>Satuan</th><th>Qty</th><th>Harga Satuan</th><th>Total</th></tr>
+                    </thead>
+                    <tbody>${materialRows}</tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="5" style="text-align:right; font-weight:bold; padding:8px;">SUB TOTAL PERANGKAT</td>
+                            <td style="text-align:right; font-weight:bold; padding:8px;">${formatRp(totalMat)}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+                
+                <div class="total-rab">GRAND TOTAL RAB : ${formatRp(grandTotal)}</div>
+                <div style="margin-top:20px; font-size:0.8rem; color:#777;">Dicetak pada: ${new Date().toLocaleString('id-ID')}</div>
             </body>
             </html>
         `);
