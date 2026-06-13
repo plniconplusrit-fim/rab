@@ -1,29 +1,37 @@
-<!DOCTYPE html>
+	<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RAB KHS CONVEN & FTTH</title>
+    
     <style>
+        /* ==========================================================================
+           1. VARIABEL WARNA (GLOBAL VARIABLES)
+           ========================================================================== */
         :root {
-            --bg-main: #323232;
-            --bg-sidebar: #111122;
-            --bg-card: #18182e;
-            --bg-input: #0f0f1d;
-            --accent-green: #00e5a0;
-            --accent-blue: #00a8cc;
-            --text-primary: #ffffff;
-            --text-secondary: #a0a0c0;
-            --border-color: #2d2d48;
-            --danger-color: #ff4a5a;
-            --success-color: #1e6f3f;
+            --bg-main: #F4F7FC;         
+            --bg-sidebar: #1E293B;      /* DIUBAH: Sidebar jadi gelap modern agar warna font cerah menyala */
+            --bg-card: #FFFFFF;         
+            --bg-input: #F8FAFC;        
+            --accent-primary: #8B9BB4;  
+            --accent-green: #00E5A0;    /* DIUBAH: Hijau mint yang sangat cerah untuk menu aktif */
+            --accent-blue: #3B82F6;     
+            --text-primary: #1E293B;    
+            --text-secondary: #94A3B8;  /* DIUBAH: Warna abu-abu cerah untuk menu biasa */
+            --border-color: #E2E8F0;    
+            --danger-color: #EF4444;    
+            --success-color: #10B981;   
         }
 
+        /* ==========================================================================
+           2. BASE STYLING (PENGATURAN DASAR)
+           ========================================================================== */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Plus Jakarta Sans', 'Segoe UI', sans-serif;
         }
 
         body {
@@ -34,36 +42,40 @@
             overflow-x: hidden;
         }
 
-        /* SIDEBAR */
+        /* ==========================================================================
+           3. SIDEBAR STYLING (MENU SAMPING) - EDIT DI SINI
+           ========================================================================== */
         .sidebar {
             width: 260px;
-            background-color: var(--bg-sidebar);
-            border-right: 1px solid var(--border-color);
+            background-color: var(--bg-sidebar); /* Menggunakan warna dasar gelap (#1E293B) */
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             flex-direction: column;
-            position: fixed;
+            position: fixed; 
             top: 0;
             bottom: 0;
             left: 0;
             z-index: 100;
             padding: 24px 16px;
+            box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
         }
 
+        /* Judul Brand Utama di Sidebar */
         .sidebar-brand {
-            font-size: 1.2rem;
-            font-weight: 800;
-            color: var(--text-primary);
+            font-size: 1.4rem;
+            font-weight: 900;            /* DIBUAT: Sangat Tebal */
+            color: #FFFFFF;              /* DIBUAT: Putih Bersih/Cerah */
             margin-bottom: 32px;
             display: flex;
             align-items: center;
             gap: 10px;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
             padding-bottom: 16px;
         }
 
-        .sidebar-brand span {
-            color: var(--accent-green);
-        }
+        .sidebar-brand span.brand-text {
+            color: var(--accent-green);  /* DIBUAT: Mengikuti warna hijau cerah */
+        }	
 
         .sidebar-menu {
             list-style: none;
@@ -72,249 +84,284 @@
             gap: 8px;
         }
 
+        .sidebar-menu a {
+            text-decoration: none !important; 
+        }
+
+        /* Gaya Teks Menu Biasa (Belum Diklik) */
         .menu-item {
-            padding: 12px 16px;
+            padding: 14px 16px;
             border-radius: 12px;
             cursor: pointer;
-            color: var(--text-secondary);
-            font-weight: 500;
-            transition: all 0.2s ease;
+            color: var(--text-secondary); /* Warna abu-abu cerah terang */
+            font-weight: 800;             /* DIBUAT: BOLD (Tebal Maksimal) */
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             gap: 12px;
         }
 
-        .menu-item:hover, .menu-item.active {
-            background-color: rgba(255, 255, 255, 0.05);
-            color: var(--text-primary);
+        /* Efek saat menu disorot mouse (Hover) */
+        .menu-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #FFFFFF;               /* DIBUAT: Berubah jadi Putih Cerah */
+            transform: translateX(6px);
         }
 
+        /* Gaya Menu saat Aktif / Halaman Terbuka */
         .menu-item.active {
+            background-color: rgba(0, 229, 160, 0.15); /* Background hijau transparan lembut */
+            color: var(--accent-green);   /* DIBUAT: Hijau Mint Menyala/Cerah */
             border-left: 4px solid var(--accent-green);
-            background-color: rgba(0, 229, 160, 0.1);
-            color: var(--accent-green);
         }
 
-        /* MAIN CONTENT */
+        /* ==========================================================================
+           4. MAIN CONTENT AREA (KONTEN UTAMA)
+           ========================================================================== */
         .main-content {
-            margin-left: 260px;
+            margin-left: 260px; 
             flex-grow: 1;
-            padding: 32px;
+            padding: 40px;
             width: calc(100% - 260px);
         }
 
         .content-section {
-            display: none;
+            display: none; 
         }
 
         .content-section.active {
-            display: block;
+            display: block; 
         }
 
-        /* HEADER */
+        /* ==========================================================================
+           5. BANNER HEADER KONTEN
+           ========================================================================== */
         .header {
-            background: linear-gradient(135deg, var(--bg-sidebar), var(--bg-card));
+            background: linear-gradient(135deg, #FFFFFF, #EEF2F6);
             border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 24px;
-            margin-bottom: 24px;
+            border-radius: 24px;
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background: rgba(139, 155, 180, 0.1);
+            border-radius: 50%;
         }
 
         .header h1 {
-            font-size: 1.8rem;
-            margin-bottom: 6px;
+            font-size: 2rem;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            font-weight: 800;
         }
 
         .header p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
+            color: #64748B;
+            font-size: 1rem;
+            font-weight: 500;
         }
 
         .badge-proyek {
-            background: rgba(255,255,255,0.08);
+            background: #E0E7FF;
+            color: #4F46E5;
             display: inline-block;
-            padding: 6px 14px;
+            padding: 6px 16px;
             border-radius: 40px;
-            font-size: 0.8rem;
-            margin-top: 12px;
-            border: 1px solid var(--border-color);
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-top: 16px;
         }
 
-        /* CARDS / SUMMARY */
+        /* ==========================================================================
+           6. KARTU / CARD RINGKASAN DATA (SUMMARY CARDS)
+           ========================================================================== */
         .summary-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-            margin-bottom: 28px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
         }
 
         .card {
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
-            padding: 24px;
-            border-radius: 20px;
+            padding: 28px;
+            border-radius: 24px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.02);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
         }
 
         .card h3 {
             font-size: 0.85rem;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--text-secondary);
-            margin-bottom: 8px;
+            letter-spacing: 1.2px;
+            color: #64748B;
+            margin-bottom: 12px;
+            font-weight: 700;
         }
 
         .card .value {
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 800;
-            color: var(--accent-green);
+            color: #10B981;
         }
 
         .card .value.blue {
             color: var(--accent-blue);
         }
 
-        /* TABLES & WRAPPERS */
+        /* ==========================================================================
+           7. TABEL DATA (TABLE STYLING)
+           ========================================================================== */
         .section-title {
-            background-color: var(--bg-sidebar);
+            background-color: #FFFFFF;
             border: 1px solid var(--border-color);
-            padding: 14px 20px;
+            padding: 16px 24px;
             border-radius: 16px;
-            margin: 28px 0 14px 0;
-            font-weight: 700;
+            margin: 32px 0 16px 0;
+            font-weight: 800;
+            color: var(--text-primary);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.01);
         }
 
         .table-wrapper {
-            background-color: var(--bg-sidebar);
-            border-radius: 20px;
-            overflow-x: auto;
+            background-color: #FFFFFF;
+            border-radius: 24px;
+            overflow: hidden;
             border: 1px solid var(--border-color);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.03);
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             min-width: 800px;
         }
 
         th {
-            background-color: rgba(0,0,0,0.3);
-            color: var(--accent-green);
-            padding: 16px 12px;
+            background-color: #F8FAFC;
+            color: var(--text-primary);
+            padding: 18px 16px;
             font-weight: 700;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 2px solid var(--border-color);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
         }
 
         td {
-            padding: 12px 12px;
-            border-bottom: 1px solid var(--bg-main);
+            padding: 16px 16px;
+            border-bottom: 1px solid var(--border-color);
             text-align: center;
-            color: #d0d0e0;
+            color: var(--text-primary);
         }
 
         td:nth-child(2), th:nth-child(2) {
             text-align: left;
-            padding-left: 20px;
+            padding-left: 24px;
         }
 
-        td:nth-child(2) {
-            color: var(--text-primary);
-            font-weight: 500;
+        tr:hover td {
+            background-color: #F8FAFC;
         }
 
-        /* BUTTONS & INPUTS */
+        /* ==========================================================================
+           8. TOMBOL & KOLOM INPUT (BUTTONS & INPUTS)
+           ========================================================================== */
         .btn {
-            padding: 8px 16px;
-            border-radius: 20px;
+            padding: 10px 20px;
+            border-radius: 12px;
             border: none;
             cursor: pointer;
-            font-weight: 600;
-            font-size: 0.8rem;
-            transition: opacity 0.2s;
+            font-weight: 700;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .btn:hover {
-            opacity: 0.9;
+        .btn:active {
+            transform: scale(0.98); 
         }
 
         .btn-primary { background-color: var(--accent-blue); color: white; }
         .btn-success { background-color: var(--success-color); color: white; }
-        .btn-danger { background-color: var(--danger-color); color: white; }
-        .btn-add { background-color: #2a4a6f; color: white; }
+        .btn-danger  { background-color: var(--danger-color); color: white; }
+        .btn-add     { background-color: #8B9BB4; color: white; }
+        .btn-add:hover { background-color: #76859D; }
 
         input[type="text"], input[type="number"] {
             background-color: var(--bg-input);
-            border: 1px solid var(--border-color);
-            color: white;
-            padding: 8px 12px;
-            border-radius: 10px;
+            border: 1.5px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px 14px;
+            border-radius: 12px;
             width: 100%;
+            transition: all 0.3s;
         }
 
         input:focus {
             outline: none;
-            border-color: var(--accent-green);
+            border-color: #8B9BB4;
+            background-color: #FFFFFF;
+            box-shadow: 0 0 0 4px rgba(139, 155, 180, 0.15); 
         }
 
-        .auto-badge {
-            background: rgba(0, 229, 160, 0.15);
-            color: var(--accent-green);
-            font-size: 0.7rem;
-            padding: 2px 8px;
-            border-radius: 8px;
-            margin-left: 6px;
+        /* ==========================================================================
+           9. KARTU AYAT / QUOTE SPECIAL CARD
+           ========================================================================== */
+        .quote-card {
+            background: linear-gradient(135deg, #FFF9F2, #FFF1E6); 
+            border: 1px solid #FFE2CC;
+            border-left: 6px solid #FF9F43; 
         }
 
-        .footer-note {
-            margin-top: 28px;
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 16px 24px;
-            border-radius: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
+        .quote-card p {
+            color: #7A4B26 !important;
+            font-style: italic;
+            font-size: 1.05rem;
         }
 
-        /* RESPONSIVE */
+        /* ==========================================================================
+           10. RESPONSIVE LAYOUT (UNTUK LAYAR HP/TABLET)
+           ========================================================================== */
         @media (max-width: 992px) {
             .sidebar { width: 70px; padding: 20px 8px; }
-            .sidebar-brand span, .menu-text { display: none; }
+            .sidebar-brand span.brand-text, .menu-text { display: none; } 
             .main-content { margin-left: 70px; width: calc(100% - 70px); padding: 20px; }
         }
     </style>
 </head>
 <body>
 
-    <style>
-        .sidebar-menu a, 
-        .menu-item, 
-        .menu-text {
-            text-decoration: none !important;
-        }
-        
-        .sidebar-menu a:hover, 
-        .menu-item:hover {
-            text-decoration: none !important;
-        }
-    </style>
-
     <div class="sidebar">
         <div class="sidebar-brand">
             <span class="brand-icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00e5a0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-                </svg>
             </span>
-            <span class="brand-text">RAB KHS</span>
+            <span class="brand-text">MENU</span>
         </div>
-        
+				
         <ul class="sidebar-menu">
             <li>
                 <a href="conven.html" class="menu-item">
@@ -322,7 +369,7 @@
                 </a>
             </li>
             <li>
-                <a href="ftth.html" class="menu-item">
+                <a href="ftth.html" class="menu-item"> 
                     <span class="menu-text">RAB FTTH</span>
                 </a>
             </li>
@@ -332,7 +379,7 @@
                 </a>
             </li>
             <li>
-                <a href="https://docs.google.com/spreadsheets/d/1NToGtWoxKtLJDHBjUMenJq-jBmQ6bdsW6_bE4GkEGIA/edit?gid=98793551#gid=98793551/edit" class="menu-item">
+                <a href="https://docs.google.com/spreadsheets/d/1NToGtWoxKtLJDHBjUMenJq-jBmQ6bdsW6_bE4GkEGIA/edit?gid=98793551#gid=98793551/edit" class="menu-item" target="_blank">
                     <span class="menu-text">PA MAKASSAR</span>
                 </a>
             </li>
@@ -344,27 +391,27 @@
         <div id="section-dashboard" class="content-section active">
             <div class="header">
                 <h1>RAB KHS CONVEN & FTTH</h1>
-                <p style="color: #FFA500;">WEB ini diperuntukkan untuk mempermudah kerjaan</p>
+                <p style="color: #FF9F43; font-weight: 700;">Dashboard internal untuk mempermudah efisiensi kerjaan Anda ✨</p>
             </div>
 
             <div class="summary-grid">
-                <div class="card">
-                    <h3>Lorem Ipsum</h3>
-                    <div class="value" id="dashTotalFTTH">Lorem Ipsum</div>
+                <div class="caard">
+                    <h3>Penarikan FO dengan menggunakan kabel besar 6-48Core</h3>
+                    <div class="value" id="dashTotalFTTH">RAB Conven</div>
                 </div>
                 <div class="card">
-                    <h3>Lorem Ipsum</h3>
-                    <div class="value blue">Lorem Ipsum</div>
+                    <h3>Penarikan FO menggunakan kabel kecil seperti Dropwire panjan 50-250m</h3>
+                    <div class="value blue">RAB FTTH</div>
                 </div>
                 <div class="card">
-                    <h3>Lorem Ipsum</h3>
-                    <div class="value" style="color: #00e5a0; font-size: 1.5rem; margin-top:8px;">Lorem Ipsum</div>
+                    <h3>Penarikan FO dengan menggunakan kabel besar 6 tapi penarikan dari ODP</h3>
+                    <div class="value" style="color: #10B981; font-size: 1.8rem; margin-top:8px;">RAB FTTH Conven</div>
                 </div>
             </div>
             
-            <div class="card" style="margin-top: 20px;">
-                <h3 style="margin-bottom: 12px;">Ayat Hari ini</h3>
-                <p style="color: var(--text-secondary); line-height: 1.6;">
+            <div class="card quote-card" style="margin-top: 20px;">
+                <h3 style="margin-bottom: 12px; color: #FF9F43;">Ayat Hari ini</h3>
+                <p style="line-height: 1.6;">
                     "Katakanlah: 'Wahai hamba-hamba-Ku yang melampaui batas terhadap diri mereka sendiri! Janganlah kamu berputus asa dari rahmat Allah. Sesungguhnya Allah mengampuni dosa-dosa semuanya. Sungguh, Dialah Yang Maha Pengampun, Maha Penyayang.'" (QS. Az-Zumar: 53)
                 </p>
             </div>
@@ -378,9 +425,9 @@
             </div>
 
             <div class="summary-grid" style="justify-content: flex-end; display: flex;">
-                <div class="card" style="min-width: 300px; text-align: center;">
-                    <h3>TOTAL RAB FTTH PRO</h3>
-                    <div class="value" id="grandTotalDisplay">Rp 0</div>
+                <div class="card" style="min-width: 350px; text-align: center; border-color: #10B981; background: #F0FDF4;">
+                    <h3 style="color: #15803D;">TOTAL RAB FTTH PRO</h3>
+                    <div class="value" id="grandTotalDisplay" style="color: #16A34A;">Rp 0</div>
                 </div>
             </div>
 
@@ -388,14 +435,33 @@
                 <span>PEKERJAAN INSTALASI & TEKNIS</span>
                 <button class="btn btn-add" onclick="tambahInstalasi()">+ Tambah Item</button>
             </div>
+            
             <div class="table-wrapper">
                 <table id="tabelInstalasi">
                     <thead>
-                        <tr><th>No</th><th>Deskripsi</th><th>Satuan</th><th>Qty</th><th>Harga Satuan (Rp)</th><th>Total (Rp)</th><th>Aksi</th></tr>
+                        <tr>
+                            <th>No</th>
+                            <th>Deskripsi</th>
+                            <th>Satuan</th>
+                            <th>Qty</th>
+                            <th>Harga Satuan (Rp)</th>
+                            <th>Total (Rp)</th>
+                            <th>Aksi</th>
+                        </tr>
                     </thead>
                     <tbody id="bodyInstalasi"></tbody>
-                    <tfoot style="background: rgba(0,0,0,0.2); font-weight:bold;">
+                    <tfoot style="background: #F8FAFC; font-weight:bold;">
                         <tr>
-                            <td colspan="5" style="text-align:right; color:var(--accent-green);">SUB TOTAL INSTALASI :</td>
-                            <td id="subTotalInstalasi" style="color:var(--accent-green);">Rp 0</td>
+                            <td colspan="5" style="text-align:right; color: var(--text-primary); font-weight: 700;">SUB TOTAL INSTALASI :</td>
+                            <td id="subTotalInstalasi" style="color: #10B981; font-size: 1.1rem; font-weight: 800;">Rp 0</td>
                             <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        
+    </div>
+
+</body>
+</html>
