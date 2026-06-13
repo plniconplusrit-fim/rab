@@ -1,0 +1,926 @@
+	<!DOCTYPE html>
+	<html lang="id">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+		<title>RAB Instalasi Fiber Optik</title>
+		<style>
+			* {
+				box-sizing: border-box;
+				margin: 0;
+				font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+			}
+			body {
+				background: #1a1a2e;
+				padding: 20px 16px;
+			}
+			.container {
+				max-width: 1400px;
+				margin: 0 auto;
+			}
+			
+			/* STYLE TOMBOL KEMBALI */
+			.btn-kembali {
+				display: inline-flex;
+				align-items: center;
+				gap: 8px;
+				background: #0f0f1a;
+				border: 1px solid #2d2d44;
+				color: #ffffff !important;
+				text-decoration: none !important; /* Menghilangkan garis bawah */
+				padding: 10px 20px;
+				border-radius: 20px;
+				font-size: 0.85rem;
+				font-weight: 600;
+				cursor: pointer;
+				transition: all 0.2s ease;
+				margin-bottom: 20px;
+			}
+			.btn-kembali:hover {
+				background: rgba(0, 229, 160, 0.1); /* Efek sentuhan hijau aksen */
+				color: #00e5a0 !important;
+				border-color: #00e5a0;
+				text-decoration: none !important;
+			}
+
+			/* HEADER */
+			.header {
+				background: linear-gradient(135deg, #0f0f1a, #1a1a2e);
+				border: 1px solid #2d2d44;
+				color: #e0e0e0;
+				border-radius: 28px;
+				margin-bottom: 24px;
+				overflow: hidden;
+			}
+			.header-content {
+				padding: 1.2rem 1.8rem;
+				cursor: pointer;
+				transition: background 0.2s;
+			}
+			.header-content:hover {
+				background: rgba(255,255,255,0.03);
+			}
+			.header h1 {
+				font-size: 1.8rem;
+				margin-bottom: 6px;
+				color: #ffffff;
+			}
+			.header p {
+				opacity: 0.75;
+				font-size: 0.9rem;
+			}
+			.badge-proyek {
+				background: rgba(255,255,255,0.1);
+				display: inline-block;
+				padding: 5px 12px;
+				border-radius: 40px;
+				font-size: 0.75rem;
+				margin-top: 10px;
+			}
+			.edit-header-hint {
+				font-size: 0.7rem;
+				margin-top: 8px;
+				opacity: 0.5;
+			}
+			.header-input, .header-textarea {
+				background: rgba(0,0,0,0.5);
+				border: 1px solid #3d3d5c;
+				color: white;
+				padding: 8px 12px;
+				border-radius: 12px;
+				width: 100%;
+				margin-bottom: 8px;
+			}
+			.btn-save-header {
+				background: #2c7a4a;
+				border: none;
+				color: white;
+				padding: 6px 16px;
+				border-radius: 30px;
+				cursor: pointer;
+			}
+			/* TOTAL CARD */
+			.summary {
+				display: flex;
+				justify-content: flex-end;
+				margin-bottom: 28px;
+			}
+			.card-total {
+				background: linear-gradient(135deg, #0f0f1a, #0a0a15);
+				border: 1px solid #2d2d44;
+				color: #00e5a0;
+				padding: 20px 32px;
+				border-radius: 32px;
+				text-align: center;
+				min-width: 280px;
+			}
+			.card-total h3 {
+				font-size: 0.85rem;
+				text-transform: uppercase;
+				letter-spacing: 2px;
+				opacity: 0.7;
+				margin-bottom: 8px;
+				color: #aaa;
+			}
+			.card-total .value {
+				font-size: 2.5rem;
+				font-weight: 800;
+				color: #00e5a0;
+			}
+			/* SECTION TITLE */
+			.section-title {
+				background: #0f0f1a;
+				border: 1px solid #2d2d44;
+				padding: 10px 20px;
+				border-radius: 20px;
+				margin: 28px 0 14px 0;
+				font-weight: 700;
+				font-size: 1.2rem;
+				border-left: 6px solid #00e5a0;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				color: #e0e0e0;
+			}
+			.add-btn {
+				background: #1a4a6f;
+				color: white;
+				border: none;
+				padding: 6px 14px;
+				border-radius: 30px;
+				cursor: pointer;
+			}
+			.add-btn:hover {
+				background: #2c7a4a;
+			}
+			.btn-excel {
+				background: #1e6f3f;
+				color: white;
+				border: none;
+				padding: 8px 20px;
+				border-radius: 30px;
+				cursor: pointer;
+				font-weight: bold;
+			}
+			.btn-excel:hover {
+				background: #2a8a55;
+			}
+			/* TABLE WRAPPER */
+			.table-wrapper {
+				background: #0a0a15;
+				border-radius: 24px;
+				overflow-x: auto;
+				box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+				border: 1px solid #2d2d44;
+			}
+			table {
+				width: 100%;
+				border-collapse: collapse;
+				font-size: 0.85rem;
+				min-width: 700px;
+			}
+			th {
+				background: #000000;
+				color: #00e5a0;
+				padding: 14px 8px;
+				text-align: center;
+				border-bottom: 1px solid #2d2d44;
+				font-weight: 700;
+			}
+			td {
+				padding: 10px 8px;
+				border-bottom: 1px solid #1a1a2e;
+				text-align: center;
+				vertical-align: middle;
+				color: #c0c0c0;
+			}
+			/* DESKRIPSI RATA KIRI */
+			td:nth-child(2), th:nth-child(2) {
+				text-align: left;
+			}
+			th:nth-child(2) {
+				text-align: left;
+				padding-left: 15px;
+			}
+			td:nth-child(2) {
+				text-align: left;
+				padding-left: 15px;
+				font-weight: 500;
+				color: #ffffff;
+			}
+			input {
+				width: 100%;
+				padding: 8px 6px;
+				border-radius: 12px;
+				border: 1px solid #3d3d5c;
+				font-size: 0.8rem;
+				text-align: left;
+				background: #1a1a2e;
+				color: white;
+			}
+			input:focus {
+				outline: none;
+				border-color: #00e5a0;
+			}
+			.auto-badge {
+				background: #1a3a2a;
+				font-size: 0.65rem;
+				padding: 2px 6px;
+				border-radius: 12px;
+				margin-left: 8px;
+				color: #00e5a0;
+			}
+			.action-buttons {
+				display: flex;
+				gap: 8px;
+				justify-content: center;
+			}
+			.edit-btn, .delete-btn {
+				background: none;
+				border: none;
+				cursor: pointer;
+				font-size: 1rem;
+				padding: 6px 10px;
+				border-radius: 20px;
+				transition: 0.2s;
+				font-weight: 500;
+			}
+			.edit-btn {
+				background: #2a4a6f;
+				color: white;
+			}
+			.edit-btn:hover {
+				background: #3a6a9f;
+			}
+			.delete-btn {
+				background: #6f2a2a;
+				color: white;
+			}
+			.delete-btn:hover {
+				background: #9f3a3a;
+			}
+			button:disabled {
+				opacity: 0.4;
+				cursor: not-allowed;
+			}
+			.save-cancel-buttons {
+				display: flex;
+				gap: 6px;
+				justify-content: center;
+			}
+			.save-btn {
+				background: #2c7a4a;
+				color: white;
+				border: none;
+				padding: 6px 12px;
+				border-radius: 20px;
+				cursor: pointer;
+				font-size: 0.75rem;
+			}
+			.cancel-btn {
+				background: #5a6e7c;
+				color: white;
+				border: none;
+				padding: 6px 12px;
+				border-radius: 20px;
+				cursor: pointer;
+				font-size: 0.75rem;
+			}
+			.footer-note {
+				margin-top: 32px;
+				background: #0a0a15;
+				border: 1px solid #2d2d44;
+				padding: 14px 20px;
+				border-radius: 20px;
+				display: flex;
+				justify-content: space-between;
+				flex-wrap: wrap;
+				align-items: center;
+				color: #888;
+			}
+			.footer-note span {
+				color: #aaa;
+			}
+			@media (max-width: 680px) {
+				.card-total .value { font-size: 1.6rem; }
+				.card-total { padding: 12px 20px; min-width: 200px; }
+				.edit-btn, .delete-btn { padding: 4px 8px; font-size: 0.75rem; }
+			}
+			
+			/* STYLE KHUSUS UNTUK CETAK PDF */
+			@media print {
+				body {
+					background: white;
+					padding: 0;
+					margin: 0;
+				}
+				.container {
+					margin: 0;
+					padding: 10px;
+				}
+				.btn-kembali {
+					display: none !important; /* Sembunyikan tombol saat cetak */
+				}
+				.header {
+					background: #0f0f1a;
+					border: 1px solid #ccc;
+					-webkit-print-color-adjust: exact;
+					print-color-adjust: exact;
+				}
+				.card-total {
+					background: #0f0f1a;
+					border: 1px solid #ccc;
+					-webkit-print-color-adjust: exact;
+					print-color-adjust: exact;
+				}
+				.add-btn, .btn-excel, .edit-btn, .delete-btn, .save-cancel-buttons, .action-buttons, .footer-note button {
+					display: none !important;
+				}
+				.table-wrapper {
+					background: white;
+					border: 1px solid #ccc;
+				}
+				th {
+					background: #e0e0e0;
+					color: black;
+					-webkit-print-color-adjust: exact;
+					print-color-adjust: exact;
+				}
+				td {
+					color: black;
+				}
+				.auto-badge {
+					background: #e8f5e9;
+					color: #2c7a4a;
+				}
+				.footer-note {
+					border: none;
+					background: none;
+				}
+				.section-title button {
+					display: none;
+				}
+				.edit-header-hint {
+					display: none;
+				}
+			}
+		</style>
+	</head>
+	<body>
+	<div class="container">
+
+		<a href="index.html" class="btn-kembali">
+			<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+				<line x1="19" y1="12" x2="5" y2="12"></line>
+				<polyline points="12 19 5 12 12 5"></polyline>
+			</svg>
+			<span>Kembali ke Dashboard</span>
+		</a>
+
+		<div class="header" id="headerBox">
+			<div class="header-content" id="headerContent">
+				<div id="headerDisplay">
+					<h1>RAB Instalasi Jaringan Fiber Optik</h1>
+					<p>Perhitungan Rencana Anggaran Biaya – Pekerjaan Instalasi dan Perangkat</p>
+					<div class="badge-proyek">Wilayah Makassar</div>
+					<div class="edit-header-hint">Klik header untuk edit</div>
+				</div>
+				<div id="headerEditor" style="display:none;">
+					<input type="text" id="editTitle" class="header-input" placeholder="Judul">
+					<textarea id="editSubtitle" rows="2" class="header-textarea" placeholder="Subtitle"></textarea>
+					<button class="btn-save-header" id="saveHeaderBtn">Simpan</button>
+					<button class="btn-save-header" id="cancelHeaderBtn" style="background:#5a6e7c;">Batal</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="summary">
+			<div class="card-total">
+				<h3>TOTAL RAB</h3>
+				<div class="value" id="grandTotalDisplay">Rp 0</div>
+			</div>
+		</div>
+
+		<div class="section-title">
+			<span>PEKERJAAN INSTALASI & TEKNIS</span>
+			<button class="add-btn" id="tambahInstalasiBtn">+ Tambah Item</button>
+		</div>
+		<div class="table-wrapper">
+			<table id="tabelInstalasi">
+				<thead>
+					<tr><th>No</th><th>Deskripsi</th><th>Satuan</th><th>Qty</th><th>Harga Satuan (Rp)</th><th>Total (Rp)</th><th>Aksi</th></tr>
+				</thead>
+				<tbody id="bodyInstalasi"></tbody>
+				<tfoot id="footerInstalasi" style="background:#1a1a2e; font-weight:bold;">
+					<tr>
+						<td colspan="5" style="text-align:right; color:#00e5a0;">SUB TOTAL INSTALASI :</td>
+						<td id="subTotalInstalasi" style="text-align:center; color:#00e5a0;">Rp 0</td>
+						<td></td>
+					</tr>
+				</footer>
+			</table>
+		</div>
+
+		<div class="section-title">
+			<span>PERANGKAT & MATERIAL KABEL</span>
+			<button class="add-btn" id="tambahMaterialBtn">+ Tambah Item</button>
+		</div>
+		<div class="table-wrapper">
+			<table id="tabelMaterial">
+				<thead>
+					<tr><th>No</th><th>Deskripsi</th><th>Satuan</th><th>Qty</th><th>Harga Satuan (Rp)</th><th>Total (Rp)</th><th>Aksi</th></tr>
+				</thead>
+				<tbody id="bodyMaterial"></tbody>
+				<tfoot id="footerMaterial" style="background:#1a1a2e; font-weight:bold;">
+					<tr>
+						<td colspan="5" style="text-align:right; color:#00e5a0;">SUB TOTAL PERANGKAT :</td>
+						<td id="subTotalMaterial" style="text-align:center; color:#00e5a0;">Rp 0</td>
+						<td></td>
+					</tr>
+				</footer>
+			</table>
+		</div>
+
+		<div class="footer-note">
+			<div>
+				<button class="btn-excel" id="exportExcelBtn">Export ke Excel</button>
+				<button class="add-btn" id="cetakBtn" style="background:#2c7a4a; margin-left:10px;">Cetak PDF</button>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+	<script>
+		let dataInstalasi = [
+			{ id: "t1", no:1, deskripsi:"PEMBUATAN DOKUMENTASI TEKNIS", satuan:"LOT", qty:1, harga:383030, autoCalc: false },
+			{ id: "t2", no:2, deskripsi:"SURVEY JALUR KABEL (+SPOT GPSMAX 3 HARI)", satuan:"LOT", qty:1, harga:913289, autoCalc: false },
+			{ id: "t3", no:3, deskripsi:"PENARIKAN FOC ADSS SHORT SPAN <4000M", satuan:"M", qty:600, harga:4124, autoCalc: false, isTrigger: true },
+			{ id: "t4", no:4, deskripsi:"JOINTING PER CORE (+LABELING CORE)", satuan:"U", qty:15, harga:56246, autoCalc: false },
+			{ id: "t5", no:5, deskripsi:"OTDR PER CORE (EXCL. JOINTING)", satuan:"U", qty:3, harga:48360, autoCalc: false },
+			{ id: "t6", no:6, deskripsi:"LABELING KABEL 1POLE 2LABEL, KHS PERAPIH", satuan:"U", qty:8, harga:16554, autoCalc: true, dependsOn: "t3" },
+			{ id: "t7", no:7, deskripsi:"LABELING IN SITE PLAN (LABELING PAT CORD)", satuan:"U", qty:2, harga:16554, autoCalc: false },
+			{ id: "t8", no:8, deskripsi:"FITTING DEADEND, 6 - 48 CORE SATU SISI", satuan:"U", qty:4, harga:92910, autoCalc: true, dependsOn: "t3" },
+			{ id: "t9", no:9, deskripsi:"FITTING SUSPENSION, 6-48 CORE", satuan:"U", qty:8, harga:56865, autoCalc: true, dependsOn: "t3" },
+			{ id: "t10", no:10, deskripsi:"PATCH CORD SINGLE MODE 1 PASANG 5M", satuan:"U", qty:2, harga:125576, autoCalc: false },
+			{ id: "t11", no:11, deskripsi:"ODF RACK MOUNTED 6 CORE (TIPE SC UPC)", satuan:"U", qty:1, harga:661760, autoCalc: false }
+		];
+
+		let dataMaterial = [
+			{ id: "m1", no:1, deskripsi:"GPON,ONT EG8021V5,2.4/5GHz Wi-Fi,,HUAWEI", satuan:"U", qty:1, harga:299200, autoCalc: false },
+			{ id: "m2", no:2, deskripsi:"FOC,ADSS SS 100m,6/1T Kuning,,FIBERHOME", satuan:"M", qty:600, harga:3310, autoCalc: true, dependsOn: "t3" }
+		];
+
+		let editingRows = new Set();
+		let tempEditData = new Map();
+		let headerData = {
+			title: "RAB Instalasi Jaringan Fiber Optik",
+			subtitle: "Perhitungan Rencana Anggaran Biaya – Pekerjaan Instalasi dan Perangkat",
+			badge: "Wilayah Makassar"
+		};
+
+		function formatRp(angka) {
+			return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
+		}
+
+		function formatNumber(angka) {
+			return new Intl.NumberFormat('id-ID').format(angka);
+		}
+
+		function escapeHtml(str) {
+			if(!str) return '';
+			return str.replace(/[&<>]/g, function(m) {
+				if(m === '&') return '&amp;';
+				if(m === '<') return '&lt;';
+				if(m === '>') return '&gt;';
+				return m;
+			});
+		}
+
+		function getQtyPenarikanFOC() {
+			const item = dataInstalasi.find(i => i.id === "t3");
+			return item ? item.qty : 0;
+		}
+
+		function hitungDeadend(qtyFOC) {
+			const step1 = qtyFOC / 40;
+			const step2 = step1 / 3;
+			return Math.ceil(step2);
+		}
+
+		function hitungSuspensionAndLabeling(qtyFOC, deadendQty) {
+			const base = qtyFOC / 40;
+			let result = base - deadendQty;
+			if (result < 0) result = 0;
+			return Math.ceil(result);
+		}
+
+		function applyAutoCalculations() {
+			const qtyFOC = getQtyPenarikanFOC();
+			
+			const focMaterial = dataMaterial.find(m => m.id === "m6");
+			if (focMaterial && focMaterial.autoCalc) {
+				focMaterial.qty = qtyFOC;
+			}
+			
+			const deadendQty = hitungDeadend(qtyFOC);
+			const deadendItem = dataInstalasi.find(i => i.id === "t9");
+			if (deadendItem && deadendItem.autoCalc) {
+				deadendItem.qty = deadendQty;
+			}
+			
+			const suspensionAndLabelQty = hitungSuspensionAndLabeling(qtyFOC, deadendQty);
+			const suspensionItem = dataInstalasi.find(i => i.id === "t10");
+			if (suspensionItem && suspensionItem.autoCalc) {
+				suspensionItem.qty = suspensionAndLabelQty;
+			}
+			
+			const labelingKabelItem = dataInstalasi.find(i => i.id === "t6");
+			if (labelingKabelItem && labelingKabelItem.autoCalc) {
+				labelingKabelItem.qty = suspensionAndLabelQty;
+			}
+		}
+
+		function renumberArray(arr) {
+			arr.forEach((item, idx) => { item.no = idx + 1; });
+		}
+
+		function updateSubtotals() {
+			const totalInst = dataInstalasi.reduce((s,i) => s + (i.qty * i.harga), 0);
+			const totalMat = dataMaterial.reduce((s,i) => s + (i.qty * i.harga), 0);
+			document.getElementById('subTotalInstalasi').innerHTML = formatRp(totalInst);
+			document.getElementById('subTotalMaterial').innerHTML = formatRp(totalMat);
+			const grand = totalInst + totalMat;
+			document.getElementById('grandTotalDisplay').innerHTML = formatRp(grand);
+		}
+
+		function startEdit(id, isMaterial) {
+			let item;
+			if (isMaterial) {
+				item = dataMaterial.find(i => i.id === id);
+			} else {
+				item = dataInstalasi.find(i => i.id === id);
+			}
+			if (item && item.autoCalc) return;
+			
+			editingRows.add(id);
+			tempEditData.set(id, {
+				deskripsi: item.deskripsi,
+				satuan: item.satuan,
+				qty: item.qty,
+				harga: item.harga
+			});
+			
+			renderMaterial();
+			renderInstalasi();
+		}
+
+		function saveEdit(id, isMaterial) {
+			const temp = tempEditData.get(id);
+			if (!temp) return;
+			
+			if (isMaterial) {
+				const item = dataMaterial.find(i => i.id === id);
+				if (item && !item.autoCalc) {
+					item.deskripsi = temp.deskripsi;
+					item.satuan = temp.satuan;
+					item.qty = temp.qty;
+					item.harga = temp.harga;
+				}
+			} else {
+				const item = dataInstalasi.find(i => i.id === id);
+				if (item && !item.autoCalc) {
+					item.deskripsi = temp.deskripsi;
+					item.satuan = temp.satuan;
+					item.qty = temp.qty;
+					item.harga = temp.harga;
+					if (item.id === "t3") {
+						applyAutoCalculations();
+					}
+				}
+			}
+			
+			editingRows.delete(id);
+			tempEditData.delete(id);
+			renderInstalasi();
+			renderMaterial();
+			updateSubtotals();
+		}
+
+		function cancelEdit(id) {
+			editingRows.delete(id);
+			tempEditData.delete(id);
+			renderInstalasi();
+			renderMaterial();
+		}
+
+		function updateEditField(id, field, value, isMaterial) {
+			const temp = tempEditData.get(id);
+			if (temp) {
+				if (field === 'deskripsi') temp.deskripsi = value;
+				if (field === 'satuan') temp.satuan = value;
+				if (field === 'qty') temp.qty = parseFloat(value) || 0;
+				if (field === 'harga') temp.harga = parseFloat(value) || 0;
+			}
+		}
+
+		function renderInstalasi() {
+			const tbody = document.getElementById('bodyInstalasi');
+			tbody.innerHTML = '';
+			renumberArray(dataInstalasi);
+			dataInstalasi.forEach(item => {
+				const row = tbody.insertRow();
+				const isEditing = editingRows.has(item.id);
+				const temp = tempEditData.get(item.id);
+				
+				row.insertCell(0).innerText = item.no;
+				
+				const cellDesc = row.insertCell(1);
+				const cellSatuan = row.insertCell(2);
+				const cellQty = row.insertCell(3);
+				const cellHarga = row.insertCell(4);
+				const cellTotal = row.insertCell(5);
+				const totalVal = (isEditing ? (temp?.qty || 0) : item.qty) * (isEditing ? (temp?.harga || 0) : item.harga);
+				cellTotal.innerText = formatRp(totalVal);
+				const cellAction = row.insertCell(6);
+				
+				if (isEditing) {
+					cellDesc.innerHTML = `<input type="text" class="edit-desc" value="${escapeHtml(temp?.deskripsi || '')}" style="text-align:left;" onchange="updateEditField('${item.id}', 'deskripsi', this.value, false)">`;
+					cellSatuan.innerHTML = `<input type="text" class="edit-satuan" value="${temp?.satuan || ''}" style="width:80px;" onchange="updateEditField('${item.id}', 'satuan', this.value, false)">`;
+					if (item.autoCalc) {
+						cellQty.innerHTML = `<span style="background:#1a3a2a; padding:4px 8px; border-radius:12px; color:#00e5a0;">${item.qty} <span class="auto-badge">auto</span></span>`;
+					} else {
+						cellQty.innerHTML = `<input type="number" class="edit-qty" value="${temp?.qty || 0}" step="any" style="width:80px;" onchange="updateEditField('${item.id}', 'qty', this.value, false)">`;
+					}
+					cellHarga.innerHTML = `<input type="number" class="edit-harga" value="${temp?.harga || 0}" step="any" style="width:110px;" onchange="updateEditField('${item.id}', 'harga', this.value, false)">`;
+					cellAction.innerHTML = `<div class="save-cancel-buttons"><button class="save-btn" onclick="saveEdit('${item.id}', false)">Simpan</button><button class="cancel-btn" onclick="cancelEdit('${item.id}')">Batal</button></div>`;
+				} else {
+					cellDesc.innerText = item.deskripsi;
+					cellSatuan.innerText = item.satuan;
+					if (item.autoCalc) {
+						cellQty.innerHTML = `<span style="background:#1a3a2a; padding:4px 8px; border-radius:12px; color:#00e5a0;">${item.qty} <span class="auto-badge">auto</span></span>`;
+					} else {
+						cellQty.innerText = item.qty;
+					}
+					cellHarga.innerText = formatRp(item.harga);
+					cellAction.innerHTML = `<div class="action-buttons">${!item.autoCalc ? `<button class="edit-btn" onclick="startEdit('${item.id}', false)">Edit</button>` : `<button class="edit-btn" disabled style="opacity:0.4;">Edit</button>`}<button class="delete-btn" onclick="deleteItem('${item.id}', false)">Hapus</button></div>`;
+				}
+			});
+			updateSubtotals();
+		}
+
+		function renderMaterial() {
+			const tbody = document.getElementById('bodyMaterial');
+			tbody.innerHTML = '';
+			renumberArray(dataMaterial);
+			dataMaterial.forEach(item => {
+				const row = tbody.insertRow();
+				const isEditing = editingRows.has(item.id);
+				const temp = tempEditData.get(item.id);
+				
+				row.insertCell(0).innerText = item.no;
+				
+				const cellDesc = row.insertCell(1);
+				const cellSatuan = row.insertCell(2);
+				const cellQty = row.insertCell(3);
+				const cellHarga = row.insertCell(4);
+				const cellTotal = row.insertCell(5);
+				const totalVal = (isEditing ? (temp?.qty || 0) : item.qty) * (isEditing ? (temp?.harga || 0) : item.harga);
+				cellTotal.innerText = formatRp(totalVal);
+				const cellAction = row.insertCell(6);
+				
+				if (isEditing) {
+					cellDesc.innerHTML = `<input type="text" class="edit-desc" value="${escapeHtml(temp?.deskripsi || '')}" style="text-align:left;" onchange="updateEditField('${item.id}', 'deskripsi', this.value, true)">`;
+					cellSatuan.innerHTML = `<input type="text" class="edit-satuan" value="${temp?.satuan || ''}" style="width:80px;" onchange="updateEditField('${item.id}', 'satuan', this.value, true)">`;
+					if (item.autoCalc) {
+						cellQty.innerHTML = `<span style="background:#1a3a2a; padding:4px 8px; border-radius:12px; color:#00e5a0;">${item.qty} <span class="auto-badge">auto</span></span>`;
+					} else {
+						cellQty.innerHTML = `<input type="number" class="edit-qty" value="${temp?.qty || 0}" step="any" style="width:80px;" onchange="updateEditField('${item.id}', 'qty', this.value, true)">`;
+					}
+					cellHarga.innerHTML = `<input type="number" class="edit-harga" value="${temp?.harga || 0}" step="any" style="width:110px;" onchange="updateEditField('${item.id}', 'harga', this.value, true)">`;
+					cellAction.innerHTML = `<div class="save-cancel-buttons"><button class="save-btn" onclick="saveEdit('${item.id}', true)">Simpan</button><button class="cancel-btn" onclick="cancelEdit('${item.id}')">Batal</button></div>`;
+				} else {
+					cellDesc.innerText = item.deskripsi;
+					cellSatuan.innerText = item.satuan;
+					if (item.autoCalc) {
+						cellQty.innerHTML = `<span style="background:#1a3a2a; padding:4px 8px; border-radius:12px; color:#00e5a0;">${item.qty} <span class="auto-badge">auto</span></span>`;
+					} else {
+						cellQty.innerText = item.qty;
+					}
+					cellHarga.innerText = formatRp(item.harga);
+					cellAction.innerHTML = `<div class="action-buttons">${!item.autoCalc ? `<button class="edit-btn" onclick="startEdit('${item.id}', true)">Edit</button>` : `<button class="edit-btn" disabled style="opacity:0.4;">Edit</button>`}<button class="delete-btn" onclick="deleteItem('${item.id}', true)">Hapus</button></div>`;
+				}
+			});
+			updateSubtotals();
+		}
+
+		function deleteItem(id, isMaterial) {
+			if (confirm('Hapus item ini?')) {
+				if (isMaterial) {
+					dataMaterial = dataMaterial.filter(i => i.id !== id);
+				} else {
+					dataInstalasi = dataInstalasi.filter(i => i.id !== id);
+				}
+				editingRows.delete(id);
+				tempEditData.delete(id);
+				renderInstalasi();
+				renderMaterial();
+				updateSubtotals();
+			}
+		}
+
+		function tambahInstalasi() {
+			const newId = 'ins_' + Date.now();
+			dataInstalasi.push({ id: newId, no: dataInstalasi.length+1, deskripsi: "Item Baru", satuan: "LOT", qty: 1, harga: 0, autoCalc: false });
+			startEdit(newId, false);
+		}
+		
+		function tambahMaterial() {
+			const newId = 'mat_' + Date.now();
+			dataMaterial.push({ id: newId, no: dataMaterial.length+1, deskripsi: "Material Baru", satuan: "U", qty: 1, harga: 0, autoCalc: false });
+			startEdit(newId, true);
+		}
+
+		function exportToExcel() {
+			const instalasiRows = dataInstalasi.map(item => ({
+				"No": item.no,
+				"Deskripsi": item.deskripsi,
+				"Satuan": item.satuan,
+				"Qty": item.qty,
+				"Harga Satuan (Rp)": item.harga,
+				"Total (Rp)": item.qty * item.harga
+			}));
+			
+			const materialRows = dataMaterial.map(item => ({
+				"No": item.no,
+				"Deskripsi": item.deskripsi,
+				"Satuan": item.satuan,
+				"Qty": item.qty,
+				"Harga Satuan (Rp)": item.harga,
+				"Total (Rp)": item.qty * item.harga
+			}));
+			
+			const totalInst = dataInstalasi.reduce((s,i) => s + (i.qty * i.harga), 0);
+			const totalMat = dataMaterial.reduce((s,i) => s + (i.qty * i.harga), 0);
+			const grandTotal = totalInst + totalMat;
+			
+			const wsInstalasi = XLSX.utils.json_to_sheet(instalasiRows);
+			const wsMaterial = XLSX.utils.json_to_sheet(materialRows);
+			const summaryRows = [
+				{ "Keterangan": "TOTAL INSTALASI", "Nilai (Rp)": totalInst },
+				{ "Keterangan": "TOTAL PERANGKAT & MATERIAL", "Nilai (Rp)": totalMat },
+				{ "Keterangan": "GRAND TOTAL RAB", "Nilai (Rp)": grandTotal }
+			];
+			const wsSummary = XLSX.utils.json_to_sheet(summaryRows);
+			
+			const wb = XLSX.utils.book_new();
+			XLSX.utils.book_append_sheet(wb, wsInstalasi, "PEKERJAAN INSTALASI");
+			XLSX.utils.book_append_sheet(wb, wsMaterial, "PERANGKAT & MATERIAL");
+			XLSX.utils.book_append_sheet(wb, wsSummary, "RINGKASAN RAB");
+			
+			const fileName = `RAB_Instalasi_Fiber_${new Date().toISOString().slice(0,19).replace(/:/g, '-')}.xlsx`;
+			XLSX.writeFile(wb, fileName);
+		}
+
+		function updateHeaderDisplay() {
+			document.getElementById('headerDisplay').innerHTML = `
+				<h1>${escapeHtml(headerData.title)}</h1>
+				<p>${escapeHtml(headerData.subtitle)}</p>
+				<div class="badge-proyek">${escapeHtml(headerData.badge)}</div>
+				<div class="edit-header-hint">Klik header untuk edit</div>
+			`;
+		}
+		
+		function showEditor() {
+			document.getElementById('headerDisplay').style.display = 'none';
+			document.getElementById('headerEditor').style.display = 'block';
+			document.getElementById('editTitle').value = headerData.title;
+			document.getElementById('editSubtitle').value = headerData.subtitle;
+		}
+		
+		function hideEditor() {
+			document.getElementById('headerDisplay').style.display = 'block';
+			document.getElementById('headerEditor').style.display = 'none';
+		}
+		
+		document.getElementById('headerContent').addEventListener('click', (e) => {
+			if(e.target.closest('#saveHeaderBtn') || e.target.closest('#cancelHeaderBtn')) return;
+			showEditor();
+		});
+		document.getElementById('saveHeaderBtn').addEventListener('click', () => {
+			headerData.title = document.getElementById('editTitle').value.trim() || headerData.title;
+			headerData.subtitle = document.getElementById('editSubtitle').value.trim() || headerData.subtitle;
+			updateHeaderDisplay();
+			hideEditor();
+		});
+		document.getElementById('cancelHeaderBtn').addEventListener('click', hideEditor);
+
+		function cetakLaporan() {
+			const printWindow = window.open('', '_blank');
+			if (!printWindow) {
+				alert("Mohon izinkan pop-up untuk mencetak.");
+				return;
+			}
+			
+			const totalInst = dataInstalasi.reduce((s,i) => s + (i.qty * i.harga), 0);
+			const totalMat = dataMaterial.reduce((s,i) => s + (i.qty * i.harga), 0);
+			const grandTotal = totalInst + totalMat;
+			
+			const instalasiRows = dataInstalasi.map(item => `
+				<tr>
+					<td style="border:1px solid #ddd; padding:8px; text-align:center;">${item.no}</td>
+					<td style="border:1px solid #ddd; padding:8px; text-align:left;">${escapeHtml(item.deskripsi)}</td>
+					<td style="border:1px solid #ddd; padding:8px; text-align:center;">${item.satuan}</td>
+					<td style="border:1px solid #ddd; padding:8px; text-align:center;">${item.qty}</td>
+					<td style="border:1px solid #ddd; padding:8px; text-align:right;">${formatRp(item.harga)}</td>
+					<td style="border:1px solid #ddd; padding:8px; text-align:right;">${formatRp(item.qty * item.harga)}</td>
+				</tr>
+			`).join('');
+			
+			const materialRows = dataMaterial.map(item => `
+				<tr>
+					<td style="border:1px solid #ddd; padding:8px; text-align:center;">${item.no}</td>
+					<td style="border:1px solid #ddd; padding:8px; text-align:left;">${escapeHtml(item.deskripsi)}</td>
+					<td style="border:1px solid #ddd; padding:8px; text-align:center;">${item.satuan}</td>
+					<td style="border:1px solid #ddd; padding:8px; text-align:center;">${item.qty}</td>
+					<td style="border:1px solid #ddd; padding:8px; text-align:right;">${formatRp(item.harga)}</td>
+					<td style="border:1px solid #ddd; padding:8px; text-align:right;">${formatRp(item.qty * item.harga)}</td>
+				</tr>
+			`).join('');
+
+			printWindow.document.write(`
+				<!DOCTYPE html>
+				<html>
+				<head>
+					<title>Cetak RAB</title>
+					<style>
+						body { font-family: 'Segoe UI', sans-serif; padding: 20px; color: #333; }
+						table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+						th { background: #f2f2f2; padding: 10px; border: 1px solid #ddd; text-align: center; }
+						.header-print { margin-bottom: 30px; }
+						.total-rab { margin-top: 30px; font-size: 1.4rem; font-weight: bold; text-align: right; }
+					</style>
+				</head>
+				<body>
+					<div class="header-print">
+						<h2>${escapeHtml(headerData.title)}</h2>
+						<p>${escapeHtml(headerData.subtitle)}</p>
+						<p style="margin-top:5px;"><strong>Proyek:</strong> ${escapeHtml(headerData.badge)}</p>
+					</div>
+					
+					<h3>PEKERJAAN INSTALASI & TEKNIS</h3>
+					<table>
+						<thead>
+							<tr><th>No</th><th>Deskripsi</th><th>Satuan</th><th>Qty</th><th>Harga Satuan</th><th>Total</th></tr>
+						</thead>
+						<tbody>${instalasiRows}</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="5" style="text-align:right; font-weight:bold; padding:8px;">SUB TOTAL INSTALASI</td>
+								<td style="text-align:right; font-weight:bold; padding:8px;">${formatRp(totalInst)}</td>
+							</tr>
+						</tfoot>
+					</table>
+
+					<h3 style="margin-top:30px;">PERANGKAT & MATERIAL KABEL</h3>
+					<table>
+						<thead>
+							<tr><th>No</th><th>Deskripsi</th><th>Satuan</th><th>Qty</th><th>Harga Satuan</th><th>Total</th></tr>
+						</thead>
+						<tbody>${materialRows}</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="5" style="text-align:right; font-weight:bold; padding:8px;">SUB TOTAL PERANGKAT</td>
+								<td style="text-align:right; font-weight:bold; padding:8px;">${formatRp(totalMat)}</td>
+							</tr>
+						</tfoot>
+					</table>
+					
+					<div class="total-rab">GRAND TOTAL RAB : ${formatRp(grandTotal)}</div>
+					<div style="margin-top:20px; font-size:0.8rem; color:#777;">Dicetak pada: ${new Date().toLocaleString('id-ID')}</div>
+				</body>
+				</html>
+			`);
+			
+			printWindow.document.close();
+			printWindow.print();
+		}
+
+		document.getElementById('tambahInstalasiBtn').addEventListener('click', tambahInstalasi);
+		document.getElementById('tambahMaterialBtn').addEventListener('click', tambahMaterial);
+		document.getElementById('cetakBtn').addEventListener('click', cetakLaporan);
+		document.getElementById('exportExcelBtn').addEventListener('click', exportToExcel);
+		
+		window.updateEditField = updateEditField;
+		window.startEdit = startEdit;
+		window.saveEdit = saveEdit;
+		window.cancelEdit = cancelEdit;
+		window.deleteItem = deleteItem;
+		
+		applyAutoCalculations();
+		renderInstalasi();
+		renderMaterial();
+		updateSubtotals();
+		updateHeaderDisplay();
+	</script>
+	</body>
+	</html>
