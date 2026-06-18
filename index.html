@@ -144,6 +144,50 @@
         }
 
         /* ==========================================================================
+           3b. TOMBOL MENU (HAMBURGER) & BACKDROP — khusus tampilan HP/tablet.
+           Tersembunyi di layar besar; muncul di breakpoint mobile di bawah.
+           ========================================================================== */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 102;
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: var(--abyss-2);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu-toggle .icon-close {
+            display: none;
+        }
+
+        .menu-toggle.is-open .icon-menu {
+            display: none;
+        }
+
+        .menu-toggle.is-open .icon-close {
+            display: block;
+        }
+
+        .sidebar-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 40, 38, 0.55);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 99;
+        }
+
+        /* ==========================================================================
            4. MAIN CONTENT AREA (KONTEN UTAMA)
            ========================================================================== */
         .main-content {
@@ -399,15 +443,45 @@
            10. RESPONSIVE LAYOUT (UNTUK LAYAR HP/TABLET)
            ========================================================================== */
         @media (max-width: 992px) {
-            .sidebar { width: 70px; padding: 20px 8px; }
-            .sidebar-brand span.brand-text, .menu-text { display: none; }
-            .main-content { margin-left: 70px; width: calc(100% - 70px); padding: 20px; }
+            .menu-toggle { display: flex; }
+            .sidebar-backdrop { display: block; }
+            .sidebar-backdrop.show { opacity: 1; pointer-events: auto; }
+
+            .sidebar {
+                width: 260px;
+                padding: 24px 16px;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            .sidebar.mobile-open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+                padding-top: 76px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="sidebar">
+    <button class="menu-toggle" id="menuToggle" aria-label="Buka menu" aria-expanded="false" aria-controls="sidebarNav">
+        <svg class="icon-menu" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E7F6F3" stroke-width="2.4" stroke-linecap="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+        <svg class="icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E7F6F3" stroke-width="2.4" stroke-linecap="round">
+            <line x1="5" y1="5" x2="19" y2="19"></line>
+            <line x1="19" y1="5" x2="5" y2="19"></line>
+        </svg>
+    </button>
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <div class="sidebar" id="sidebarNav">
         <div class="sidebar-brand">
             <span class="brand-icon">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -532,5 +606,31 @@
 
     </div>
 
+    <script>
+        const sidebarNav = document.getElementById('sidebarNav');
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+
+        function openSidebar() {
+            sidebarNav.classList.add('mobile-open');
+            sidebarBackdrop.classList.add('show');
+            menuToggle.classList.add('is-open');
+            menuToggle.setAttribute('aria-expanded', 'true');
+        }
+        function closeSidebar() {
+            sidebarNav.classList.remove('mobile-open');
+            sidebarBackdrop.classList.remove('show');
+            menuToggle.classList.remove('is-open');
+            menuToggle.setAttribute('aria-expanded', 'false');
+        }
+        menuToggle.addEventListener('click', () => {
+            sidebarNav.classList.contains('mobile-open') ? closeSidebar() : openSidebar();
+        });
+        sidebarBackdrop.addEventListener('click', closeSidebar);
+        sidebarNav.querySelectorAll('.menu-item').forEach(link => {
+            link.addEventListener('click', closeSidebar);
+        });
+    </script>
+
 </body>
-</html> 
+</html>
