@@ -4,30 +4,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>RAB Instalasi Fiber Optik</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+
     <style>
+        /* ==========================================================================
+           PALET "MATAHARI & LAUT" — diturunkan dari swatch (#FDF4AF, #A5E9DD, #6FBEB2, #34908B)
+           Tema halaman ini dibuat gelap (mode kerja/konsol) tapi seluruh aksen,
+           glow, dan highlight memakai warna dari palet yang sama dengan dashboard.
+           ========================================================================== */
+        :root {
+            --sun:        #FDF4AF;
+            --sun-glow:   #FFDE6B;   /* varian lebih jenuh dari sun, untuk highlight nilai uang */
+            --foam:       #A5E9DD;   /* aksen utama — pengganti hijau neon lama */
+            --foam-soft:  rgba(165, 233, 221, 0.14);
+            --sea:        #6FBEB2;
+            --deep:       #34908B;
+            --abyss:      #0A2826;   /* dasar halaman, hitam kehijauan */
+            --abyss-2:    #123330;   /* permukaan kartu/tabel */
+            --abyss-3:    #173D39;   /* permukaan hover / gradasi header */
+            --ink-light:  #E7F6F3;   /* teks utama di atas gelap */
+            --ink-muted:  #88AFAA;   /* teks sekunder */
+            --line:       rgba(165, 233, 221, 0.14);
+            --coral:      #FF6B5B;   /* utilitas: hapus/bahaya */
+            --success:    #21B894;   /* utilitas: simpan/berhasil */
+
+            --font-display: 'Sora', 'Plus Jakarta Sans', sans-serif;
+            --font-body:    'Plus Jakarta Sans', 'Segoe UI', Roboto, sans-serif;
+            --font-mono:    'JetBrains Mono', 'Consolas', monospace;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
-            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            font-family: var(--font-body);
         }
         body {
-            background: #1a1a2e;
+            background:
+                radial-gradient(circle at 12% 0%, rgba(165, 233, 221, 0.07), transparent 45%),
+                radial-gradient(circle at 88% 110%, rgba(255, 222, 107, 0.05), transparent 50%),
+                var(--abyss);
             padding: 20px 16px;
+            color: var(--ink-light);
         }
         .container {
             max-width: 1400px;
             margin: 0 auto;
         }
-        
+
+        :focus-visible {
+            outline: 2px solid var(--foam);
+            outline-offset: 2px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, .fiber-pulse { transition: none !important; animation: none !important; }
+        }
+
         /* STYLE TOMBOL KEMBALI */
         .btn-kembali {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: #0f0f1a;
-            border: 1px solid #2d2d44;
-            color: #ffffff !important;
-            text-decoration: none !important; /* Menghilangkan garis bawah */
+            background: var(--abyss-2);
+            border: 1px solid var(--line);
+            color: var(--ink-light) !important;
+            text-decoration: none !important;
             padding: 10px 20px;
             border-radius: 20px;
             font-size: 0.85rem;
@@ -37,20 +81,54 @@
             margin-bottom: 20px;
         }
         .btn-kembali:hover {
-            background: rgba(0, 229, 160, 0.1); /* Efek sentuhan hijau aksen */
-            color: #00e5a0 !important;
-            border-color: #00e5a0;
+            background: var(--foam-soft);
+            color: var(--foam) !important;
+            border-color: var(--foam);
             text-decoration: none !important;
+            transform: translateY(-2px);
         }
 
         /* HEADER */
         .header {
-            background: linear-gradient(135deg, #0f0f1a, #1a1a2e);
-            border: 1px solid #2d2d44;
-            color: #e0e0e0;
+            background: linear-gradient(135deg, var(--abyss-2), var(--abyss-3));
+            border: 1px solid var(--line);
+            color: var(--ink-light);
             border-radius: 28px;
             margin-bottom: 24px;
             overflow: hidden;
+            position: relative;
+        }
+        /* Aksen "kabel fiber" yang menyala di tepi atas header — sinyal cahaya berjalan */
+        .fiber-track {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--foam-soft);
+        }
+        .fiber-pulse {
+            position: absolute;
+            top: 0;
+            left: -46px;
+            width: 46px;
+            height: 3px;
+            border-radius: 3px;
+            background: linear-gradient(90deg, transparent, var(--foam), transparent);
+            animation: pulseMove 3.2s linear infinite;
+            opacity: 0;
+        }
+        .fiber-pulse.p2 {
+            background: linear-gradient(90deg, transparent, var(--sun-glow), transparent);
+            animation-delay: 1.05s;
+        }
+        .fiber-pulse.p3 {
+            background: linear-gradient(90deg, transparent, var(--sea), transparent);
+            animation-delay: 2.1s;
+        }
+        @keyframes pulseMove {
+            0%   { left: -46px; opacity: 0; }
+            8%   { opacity: 1; }
+            92%  { opacity: 1; }
+            100% { left: 100%; opacity: 0; }
         }
         .header-content {
             padding: 1.2rem 1.8rem;
@@ -58,19 +136,28 @@
             transition: background 0.2s;
         }
         .header-content:hover {
-            background: rgba(255,255,255,0.03);
+            background: rgba(165, 233, 221, 0.04);
         }
         .header h1 {
+            font-family: var(--font-display);
             font-size: 1.8rem;
             margin-bottom: 6px;
-            color: #ffffff;
+            font-weight: 800;
+            color: var(--ink-light);
+            background: linear-gradient(90deg, var(--foam), var(--sun-glow));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
         }
         .header p {
-            opacity: 0.75;
+            color: var(--ink-muted);
             font-size: 0.9rem;
         }
         .badge-proyek {
-            background: rgba(255,255,255,0.1);
+            background: var(--foam-soft);
+            color: var(--foam);
+            border: 1px solid rgba(165, 233, 221, 0.25);
             display: inline-block;
             padding: 5px 12px;
             border-radius: 40px;
@@ -80,24 +167,27 @@
         .edit-header-hint {
             font-size: 0.7rem;
             margin-top: 8px;
-            opacity: 0.5;
+            opacity: 0.55;
+            color: var(--ink-muted);
         }
         .header-input, .header-textarea {
-            background: rgba(0,0,0,0.5);
-            border: 1px solid #3d3d5c;
-            color: white;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--sea);
+            color: var(--ink-light);
             padding: 8px 12px;
             border-radius: 12px;
             width: 100%;
             margin-bottom: 8px;
+            font-family: var(--font-body);
         }
         .btn-save-header {
-            background: #2c7a4a;
+            background: var(--success);
             border: none;
             color: white;
             padding: 6px 16px;
             border-radius: 30px;
             cursor: pointer;
+            font-weight: 600;
         }
         /* TOTAL CARD */
         .summary {
@@ -106,72 +196,85 @@
             margin-bottom: 28px;
         }
         .card-total {
-            background: linear-gradient(135deg, #0f0f1a, #0a0a15);
-            border: 1px solid #2d2d44;
-            color: #00e5a0;
+            background: linear-gradient(135deg, var(--abyss-2), var(--abyss));
+            border: 1px solid var(--line);
+            color: var(--foam);
             padding: 20px 32px;
             border-radius: 32px;
             text-align: center;
             min-width: 280px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-total:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(165, 233, 221, 0.08);
         }
         .card-total h3 {
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            opacity: 0.7;
+            opacity: 0.85;
             margin-bottom: 8px;
-            color: #aaa;
+            color: var(--ink-muted);
         }
         .card-total .value {
+            font-family: var(--font-mono);
             font-size: 2.5rem;
             font-weight: 800;
-            color: #00e5a0;
+            color: var(--sun-glow);
         }
         /* SECTION TITLE */
         .section-title {
-            background: #0f0f1a;
-            border: 1px solid #2d2d44;
+            background: var(--abyss-2);
+            border: 1px solid var(--line);
             padding: 10px 20px;
             border-radius: 20px;
             margin: 28px 0 14px 0;
             font-weight: 700;
             font-size: 1.2rem;
-            border-left: 6px solid #00e5a0;
+            border-left: 6px solid var(--foam);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            color: #e0e0e0;
+            color: var(--ink-light);
+            font-family: var(--font-display);
         }
         .add-btn {
-            background: #1a4a6f;
-            color: white;
+            background: var(--sea);
+            color: var(--abyss);
             border: none;
             padding: 6px 14px;
             border-radius: 30px;
             cursor: pointer;
+            font-weight: 700;
+            transition: all 0.2s ease;
         }
         .add-btn:hover {
-            background: #2c7a4a;
+            background: var(--deep);
+            color: white;
+            transform: translateY(-2px);
         }
         .btn-excel {
-            background: #1e6f3f;
+            background: var(--success);
             color: white;
             border: none;
             padding: 8px 20px;
             border-radius: 30px;
             cursor: pointer;
             font-weight: bold;
+            transition: all 0.2s ease;
         }
         .btn-excel:hover {
-            background: #2a8a55;
+            background: #1a9a7f;
+            transform: translateY(-2px);
         }
         /* TABLE WRAPPER */
         .table-wrapper {
-            background: #0a0a15;
+            background: var(--abyss-2);
             border-radius: 24px;
             overflow-x: auto;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.3);
-            border: 1px solid #2d2d44;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+            border: 1px solid var(--line);
         }
         table {
             width: 100%;
@@ -180,24 +283,26 @@
             min-width: 700px;
         }
         th {
-            background: #000000;
-            color: #00e5a0;
+            background: var(--abyss);
+            color: var(--foam);
             padding: 14px 8px;
             text-align: center;
-            border-bottom: 1px solid #2d2d44;
+            border-bottom: 1px solid var(--line);
             font-weight: 700;
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
         }
         td {
             padding: 10px 8px;
-            border-bottom: 1px solid #1a1a2e;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             text-align: center;
             vertical-align: middle;
-            color: #c0c0c0;
+            color: var(--ink-muted);
+            font-family: var(--font-mono);
         }
         /* DESKRIPSI RATA KIRI */
-        td:nth-child(2), th:nth-child(2) {
-            text-align: left;
-        }
         th:nth-child(2) {
             text-align: left;
             padding-left: 15px;
@@ -206,29 +311,35 @@
             text-align: left;
             padding-left: 15px;
             font-weight: 500;
-            color: #ffffff;
+            color: var(--ink-light);
+            font-family: var(--font-body);
+        }
+        tr:hover td {
+            background: rgba(165, 233, 221, 0.03);
         }
         input {
             width: 100%;
             padding: 8px 6px;
             border-radius: 12px;
-            border: 1px solid #3d3d5c;
+            border: 1px solid rgba(111, 190, 178, 0.35);
             font-size: 0.8rem;
             text-align: left;
-            background: #1a1a2e;
-            color: white;
+            background: var(--abyss);
+            color: var(--ink-light);
+            font-family: var(--font-mono);
         }
         input:focus {
             outline: none;
-            border-color: #00e5a0;
+            border-color: var(--foam);
+            box-shadow: 0 0 0 3px rgba(165, 233, 221, 0.15);
         }
         .auto-badge {
-            background: #1a3a2a;
+            background: rgba(165, 233, 221, 0.18);
             font-size: 0.65rem;
             padding: 2px 6px;
             border-radius: 12px;
             margin-left: 8px;
-            color: #00e5a0;
+            color: var(--foam);
         }
         .action-buttons {
             display: flex;
@@ -236,7 +347,6 @@
             justify-content: center;
         }
         .edit-btn, .delete-btn {
-            background: none;
             border: none;
             cursor: pointer;
             font-size: 1rem;
@@ -246,18 +356,22 @@
             font-weight: 500;
         }
         .edit-btn {
-            background: #2a4a6f;
-            color: white;
+            background: rgba(111, 190, 178, 0.18);
+            color: var(--foam);
         }
         .edit-btn:hover {
-            background: #3a6a9f;
+            background: var(--sea);
+            color: var(--abyss);
+            transform: translateY(-2px);
         }
         .delete-btn {
-            background: #6f2a2a;
-            color: white;
+            background: rgba(255, 107, 91, 0.14);
+            color: var(--coral);
         }
         .delete-btn:hover {
-            background: #9f3a3a;
+            background: var(--coral);
+            color: white;
+            transform: translateY(-2px);
         }
         button:disabled {
             opacity: 0.4;
@@ -269,7 +383,7 @@
             justify-content: center;
         }
         .save-btn {
-            background: #2c7a4a;
+            background: var(--success);
             color: white;
             border: none;
             padding: 6px 12px;
@@ -278,8 +392,8 @@
             font-size: 0.75rem;
         }
         .cancel-btn {
-            background: #5a6e7c;
-            color: white;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--ink-muted);
             border: none;
             padding: 6px 12px;
             border-radius: 20px;
@@ -288,26 +402,26 @@
         }
         .footer-note {
             margin-top: 32px;
-            background: #0a0a15;
-            border: 1px solid #2d2d44;
+            background: var(--abyss-2);
+            border: 1px solid var(--line);
             padding: 14px 20px;
             border-radius: 20px;
             display: flex;
             justify-content: space-between;
             flex-wrap: wrap;
             align-items: center;
-            color: #888;
+            color: var(--ink-muted);
         }
         .footer-note span {
-            color: #aaa;
+            color: var(--ink-light);
         }
         @media (max-width: 680px) {
             .card-total .value { font-size: 1.6rem; }
             .card-total { padding: 12px 20px; min-width: 200px; }
             .edit-btn, .delete-btn { padding: 4px 8px; font-size: 0.75rem; }
         }
-        
-        /* STYLE KHUSUS UNTUK CETAK PDF */
+
+        /* STYLE KHUSUS UNTUK CETAK PDF (tetap terang/hemat tinta, tidak memakai tema gelap) */
         @media print {
             body {
                 background: white;
@@ -319,16 +433,19 @@
                 padding: 10px;
             }
             .btn-kembali {
-                display: none !important; /* Sembunyikan tombol saat cetak */
+                display: none !important;
             }
             .header {
-                background: #0f0f1a;
+                background: var(--abyss-2);
                 border: 1px solid #ccc;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
+            .fiber-track, .fiber-pulse {
+                display: none !important;
+            }
             .card-total {
-                background: #0f0f1a;
+                background: var(--abyss-2);
                 border: 1px solid #ccc;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
@@ -351,7 +468,7 @@
             }
             .auto-badge {
                 background: #e8f5e9;
-                color: #2c7a4a;
+                color: #1a7a63;
             }
             .footer-note {
                 border: none;
@@ -378,6 +495,10 @@
     </a>
 
     <div class="header" id="headerBox">
+        <div class="fiber-track" aria-hidden="true"></div>
+        <div class="fiber-pulse p1" aria-hidden="true"></div>
+        <div class="fiber-pulse p2" aria-hidden="true"></div>
+        <div class="fiber-pulse p3" aria-hidden="true"></div>
         <div class="header-content" id="headerContent">
             <div id="headerDisplay">
                 <h1>RAB AKTIVASI VIA CONVEN </h1>
@@ -417,7 +538,7 @@
                     <td id="subTotalInstalasi" style="text-align:center; color:#00e5a0;">Rp 0</td>
                     <td></td>
                 </tr>
-            </footer>
+            </tfoot>
         </table>
     </div>
 
@@ -437,7 +558,7 @@
                     <td id="subTotalMaterial" style="text-align:center; color:#00e5a0;">Rp 0</td>
                     <td></td>
                 </tr>
-            </footer>
+            </tfoot>
         </table>
     </div>
 
@@ -653,7 +774,7 @@
                 cellDesc.innerHTML = `<input type="text" class="edit-desc" value="${escapeHtml(temp?.deskripsi || '')}" style="text-align:left;" onchange="updateEditField('${item.id}', 'deskripsi', this.value, false)">`;
                 cellSatuan.innerHTML = `<input type="text" class="edit-satuan" value="${temp?.satuan || ''}" style="width:80px;" onchange="updateEditField('${item.id}', 'satuan', this.value, false)">`;
                 if (item.autoCalc) {
-                    cellQty.innerHTML = `<span style="background:#1a3a2a; padding:4px 8px; border-radius:12px; color:#00e5a0;">${item.qty} <span class="auto-badge">auto</span></span>`;
+                    cellQty.innerHTML = `<span style="background:#163C38; padding:4px 8px; border-radius:12px; color:#A5E9DD;">${item.qty} <span class="auto-badge">auto</span></span>`;
                 } else {
                     cellQty.innerHTML = `<input type="number" class="edit-qty" value="${temp?.qty || 0}" step="any" style="width:80px;" onchange="updateEditField('${item.id}', 'qty', this.value, false)">`;
                 }
@@ -663,7 +784,7 @@
                 cellDesc.innerText = item.deskripsi;
                 cellSatuan.innerText = item.satuan;
                 if (item.autoCalc) {
-                    cellQty.innerHTML = `<span style="background:#1a3a2a; padding:4px 8px; border-radius:12px; color:#00e5a0;">${item.qty} <span class="auto-badge">auto</span></span>`;
+                    cellQty.innerHTML = `<span style="background:#163C38; padding:4px 8px; border-radius:12px; color:#A5E9DD;">${item.qty} <span class="auto-badge">auto</span></span>`;
                 } else {
                     cellQty.innerText = item.qty;
                 }
@@ -698,7 +819,7 @@
                 cellDesc.innerHTML = `<input type="text" class="edit-desc" value="${escapeHtml(temp?.deskripsi || '')}" style="text-align:left;" onchange="updateEditField('${item.id}', 'deskripsi', this.value, true)">`;
                 cellSatuan.innerHTML = `<input type="text" class="edit-satuan" value="${temp?.satuan || ''}" style="width:80px;" onchange="updateEditField('${item.id}', 'satuan', this.value, true)">`;
                 if (item.autoCalc) {
-                    cellQty.innerHTML = `<span style="background:#1a3a2a; padding:4px 8px; border-radius:12px; color:#00e5a0;">${item.qty} <span class="auto-badge">auto</span></span>`;
+                    cellQty.innerHTML = `<span style="background:#163C38; padding:4px 8px; border-radius:12px; color:#A5E9DD;">${item.qty} <span class="auto-badge">auto</span></span>`;
                 } else {
                     cellQty.innerHTML = `<input type="number" class="edit-qty" value="${temp?.qty || 0}" step="any" style="width:80px;" onchange="updateEditField('${item.id}', 'qty', this.value, true)">`;
                 }
@@ -708,7 +829,7 @@
                 cellDesc.innerText = item.deskripsi;
                 cellSatuan.innerText = item.satuan;
                 if (item.autoCalc) {
-                    cellQty.innerHTML = `<span style="background:#1a3a2a; padding:4px 8px; border-radius:12px; color:#00e5a0;">${item.qty} <span class="auto-badge">auto</span></span>`;
+                    cellQty.innerHTML = `<span style="background:#163C38; padding:4px 8px; border-radius:12px; color:#A5E9DD;">${item.qty} <span class="auto-badge">auto</span></span>`;
                 } else {
                     cellQty.innerText = item.qty;
                 }
