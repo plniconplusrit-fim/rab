@@ -1,27 +1,40 @@
-	<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RAB KHS CONVEN & FTTH</title>
-    
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+
     <style>
         /* ==========================================================================
-           1. VARIABEL WARNA (GLOBAL VARIABLES)
+           1. VARIABEL WARNA (GLOBAL VARIABLES) — palet "Matahari & Laut"
+           Diturunkan langsung dari swatch: kuning pasir, foam mint #A5E9DD,
+           laut teal, dan laut dalam.
            ========================================================================== */
         :root {
-            --bg-main: #F4F7FC;         
-            --bg-sidebar: #1E293B;      /* DIUBAH: Sidebar jadi gelap modern agar warna font cerah menyala */
-            --bg-card: #FFFFFF;         
-            --bg-input: #F8FAFC;        
-            --accent-primary: #8B9BB4;  
-            --accent-green: #00E5A0;    /* DIUBAH: Hijau mint yang sangat cerah untuk menu aktif */
-            --accent-blue: #3B82F6;     
-            --text-primary: #1E293B;    
-            --text-secondary: #94A3B8;  /* DIUBAH: Warna abu-abu cerah untuk menu biasa */
-            --border-color: #E2E8F0;    
-            --danger-color: #EF4444;    
-            --success-color: #10B981;   
+            --sun:        #FDF4AF;   /* kuning pasir — pagi/matahari */
+            --sun-soft:   #FFFBEA;   /* tint sangat lembut dari sun */
+            --foam:       #A5E9DD;   /* mint terang — buih laut (warna acuan) */
+            --foam-soft:  #EAFBF7;   /* tint sangat lembut dari foam */
+            --sea:        #6FBEB2;   /* teal sedang — air laut */
+            --deep:       #34908B;   /* teal tua — laut dalam, warna brand utama */
+            --abyss:      #15403C;   /* teal nyaris hitam — dasar sidebar */
+            --abyss-2:    #1E5550;   /* sedikit lebih terang, untuk gradasi sidebar */
+            --ink:        #15302D;   /* teks utama, hitam kehijauan */
+            --slate:      #5C7976;   /* teks sekunder, abu kehijauan */
+            --paper:      #F6FBFA;   /* latar halaman */
+            --card:       #FFFFFF;   /* permukaan kartu */
+            --line:       #DCEFEA;   /* garis/border */
+            --coral:      #E1604F;   /* utilitas: bahaya/hapus (di luar palet, demi kontras fungsi) */
+            --success:    #1FA38C;   /* utilitas: berhasil — masih satu keluarga teal */
+
+            --font-display: 'Sora', 'Plus Jakarta Sans', sans-serif;
+            --font-body:    'Plus Jakarta Sans', 'Segoe UI', sans-serif;
+            --font-mono:    'JetBrains Mono', 'Consolas', monospace;
         }
 
         /* ==========================================================================
@@ -31,40 +44,51 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Plus Jakarta Sans', 'Segoe UI', sans-serif;
+            font-family: var(--font-body);
         }
 
         body {
-            background-color: var(--bg-main);
-            color: var(--text-primary);
+            background-color: var(--paper);
+            color: var(--ink);
             display: flex;
             min-height: 100vh;
             overflow-x: hidden;
         }
 
+        a { color: inherit; }
+
+        :focus-visible {
+            outline: 2px solid var(--sea);
+            outline-offset: 2px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * { transition: none !important; animation: none !important; }
+        }
+
         /* ==========================================================================
-           3. SIDEBAR STYLING (MENU SAMPING) - EDIT DI SINI
+           3. SIDEBAR STYLING (MENU SAMPING)
            ========================================================================== */
         .sidebar {
             width: 260px;
-            background-color: var(--bg-sidebar); /* Menggunakan warna dasar gelap (#1E293B) */
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            background: linear-gradient(165deg, var(--abyss) 0%, var(--abyss-2) 100%);
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
             display: flex;
             flex-direction: column;
-            position: fixed; 
+            position: fixed;
             top: 0;
             bottom: 0;
             left: 0;
             z-index: 100;
             padding: 24px 16px;
-            box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 4px 0 24px rgba(0, 0, 0, 0.18);
         }
 
-        /* Judul Brand Utama di Sidebar */
         .sidebar-brand {
-            font-size: 1.4rem;
-            font-weight: 900;            /* DIBUAT: Sangat Tebal */
-            color: #FFFFFF;              /* DIBUAT: Putih Bersih/Cerah */
+            font-family: var(--font-display);
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #FFFFFF;
             margin-bottom: 32px;
             display: flex;
             align-items: center;
@@ -73,9 +97,14 @@
             padding-bottom: 16px;
         }
 
+        .sidebar-brand .brand-icon {
+            display: inline-flex;
+            align-items: center;
+        }
+
         .sidebar-brand span.brand-text {
-            color: var(--accent-green);  /* DIBUAT: Mengikuti warna hijau cerah */
-        }	
+            color: var(--foam);
+        }
 
         .sidebar-menu {
             list-style: none;
@@ -85,65 +114,63 @@
         }
 
         .sidebar-menu a {
-            text-decoration: none !important; 
+            text-decoration: none !important;
         }
 
-        /* Gaya Teks Menu Biasa (Belum Diklik) */
         .menu-item {
             padding: 14px 16px;
             border-radius: 12px;
             cursor: pointer;
-            color: var(--text-secondary); /* Warna abu-abu cerah terang */
-            font-weight: 800;             /* DIBUAT: BOLD (Tebal Maksimal) */
+            color: #7FA09D;
+            font-weight: 700;
             font-size: 0.95rem;
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;
             display: flex;
             align-items: center;
             gap: 12px;
+            border-left: 4px solid transparent;
         }
 
-        /* Efek saat menu disorot mouse (Hover) */
         .menu-item:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: #FFFFFF;               /* DIBUAT: Berubah jadi Putih Cerah */
+            background-color: rgba(165, 233, 221, 0.08);
+            color: #FFFFFF;
             transform: translateX(6px);
         }
 
-        /* Gaya Menu saat Aktif / Halaman Terbuka */
         .menu-item.active {
-            background-color: rgba(0, 229, 160, 0.15); /* Background hijau transparan lembut */
-            color: var(--accent-green);   /* DIBUAT: Hijau Mint Menyala/Cerah */
-            border-left: 4px solid var(--accent-green);
+            background-color: rgba(165, 233, 221, 0.14);
+            color: var(--foam);
+            border-left: 4px solid var(--foam);
         }
 
         /* ==========================================================================
            4. MAIN CONTENT AREA (KONTEN UTAMA)
            ========================================================================== */
         .main-content {
-            margin-left: 260px; 
+            margin-left: 260px;
             flex-grow: 1;
             padding: 40px;
             width: calc(100% - 260px);
         }
 
         .content-section {
-            display: none; 
+            display: none;
         }
 
         .content-section.active {
-            display: block; 
+            display: block;
         }
 
         /* ==========================================================================
            5. BANNER HEADER KONTEN
            ========================================================================== */
         .header {
-            background: linear-gradient(135deg, #FFFFFF, #EEF2F6);
-            border: 1px solid var(--border-color);
+            background: linear-gradient(135deg, var(--sun-soft), var(--foam-soft));
+            border: 1px solid var(--line);
             border-radius: 24px;
             padding: 32px;
             margin-bottom: 32px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+            box-shadow: 0 10px 30px rgba(21, 64, 60, 0.04);
             position: relative;
             overflow: hidden;
         }
@@ -155,32 +182,46 @@
             right: -50px;
             width: 150px;
             height: 150px;
-            background: rgba(139, 155, 180, 0.1);
+            background: rgba(165, 233, 221, 0.35);
             border-radius: 50%;
         }
 
+        .header-wave {
+            position: absolute;
+            right: -10px;
+            bottom: -10px;
+            width: 60%;
+            max-width: 420px;
+            opacity: 0.55;
+            pointer-events: none;
+        }
+
         .header h1 {
+            font-family: var(--font-display);
             font-size: 2rem;
-            color: var(--text-primary);
+            color: var(--ink);
             margin-bottom: 8px;
             font-weight: 800;
+            position: relative;
         }
 
         .header p {
-            color: #64748B;
+            color: var(--slate);
             font-size: 1rem;
             font-weight: 500;
+            position: relative;
         }
 
         .badge-proyek {
-            background: #E0E7FF;
-            color: #4F46E5;
+            background: var(--foam-soft);
+            color: var(--deep);
             display: inline-block;
             padding: 6px 16px;
             border-radius: 40px;
             font-size: 0.85rem;
             font-weight: 700;
             margin-top: 16px;
+            position: relative;
         }
 
         /* ==========================================================================
@@ -194,61 +235,62 @@
         }
 
         .card {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
+            background-color: var(--card);
+            border: 1px solid var(--line);
             padding: 28px;
             border-radius: 24px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.02);
+            box-shadow: 0 10px 25px rgba(21, 64, 60, 0.04);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 15px 35px rgba(21, 64, 60, 0.08);
         }
 
         .card h3 {
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 1.2px;
-            color: #64748B;
+            color: var(--slate);
             margin-bottom: 12px;
             font-weight: 700;
         }
 
         .card .value {
+            font-family: var(--font-display);
             font-size: 2.2rem;
             font-weight: 800;
-            color: #10B981;
+            color: var(--deep);
         }
 
         .card .value.blue {
-            color: var(--accent-blue);
+            color: var(--sea);
         }
 
         /* ==========================================================================
            7. TABEL DATA (TABLE STYLING)
            ========================================================================== */
         .section-title {
-            background-color: #FFFFFF;
-            border: 1px solid var(--border-color);
+            background-color: var(--card);
+            border: 1px solid var(--line);
             padding: 16px 24px;
             border-radius: 16px;
             margin: 32px 0 16px 0;
             font-weight: 800;
-            color: var(--text-primary);
+            color: var(--ink);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.01);
+            box-shadow: 0 4px 12px rgba(21, 64, 60, 0.02);
         }
 
         .table-wrapper {
-            background-color: #FFFFFF;
+            background-color: var(--card);
             border-radius: 24px;
             overflow: hidden;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.03);
+            border: 1px solid var(--line);
+            box-shadow: 0 15px 40px rgba(21, 64, 60, 0.05);
         }
 
         table {
@@ -259,11 +301,11 @@
         }
 
         th {
-            background-color: #F8FAFC;
-            color: var(--text-primary);
+            background-color: var(--foam-soft);
+            color: var(--ink);
             padding: 18px 16px;
             font-weight: 700;
-            border-bottom: 2px solid var(--border-color);
+            border-bottom: 2px solid var(--line);
             text-transform: uppercase;
             font-size: 0.8rem;
             letter-spacing: 0.5px;
@@ -271,9 +313,9 @@
 
         td {
             padding: 16px 16px;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--line);
             text-align: center;
-            color: var(--text-primary);
+            color: var(--ink);
         }
 
         td:nth-child(2), th:nth-child(2) {
@@ -281,8 +323,13 @@
             padding-left: 24px;
         }
 
+        /* Kolom angka & uang memakai font mono agar rapi sejajar, seperti buku kas */
+        td:nth-child(4), td:nth-child(5), td:nth-child(6) {
+            font-family: var(--font-mono);
+        }
+
         tr:hover td {
-            background-color: #F8FAFC;
+            background-color: var(--foam-soft);
         }
 
         /* ==========================================================================
@@ -302,43 +349,48 @@
         }
 
         .btn:active {
-            transform: scale(0.98); 
+            transform: scale(0.98);
         }
 
-        .btn-primary { background-color: var(--accent-blue); color: white; }
-        .btn-success { background-color: var(--success-color); color: white; }
-        .btn-danger  { background-color: var(--danger-color); color: white; }
-        .btn-add     { background-color: #8B9BB4; color: white; }
-        .btn-add:hover { background-color: #76859D; }
+        .btn-primary { background-color: var(--deep); color: white; }
+        .btn-success { background-color: var(--success); color: white; }
+        .btn-danger  { background-color: var(--coral); color: white; }
+        .btn-add     { background-color: var(--sea); color: white; }
+        .btn-add:hover { background-color: var(--deep); }
 
         input[type="text"], input[type="number"] {
-            background-color: var(--bg-input);
-            border: 1.5px solid var(--border-color);
-            color: var(--text-primary);
+            background-color: var(--paper);
+            border: 1.5px solid var(--line);
+            color: var(--ink);
             padding: 10px 14px;
             border-radius: 12px;
             width: 100%;
             transition: all 0.3s;
+            font-family: var(--font-mono);
         }
 
         input:focus {
             outline: none;
-            border-color: #8B9BB4;
+            border-color: var(--sea);
             background-color: #FFFFFF;
-            box-shadow: 0 0 0 4px rgba(139, 155, 180, 0.15); 
+            box-shadow: 0 0 0 4px rgba(111, 190, 178, 0.18);
         }
 
         /* ==========================================================================
-           9. KARTU AYAT / QUOTE SPECIAL CARD
+           9. KARTU AYAT / QUOTE SPECIAL CARD — kini bertema "matahari di atas laut"
            ========================================================================== */
         .quote-card {
-            background: linear-gradient(135deg, #FFF9F2, #FFF1E6); 
-            border: 1px solid #FFE2CC;
-            border-left: 6px solid #FF9F43; 
+            background: linear-gradient(135deg, var(--sun-soft), var(--sun));
+            border: 1px solid #F2E6A0;
+            border-left: 6px solid var(--deep);
+        }
+
+        .quote-card h3 {
+            color: var(--deep) !important;
         }
 
         .quote-card p {
-            color: #7A4B26 !important;
+            color: var(--ink) !important;
             font-style: italic;
             font-size: 1.05rem;
         }
@@ -348,7 +400,7 @@
            ========================================================================== */
         @media (max-width: 992px) {
             .sidebar { width: 70px; padding: 20px 8px; }
-            .sidebar-brand span.brand-text, .menu-text { display: none; } 
+            .sidebar-brand span.brand-text, .menu-text { display: none; }
             .main-content { margin-left: 70px; width: calc(100% - 70px); padding: 20px; }
         }
     </style>
@@ -358,10 +410,15 @@
     <div class="sidebar">
         <div class="sidebar-brand">
             <span class="brand-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="5" cy="12" r="3" fill="#A5E9DD"/>
+                    <line x1="8" y1="12" x2="16" y2="12" stroke="#A5E9DD" stroke-width="2" stroke-dasharray="2 2"/>
+                    <circle cx="19" cy="12" r="3" fill="#FDF4AF"/>
+                </svg>
             </span>
             <span class="brand-text">RAB</span>
         </div>
-				
+
         <ul class="sidebar-menu">
             <li>
                 <a href="conven.html" class="menu-item">
@@ -369,7 +426,7 @@
                 </a>
             </li>
             <li>
-                <a href="ftth.html" class="menu-item"> 
+                <a href="ftth.html" class="menu-item">
                     <span class="menu-text">FTTH</span>
                 </a>
             </li>
@@ -391,7 +448,13 @@
         <div id="section-dashboard" class="content-section active">
             <div class="header">
                 <h1>RAB KHS CONVEN & FTTH</h1>
-                <p style="color: #FF9F43; font-weight: 700;">Dashboard internal untuk mempermudah efisiensi kerjaan Anda</p>
+                <p style="color: var(--deep); font-weight: 700;">Dashboard internal untuk mempermudah efisiensi kerjaan Anda</p>
+                <svg class="header-wave" viewBox="0 0 600 120" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0,90 C100,40 200,140 300,90 C400,40 500,140 600,90" fill="none" stroke="#6FBEB2" stroke-width="3" stroke-linecap="round"/>
+                    <circle cx="90" cy="75" r="5" fill="#FDF4AF"/>
+                    <circle cx="300" cy="90" r="6" fill="#34908B"/>
+                    <circle cx="480" cy="70" r="5" fill="#A5E9DD"/>
+                </svg>
             </div>
 
             <div class="summary-grid">
@@ -405,12 +468,12 @@
                 </div>
                 <div class="card">
                     <h3>Penarikan FO dengan menggunakan kabel besar 6core dari ODP</h3>
-                    <div class="value" style="color: #10B981; font-size: 1.8rem; margin-top:8px;">RAB FTTH Conven</div>
+                    <div class="value" style="color: var(--success); font-size: 1.8rem; margin-top:8px;">RAB FTTH Conven</div>
                 </div>
             </div>
-            
+
             <div class="card quote-card" style="margin-top: 20px;">
-                <h3 style="margin-bottom: 12px; color: #FF9F43;">Ayat Hari ini</h3>
+                <h3 style="margin-bottom: 12px;">Ayat Hari ini</h3>
                 <p style="line-height: 1.6;">
                     "Satu-satunya batasanmu adalah pikiranmu. Jika pikiranmu mengatakan kamu bisa, kamu pasti akan bisa."
                 </p>
@@ -422,12 +485,18 @@
                 <h1>RAB Instalasi Jaringan Fiber Optik</h1>
                 <p>Perhitungan Rencana Anggaran Biaya – Pekerjaan Instalasi dan Perangkat</p>
                 <div class="badge-proyek">Wilayah Makassar (FTTH Pro)</div>
+                <svg class="header-wave" viewBox="0 0 600 120" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0,90 C100,40 200,140 300,90 C400,40 500,140 600,90" fill="none" stroke="#6FBEB2" stroke-width="3" stroke-linecap="round"/>
+                    <circle cx="90" cy="75" r="5" fill="#FDF4AF"/>
+                    <circle cx="300" cy="90" r="6" fill="#34908B"/>
+                    <circle cx="480" cy="70" r="5" fill="#A5E9DD"/>
+                </svg>
             </div>
 
             <div class="summary-grid" style="justify-content: flex-end; display: flex;">
-                <div class="card" style="min-width: 350px; text-align: center; border-color: #10B981; background: #F0FDF4;">
-                    <h3 style="color: #15803D;">TOTAL RAB FTTH PRO</h3>
-                    <div class="value" id="grandTotalDisplay" style="color: #16A34A;">Rp 0</div>
+                <div class="card" style="min-width: 350px; text-align: center; border-color: var(--deep); background: var(--foam-soft);">
+                    <h3 style="color: var(--deep);">TOTAL RAB FTTH PRO</h3>
+                    <div class="value" id="grandTotalDisplay" style="color: var(--deep); font-family: var(--font-mono);">Rp 0</div>
                 </div>
             </div>
 
@@ -435,7 +504,7 @@
                 <span>PEKERJAAN INSTALASI & TEKNIS</span>
                 <button class="btn btn-add" onclick="tambahInstalasi()">+ Tambah Item</button>
             </div>
-            
+
             <div class="table-wrapper">
                 <table id="tabelInstalasi">
                     <thead>
@@ -450,18 +519,18 @@
                         </tr>
                     </thead>
                     <tbody id="bodyInstalasi"></tbody>
-                    <tfoot style="background: #F8FAFC; font-weight:bold;">
+                    <tfoot style="background: var(--foam-soft); font-weight:bold;">
                         <tr>
-                            <td colspan="5" style="text-align:right; color: var(--text-primary); font-weight: 700;">SUB TOTAL INSTALASI :</td>
-                            <td id="subTotalInstalasi" style="color: #10B981; font-size: 1.1rem; font-weight: 800;">Rp 0</td>
+                            <td colspan="5" style="text-align:right; color: var(--ink); font-weight: 700;">SUB TOTAL INSTALASI :</td>
+                            <td id="subTotalInstalasi" style="color: var(--deep); font-size: 1.1rem; font-weight: 800; font-family: var(--font-mono);">Rp 0</td>
                             <td></td>
                         </tr>
                     </tfoot>
                 </table>
             </div>
         </div>
-        
+
     </div>
 
 </body>
-</html>
+</html> 
