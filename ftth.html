@@ -3,75 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-        <title>RAB FTTH</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-
+    <title>RAB FTTH</title>
     <style>
-        /* ==========================================================================
-           PALET "MATAHARI & LAUT" — diturunkan dari swatch (#FDF4AF, #A5E9DD, #6FBEB2, #34908B)
-           Tema halaman ini dibuat gelap (mode kerja/konsol) tapi seluruh aksen,
-           glow, dan highlight memakai warna dari palet yang sama dengan dashboard.
-           ========================================================================== */
-        :root {
-            --sun:        #FDF4AF;
-            --sun-glow:   #FFDE6B;   /* varian lebih jenuh dari sun, untuk highlight nilai uang */
-            --foam:       #A5E9DD;   /* aksen utama — pengganti hijau neon lama */
-            --foam-soft:  rgba(165, 233, 221, 0.14);
-            --sea:        #6FBEB2;
-            --deep:       #34908B;
-            --abyss:      #0A2826;   /* dasar halaman, hitam kehijauan */
-            --abyss-2:    #123330;   /* permukaan kartu/tabel */
-            --abyss-3:    #173D39;   /* permukaan hover / gradasi header */
-            --ink-light:  #E7F6F3;   /* teks utama di atas gelap */
-            --ink-muted:  #88AFAA;   /* teks sekunder */
-            --line:       rgba(165, 233, 221, 0.14);
-            --coral:      #FF6B5B;   /* utilitas: hapus/bahaya */
-            --success:    #21B894;   /* utilitas: simpan/berhasil */
-
-            --font-display: 'Sora', 'Plus Jakarta Sans', sans-serif;
-            --font-body:    'Plus Jakarta Sans', 'Segoe UI', Roboto, sans-serif;
-            --font-mono:    'JetBrains Mono', 'Consolas', monospace;
-        }
-
         * {
             box-sizing: border-box;
             margin: 0;
-            font-family: var(--font-body);
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
         }
         body {
-            background:
-                radial-gradient(circle at 12% 0%, rgba(165, 233, 221, 0.07), transparent 45%),
-                radial-gradient(circle at 88% 110%, rgba(255, 222, 107, 0.05), transparent 50%),
-                var(--abyss);
+            background: #1a1a2e;
             padding: 20px 16px;
-            color: var(--ink-light);
         }
         .container {
             max-width: 1400px;
             margin: 0 auto;
         }
-
-        :focus-visible {
-            outline: 2px solid var(--foam);
-            outline-offset: 2px;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            *, .fiber-pulse { transition: none !important; animation: none !important; }
-        }
-
+        
         /* STYLE TOMBOL KEMBALI */
         .btn-kembali {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: var(--abyss-2);
-            border: 1px solid var(--line);
-            color: var(--ink-light) !important;
-            text-decoration: none !important;
+            background: #0f0f1a;
+            border: 1px solid #2d2d44;
+            color: #ffffff !important;
+            text-decoration: none !important; /* Menghilangkan garis bawah */
             padding: 10px 20px;
             border-radius: 20px;
             font-size: 0.85rem;
@@ -81,54 +37,20 @@
             margin-bottom: 20px;
         }
         .btn-kembali:hover {
-            background: var(--foam-soft);
-            color: var(--foam) !important;
-            border-color: var(--foam);
+            background: rgba(0, 229, 160, 0.1); /* Efek sentuhan hijau aksen */
+            color: #00e5a0 !important;
+            border-color: #00e5a0;
             text-decoration: none !important;
-            transform: translateY(-2px);
         }
 
         /* HEADER */
         .header {
-            background: linear-gradient(135deg, var(--abyss-2), var(--abyss-3));
-            border: 1px solid var(--line);
-            color: var(--ink-light);
+            background: linear-gradient(135deg, #0f0f1a, #1a1a2e);
+            border: 1px solid #2d2d44;
+            color: #e0e0e0;
             border-radius: 28px;
             margin-bottom: 24px;
             overflow: hidden;
-            position: relative;
-        }
-        /* Aksen "kabel fiber" yang menyala di tepi atas header — sinyal cahaya berjalan */
-        .fiber-track {
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 3px;
-            background: var(--foam-soft);
-        }
-        .fiber-pulse {
-            position: absolute;
-            top: 0;
-            left: -46px;
-            width: 46px;
-            height: 3px;
-            border-radius: 3px;
-            background: linear-gradient(90deg, transparent, var(--foam), transparent);
-            animation: pulseMove 3.2s linear infinite;
-            opacity: 0;
-        }
-        .fiber-pulse.p2 {
-            background: linear-gradient(90deg, transparent, var(--sun-glow), transparent);
-            animation-delay: 1.05s;
-        }
-        .fiber-pulse.p3 {
-            background: linear-gradient(90deg, transparent, var(--sea), transparent);
-            animation-delay: 2.1s;
-        }
-        @keyframes pulseMove {
-            0%   { left: -46px; opacity: 0; }
-            8%   { opacity: 1; }
-            92%  { opacity: 1; }
-            100% { left: 100%; opacity: 0; }
         }
         .header-content {
             padding: 1.2rem 1.8rem;
@@ -136,28 +58,19 @@
             transition: background 0.2s;
         }
         .header-content:hover {
-            background: rgba(165, 233, 221, 0.04);
+            background: rgba(255,255,255,0.03);
         }
         .header h1 {
-            font-family: var(--font-display);
             font-size: 1.8rem;
             margin-bottom: 6px;
-            font-weight: 800;
-            color: var(--ink-light);
-            background: linear-gradient(90deg, var(--foam), var(--sun-glow));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: inline-block;
+            color: #ffffff;
         }
         .header p {
-            color: var(--ink-muted);
+            opacity: 0.75;
             font-size: 0.9rem;
         }
         .badge-proyek {
-            background: var(--foam-soft);
-            color: var(--foam);
-            border: 1px solid rgba(165, 233, 221, 0.25);
+            background: rgba(255,255,255,0.1);
             display: inline-block;
             padding: 5px 12px;
             border-radius: 40px;
@@ -167,27 +80,24 @@
         .edit-header-hint {
             font-size: 0.7rem;
             margin-top: 8px;
-            opacity: 0.55;
-            color: var(--ink-muted);
+            opacity: 0.5;
         }
         .header-input, .header-textarea {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--sea);
-            color: var(--ink-light);
+            background: rgba(0,0,0,0.5);
+            border: 1px solid #3d3d5c;
+            color: white;
             padding: 8px 12px;
             border-radius: 12px;
             width: 100%;
             margin-bottom: 8px;
-            font-family: var(--font-body);
         }
         .btn-save-header {
-            background: var(--success);
+            background: #2c7a4a;
             border: none;
             color: white;
             padding: 6px 16px;
             border-radius: 30px;
             cursor: pointer;
-            font-weight: 600;
         }
         /* TOTAL CARD */
         .summary {
@@ -196,85 +106,72 @@
             margin-bottom: 28px;
         }
         .card-total {
-            background: linear-gradient(135deg, var(--abyss-2), var(--abyss));
-            border: 1px solid var(--line);
-            color: var(--foam);
+            background: linear-gradient(135deg, #0f0f1a, #0a0a15);
+            border: 1px solid #2d2d44;
+            color: #00e5a0;
             padding: 20px 32px;
             border-radius: 32px;
             text-align: center;
             min-width: 280px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .card-total:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(165, 233, 221, 0.08);
         }
         .card-total h3 {
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            opacity: 0.85;
+            opacity: 0.7;
             margin-bottom: 8px;
-            color: var(--ink-muted);
+            color: #aaa;
         }
         .card-total .value {
-            font-family: var(--font-mono);
             font-size: 2.5rem;
             font-weight: 800;
-            color: var(--sun-glow);
+            color: #00e5a0;
         }
         /* SECTION TITLE */
         .section-title {
-            background: var(--abyss-2);
-            border: 1px solid var(--line);
+            background: #0f0f1a;
+            border: 1px solid #2d2d44;
             padding: 10px 20px;
             border-radius: 20px;
             margin: 28px 0 14px 0;
             font-weight: 700;
             font-size: 1.2rem;
-            border-left: 6px solid var(--foam);
+            border-left: 6px solid #00e5a0;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            color: var(--ink-light);
-            font-family: var(--font-display);
+            color: #e0e0e0;
         }
         .add-btn {
-            background: var(--sea);
-            color: var(--abyss);
+            background: #1a4a6f;
+            color: white;
             border: none;
             padding: 6px 14px;
             border-radius: 30px;
             cursor: pointer;
-            font-weight: 700;
-            transition: all 0.2s ease;
         }
         .add-btn:hover {
-            background: var(--deep);
-            color: white;
-            transform: translateY(-2px);
+            background: #2c7a4a;
         }
         .btn-excel {
-            background: var(--success);
+            background: #1e6f3f;
             color: white;
             border: none;
             padding: 8px 20px;
             border-radius: 30px;
             cursor: pointer;
             font-weight: bold;
-            transition: all 0.2s ease;
         }
         .btn-excel:hover {
-            background: #1a9a7f;
-            transform: translateY(-2px);
+            background: #2a8a55;
         }
         /* TABLE WRAPPER */
         .table-wrapper {
-            background: var(--abyss-2);
+            background: #0a0a15;
             border-radius: 24px;
             overflow-x: auto;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-            border: 1px solid var(--line);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+            border: 1px solid #2d2d44;
         }
         table {
             width: 100%;
@@ -283,26 +180,24 @@
             min-width: 700px;
         }
         th {
-            background: var(--abyss);
-            color: var(--foam);
+            background: #000000;
+            color: #00e5a0;
             padding: 14px 8px;
             text-align: center;
-            border-bottom: 1px solid var(--line);
+            border-bottom: 1px solid #2d2d44;
             font-weight: 700;
-            font-family: var(--font-display);
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            letter-spacing: 0.5px;
         }
         td {
             padding: 10px 8px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid #1a1a2e;
             text-align: center;
             vertical-align: middle;
-            color: var(--ink-muted);
-            font-family: var(--font-mono);
+            color: #c0c0c0;
         }
         /* DESKRIPSI RATA KIRI */
+        td:nth-child(2), th:nth-child(2) {
+            text-align: left;
+        }
         th:nth-child(2) {
             text-align: left;
             padding-left: 15px;
@@ -311,35 +206,29 @@
             text-align: left;
             padding-left: 15px;
             font-weight: 500;
-            color: var(--ink-light);
-            font-family: var(--font-body);
-        }
-        tr:hover td {
-            background: rgba(165, 233, 221, 0.03);
+            color: #ffffff;
         }
         input {
             width: 100%;
             padding: 8px 6px;
             border-radius: 12px;
-            border: 1px solid rgba(111, 190, 178, 0.35);
+            border: 1px solid #3d3d5c;
             font-size: 0.8rem;
             text-align: left;
-            background: var(--abyss);
-            color: var(--ink-light);
-            font-family: var(--font-mono);
+            background: #1a1a2e;
+            color: white;
         }
         input:focus {
             outline: none;
-            border-color: var(--foam);
-            box-shadow: 0 0 0 3px rgba(165, 233, 221, 0.15);
+            border-color: #00e5a0;
         }
         .auto-badge {
-            background: rgba(165, 233, 221, 0.18);
+            background: #1a3a2a;
             font-size: 0.65rem;
             padding: 2px 6px;
             border-radius: 12px;
             margin-left: 8px;
-            color: var(--foam);
+            color: #00e5a0;
         }
         .action-buttons {
             display: flex;
@@ -347,6 +236,7 @@
             justify-content: center;
         }
         .edit-btn, .delete-btn {
+            background: none;
             border: none;
             cursor: pointer;
             font-size: 1rem;
@@ -356,22 +246,18 @@
             font-weight: 500;
         }
         .edit-btn {
-            background: rgba(111, 190, 178, 0.18);
-            color: var(--foam);
+            background: #2a4a6f;
+            color: white;
         }
         .edit-btn:hover {
-            background: var(--sea);
-            color: var(--abyss);
-            transform: translateY(-2px);
+            background: #3a6a9f;
         }
         .delete-btn {
-            background: rgba(255, 107, 91, 0.14);
-            color: var(--coral);
+            background: #6f2a2a;
+            color: white;
         }
         .delete-btn:hover {
-            background: var(--coral);
-            color: white;
-            transform: translateY(-2px);
+            background: #9f3a3a;
         }
         button:disabled {
             opacity: 0.4;
@@ -383,7 +269,7 @@
             justify-content: center;
         }
         .save-btn {
-            background: var(--success);
+            background: #2c7a4a;
             color: white;
             border: none;
             padding: 6px 12px;
@@ -392,8 +278,8 @@
             font-size: 0.75rem;
         }
         .cancel-btn {
-            background: rgba(255, 255, 255, 0.08);
-            color: var(--ink-muted);
+            background: #5a6e7c;
+            color: white;
             border: none;
             padding: 6px 12px;
             border-radius: 20px;
@@ -402,26 +288,26 @@
         }
         .footer-note {
             margin-top: 32px;
-            background: var(--abyss-2);
-            border: 1px solid var(--line);
+            background: #0a0a15;
+            border: 1px solid #2d2d44;
             padding: 14px 20px;
             border-radius: 20px;
             display: flex;
             justify-content: space-between;
             flex-wrap: wrap;
             align-items: center;
-            color: var(--ink-muted);
+            color: #888;
         }
         .footer-note span {
-            color: var(--ink-light);
+            color: #aaa;
         }
         @media (max-width: 680px) {
             .card-total .value { font-size: 1.6rem; }
             .card-total { padding: 12px 20px; min-width: 200px; }
             .edit-btn, .delete-btn { padding: 4px 8px; font-size: 0.75rem; }
         }
-
-        /* STYLE KHUSUS UNTUK CETAK PDF (tetap terang/hemat tinta, tidak memakai tema gelap) */
+        
+        /* STYLE KHUSUS UNTUK CETAK PDF */
         @media print {
             body {
                 background: white;
@@ -433,19 +319,16 @@
                 padding: 10px;
             }
             .btn-kembali {
-                display: none !important;
+                display: none !important; /* Sembunyikan tombol saat cetak */
             }
             .header {
-                background: var(--abyss-2);
+                background: #0f0f1a;
                 border: 1px solid #ccc;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
-            .fiber-track, .fiber-pulse {
-                display: none !important;
-            }
             .card-total {
-                background: var(--abyss-2);
+                background: #0f0f1a;
                 border: 1px solid #ccc;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
@@ -468,7 +351,7 @@
             }
             .auto-badge {
                 background: #e8f5e9;
-                color: #1a7a63;
+                color: #2c7a4a;
             }
             .footer-note {
                 border: none;
@@ -495,15 +378,10 @@
     </a>
 
     <div class="header" id="headerBox">
-        <div class="fiber-track" aria-hidden="true"></div>
-        <div class="fiber-pulse p1" aria-hidden="true"></div>
-        <div class="fiber-pulse p2" aria-hidden="true"></div>
-        <div class="fiber-pulse p3" aria-hidden="true"></div>
         <div class="header-content" id="headerContent">
             <div id="headerDisplay">
-                <h1>RAB FTTH </h1>
-                <p>Nama Pelanggan</p>
-                <div class="badge-proyek">KHS AKTIVASI SULAWESI</div>
+                <h1>RAB FTTH</h1>
+                <div class="badge-proyek">Wilayah Makassar</div>
                 <div class="edit-header-hint">Klik header untuk edit</div>
             </div>
             <div id="headerEditor" style="display:none;">
@@ -538,7 +416,7 @@
                     <td id="subTotalInstalasi" style="text-align:center; color:#00e5a0;">Rp 0</td>
                     <td></td>
                 </tr>
-            </tfoot>
+            </footer>
         </table>
     </div>
 
@@ -558,7 +436,7 @@
                     <td id="subTotalMaterial" style="text-align:center; color:#00e5a0;">Rp 0</td>
                     <td></td>
                 </tr>
-            </tfoot>
+            </footer>
         </table>
     </div>
 
@@ -573,26 +451,25 @@
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script>
     let dataInstalasi = [
-       { id: "t1", no:1, deskripsi:"PEMBUATAN DOKUMENTASI TEKNIS", satuan:"LOT", qty:1, harga:383030, autoCalc: false },
+        { id: "t1", no:1, deskripsi:"PEMBUATAN DOKUMENTASI TEKNIS", satuan:"LOT", qty:1, harga:383030, autoCalc: false },
         { id: "t2", no:2, deskripsi:"INSTALASI DROP WIRE <= 300M", satuan:"LOT", qty:1, harga:285000, autoCalc: false },
         { id: "t3", no:2, deskripsi:"TRANSPORTASI ADSS SS/LS UNTUK >120KM", satuan:"LOT", qty:1, harga:1051536, autoCalc: false },
     ];
 
-
     let dataMaterial = [
-          { id: "m1", no:1, deskripsi:"GPON,ONT EG8021V5,2.4/5GHz Wi-Fi,,HUAWEI", satuan:"U", qty:1, harga:299200, autoCalc: false },
+        { id: "m1", no:1, deskripsi:"GPON,ONT EG8021V5,2.4/5GHz Wi-Fi,,HUAWEI", satuan:"U", qty:1, harga:299200, autoCalc: false },
         { id: "m2", no:2, deskripsi:"FOC,DropWire3SlgSC-UPC,1F,100m,FIBERHOME", satuan:"U", qty:1, harga:63706, autoCalc: false },
         { id: "m3", no:3, deskripsi:"FOC,DropWire3SlgSC-UPC,1F,150m,FIBERHOME", satuan:"U", qty:1, harga:86553, autoCalc: false },
         { id: "m4", no:4, deskripsi:"FOC,DropWire3SlgSC-UPC,1F,250m,FIBERHOME", satuan:"U", qty:1, harga:132248, autoCalc: false },
         { id: "m6", no:6, deskripsi:"GPON,ONT HG6045D1 2*GE+1*POTS,FIBERHOME", satuan:"U", qty:1, harga:299000, autoCalc: false },
     ];
-	
+
     let editingRows = new Set();
     let tempEditData = new Map();
     let headerData = {
         title: "RAB AKTIVASI VIA FTTH",
-        subtitle: "Nama Pelanggan",
-        badge: "KHS AKTIVASI SULAWESI"
+        subtitle: "Nama User",
+        badge: "KHS Aktivasi Sulawesi"
     };
 
     function formatRp(angka) {
@@ -629,6 +506,32 @@
         let result = base - deadendQty;
         if (result < 0) result = 0;
         return Math.ceil(result);
+    }
+
+    function applyAutoCalculations() {
+        const qtyFOC = getQtyPenarikanFOC();
+        
+        const focMaterial = dataMaterial.find(m => m.id === "m6");
+        if (focMaterial && focMaterial.autoCalc) {
+            focMaterial.qty = qtyFOC;
+        }
+        
+        const deadendQty = hitungDeadend(qtyFOC);
+        const deadendItem = dataInstalasi.find(i => i.id === "t9");
+        if (deadendItem && deadendItem.autoCalc) {
+            deadendItem.qty = deadendQty;
+        }
+        
+        const suspensionAndLabelQty = hitungSuspensionAndLabeling(qtyFOC, deadendQty);
+        const suspensionItem = dataInstalasi.find(i => i.id === "t10");
+        if (suspensionItem && suspensionItem.autoCalc) {
+            suspensionItem.qty = suspensionAndLabelQty;
+        }
+        
+        const labelingKabelItem = dataInstalasi.find(i => i.id === "t6");
+        if (labelingKabelItem && labelingKabelItem.autoCalc) {
+            labelingKabelItem.qty = suspensionAndLabelQty;
+        }
     }
 
     function renumberArray(arr) {
@@ -738,7 +641,7 @@
                 cellDesc.innerHTML = `<input type="text" class="edit-desc" value="${escapeHtml(temp?.deskripsi || '')}" style="text-align:left;" onchange="updateEditField('${item.id}', 'deskripsi', this.value, false)">`;
                 cellSatuan.innerHTML = `<input type="text" class="edit-satuan" value="${temp?.satuan || ''}" style="width:80px;" onchange="updateEditField('${item.id}', 'satuan', this.value, false)">`;
                 if (item.autoCalc) {
-                    cellQty.innerHTML = `<span style="background:#163C38; padding:4px 8px; border-radius:12px; color:#A5E9DD;">${item.qty} <span class="auto-badge">auto</span></span>`;
+                    cellQty.innerHTML = `<span style="background:#1a3a2a; padding:4px 8px; border-radius:12px; color:#00e5a0;">${item.qty} <span class="auto-badge">auto</span></span>`;
                 } else {
                     cellQty.innerHTML = `<input type="number" class="edit-qty" value="${temp?.qty || 0}" step="any" style="width:80px;" onchange="updateEditField('${item.id}', 'qty', this.value, false)">`;
                 }
@@ -748,7 +651,7 @@
                 cellDesc.innerText = item.deskripsi;
                 cellSatuan.innerText = item.satuan;
                 if (item.autoCalc) {
-                    cellQty.innerHTML = `<span style="background:#163C38; padding:4px 8px; border-radius:12px; color:#A5E9DD;">${item.qty} <span class="auto-badge">auto</span></span>`;
+                    cellQty.innerHTML = `<span style="background:#1a3a2a; padding:4px 8px; border-radius:12px; color:#00e5a0;">${item.qty} <span class="auto-badge">auto</span></span>`;
                 } else {
                     cellQty.innerText = item.qty;
                 }
@@ -783,7 +686,7 @@
                 cellDesc.innerHTML = `<input type="text" class="edit-desc" value="${escapeHtml(temp?.deskripsi || '')}" style="text-align:left;" onchange="updateEditField('${item.id}', 'deskripsi', this.value, true)">`;
                 cellSatuan.innerHTML = `<input type="text" class="edit-satuan" value="${temp?.satuan || ''}" style="width:80px;" onchange="updateEditField('${item.id}', 'satuan', this.value, true)">`;
                 if (item.autoCalc) {
-                    cellQty.innerHTML = `<span style="background:#163C38; padding:4px 8px; border-radius:12px; color:#A5E9DD;">${item.qty} <span class="auto-badge">auto</span></span>`;
+                    cellQty.innerHTML = `<span style="background:#1a3a2a; padding:4px 8px; border-radius:12px; color:#00e5a0;">${item.qty} <span class="auto-badge">auto</span></span>`;
                 } else {
                     cellQty.innerHTML = `<input type="number" class="edit-qty" value="${temp?.qty || 0}" step="any" style="width:80px;" onchange="updateEditField('${item.id}', 'qty', this.value, true)">`;
                 }
@@ -793,7 +696,7 @@
                 cellDesc.innerText = item.deskripsi;
                 cellSatuan.innerText = item.satuan;
                 if (item.autoCalc) {
-                    cellQty.innerHTML = `<span style="background:#163C38; padding:4px 8px; border-radius:12px; color:#A5E9DD;">${item.qty} <span class="auto-badge">auto</span></span>`;
+                    cellQty.innerHTML = `<span style="background:#1a3a2a; padding:4px 8px; border-radius:12px; color:#00e5a0;">${item.qty} <span class="auto-badge">auto</span></span>`;
                 } else {
                     cellQty.innerText = item.qty;
                 }
