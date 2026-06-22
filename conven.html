@@ -1023,7 +1023,6 @@
                 </table>
                 
                 <div class="total-rab">GRAND TOTAL RAB : ${formatRp(grandTotal)}</div>
-                <div style="margin-top:20px; font-size:0.8rem; color:#777;">Dicetak pada: ${new Date().toLocaleString('id-ID')}</div>
             </body>
             </html>
         `);
@@ -1035,7 +1034,6 @@
     document.getElementById('tambahInstalasiBtn').addEventListener('click', tambahInstalasi);
     document.getElementById('tambahMaterialBtn').addEventListener('click', tambahMaterial);
     document.getElementById('cetakBtn').addEventListener('click', cetakLaporan);
-    document.getElementById('exportExcelBtn').addEventListener('click', exportToExcel);
     
     window.updateEditField = updateEditField;
     window.startEdit = startEdit;
