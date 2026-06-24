@@ -1,639 +1,256 @@
 <!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RAB KHS CONVEN & FTTH</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-
-    <style>
-        /* ==========================================================================
-           1. VARIABEL WARNA (GLOBAL VARIABLES) — palet "Matahari & Laut"
-           Diturunkan langsung dari swatch: kuning pasir, foam mint #A5E9DD,
-           laut teal, dan laut dalam.
-           ========================================================================== */
-        :root {
-            --sun:        #FDF4AF;   /* kuning pasir — pagi/matahari */
-            --sun-soft:   #FFFBEA;   /* tint sangat lembut dari sun */
-            --foam:       #A5E9DD;   /* mint terang — buih laut (warna acuan) */
-            --foam-soft:  #EAFBF7;   /* tint sangat lembut dari foam */
-            --sea:        #6FBEB2;   /* teal sedang — air laut */
-            --deep:       #34908B;   /* teal tua — laut dalam, warna brand utama */
-            --abyss:      #15403C;   /* teal nyaris hitam — dasar sidebar */
-            --abyss-2:    #1E5550;   /* sedikit lebih terang, untuk gradasi sidebar */
-            --ink:        #15302D;   /* teks utama, hitam kehijauan */
-            --slate:      #5C7976;   /* teks sekunder, abu kehijauan */
-            --paper:      #F6FBFA;   /* latar halaman */
-            --card:       #FFFFFF;   /* permukaan kartu */
-            --line:       #DCEFEA;   /* garis/border */
-            --coral:      #E1604F;   /* utilitas: bahaya/hapus (di luar palet, demi kontras fungsi) */
-            --success:    #1FA38C;   /* utilitas: berhasil — masih satu keluarga teal */
-
-            --font-display: 'Sora', 'Plus Jakarta Sans', sans-serif;
-            --font-body:    'Plus Jakarta Sans', 'Segoe UI', sans-serif;
-            --font-mono:    'JetBrains Mono', 'Consolas', monospace;
-        }
-
-        /* ==========================================================================
-           2. BASE STYLING (PENGATURAN DASAR)
-           ========================================================================== */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: var(--font-body);
-        }
-
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FiberOptic Pro - RAB Management System</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Geist:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
         body {
-            background-color: var(--paper);
-            color: var(--ink);
-            display: flex;
-            min-height: 100vh;
-            overflow-x: hidden;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #faf8ff;
         }
-
-        a { color: inherit; }
-
-        :focus-visible {
-            outline: 2px solid var(--sea);
-            outline-offset: 2px;
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
-
-        @media (prefers-reduced-motion: reduce) {
-            * { transition: none !important; animation: none !important; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid #E2E8F0;
         }
-
-        /* ==========================================================================
-           3. SIDEBAR STYLING (MENU SAMPING)
-           ========================================================================== */
-        .sidebar {
-            width: 260px;
-            background: linear-gradient(165deg, var(--abyss) 0%, var(--abyss-2) 100%);
-            border-right: 1px solid rgba(255, 255, 255, 0.08);
-            display: flex;
-            flex-direction: column;
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            z-index: 100;
-            padding: 24px 16px;
-            box-shadow: 4px 0 24px rgba(0, 0, 0, 0.18);
-        }
-
-        .sidebar-brand {
-            font-family: var(--font-display);
-            font-size: 1.35rem;
-            font-weight: 800;
-            color: #FFFFFF;
-            margin-bottom: 32px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 16px;
-        }
-
-        .sidebar-brand .brand-icon {
-            display: inline-flex;
-            align-items: center;
-        }
-
-        .sidebar-brand span.brand-text {
-            color: var(--foam);
-        }
-
-        .sidebar-menu {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .sidebar-menu a {
-            text-decoration: none !important;
-        }
-
-        .menu-item {
-            padding: 14px 16px;
-            border-radius: 12px;
-            cursor: pointer;
-            color: #7FA09D;
-            font-weight: 700;
-            font-size: 0.95rem;
-            transition: all 0.25s ease;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            border-left: 4px solid transparent;
-        }
-
-        .menu-item:hover {
-            background-color: rgba(165, 233, 221, 0.08);
-            color: #FFFFFF;
-            transform: translateX(6px);
-        }
-
-        .menu-item.active {
-            background-color: rgba(165, 233, 221, 0.14);
-            color: var(--foam);
-            border-left: 4px solid var(--foam);
-        }
-
-        /* ==========================================================================
-           3b. TOMBOL MENU (HAMBURGER) & BACKDROP — khusus tampilan HP/tablet.
-           Tersembunyi di layar besar; muncul di breakpoint mobile di bawah.
-           ========================================================================== */
-        .menu-toggle {
-            display: none;
-            position: fixed;
-            top: 16px;
-            right: 16px;
-            z-index: 102;
-            width: 44px;
-            height: 44px;
-            border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            background: var(--abyss-2);
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-            cursor: pointer;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .menu-toggle .icon-close {
-            display: none;
-        }
-
-        .menu-toggle.is-open .icon-menu {
-            display: none;
-        }
-
-        .menu-toggle.is-open .icon-close {
-            display: block;
-        }
-
-        .sidebar-backdrop {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(10, 40, 38, 0.55);
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-            z-index: 99;
-        }
-
-        /* ==========================================================================
-           4. MAIN CONTENT AREA (KONTEN UTAMA)
-           ========================================================================== */
-        .main-content {
-            margin-left: 260px;
-            flex-grow: 1;
-            padding: 40px;
-            width: calc(100% - 260px);
-        }
-
-        .content-section {
-            display: none;
-        }
-
-        .content-section.active {
-            display: block;
-        }
-
-        /* ==========================================================================
-           5. BANNER HEADER KONTEN
-           ========================================================================== */
-        .header {
-            background: linear-gradient(135deg, var(--sun-soft), var(--foam-soft));
-            border: 1px solid var(--line);
-            border-radius: 24px;
-            padding: 32px;
-            margin-bottom: 32px;
-            box-shadow: 0 10px 30px rgba(21, 64, 60, 0.04);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header::after {
-            content: '';
-            position: absolute;
-            top: -50px;
-            right: -50px;
-            width: 150px;
-            height: 150px;
-            background: rgba(165, 233, 221, 0.35);
-            border-radius: 50%;
-        }
-
-        .header-wave {
-            position: absolute;
-            right: -10px;
-            bottom: -10px;
-            width: 60%;
-            max-width: 420px;
-            opacity: 0.55;
-            pointer-events: none;
-        }
-
-        .header h1 {
-            font-family: var(--font-display);
-            font-size: 2rem;
-            color: var(--ink);
-            margin-bottom: 8px;
-            font-weight: 800;
-            position: relative;
-        }
-
-        .header p {
-            color: var(--slate);
-            font-size: 1rem;
-            font-weight: 500;
-            position: relative;
-        }
-
-        .badge-proyek {
-            background: var(--foam-soft);
-            color: var(--deep);
-            display: inline-block;
-            padding: 6px 16px;
-            border-radius: 40px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            margin-top: 16px;
-            position: relative;
-        }
-
-        /* ==========================================================================
-           6. KARTU / CARD RINGKASAN DATA (SUMMARY CARDS)
-           ========================================================================== */
-        .summary-grid {
+        .bento-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            grid-template-columns: repeat(12, 1fr);
             gap: 24px;
-            margin-bottom: 32px;
         }
-
-        .card {
-            background-color: var(--card);
-            border: 1px solid var(--line);
-            padding: 28px;
-            border-radius: 24px;
-            box-shadow: 0 10px 25px rgba(21, 64, 60, 0.04);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        /* Custom scrollbar for technical feel */
+        ::-webkit-scrollbar {
+            width: 6px;
         }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(21, 64, 60, 0.08);
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
         }
-
-        .card h3 {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
-            color: var(--slate);
-            margin-bottom: 12px;
-            font-weight: 700;
-        }
-
-        .card .value {
-            font-family: var(--font-display);
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: var(--deep);
-        }
-
-        .card .value.blue {
-            color: var(--sea);
-        }
-
-        /* ==========================================================================
-           7. TABEL DATA (TABLE STYLING)
-           ========================================================================== */
-        .section-title {
-            background-color: var(--card);
-            border: 1px solid var(--line);
-            padding: 16px 24px;
-            border-radius: 16px;
-            margin: 32px 0 16px 0;
-            font-weight: 800;
-            color: var(--ink);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 12px rgba(21, 64, 60, 0.02);
-        }
-
-        .table-wrapper {
-            background-color: var(--card);
-            border-radius: 24px;
-            overflow: hidden;
-            border: 1px solid var(--line);
-            box-shadow: 0 15px 40px rgba(21, 64, 60, 0.05);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.9rem;
-            min-width: 800px;
-        }
-
-        th {
-            background-color: var(--foam-soft);
-            color: var(--ink);
-            padding: 18px 16px;
-            font-weight: 700;
-            border-bottom: 2px solid var(--line);
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 0.5px;
-        }
-
-        td {
-            padding: 16px 16px;
-            border-bottom: 1px solid var(--line);
-            text-align: center;
-            color: var(--ink);
-        }
-
-        td:nth-child(2), th:nth-child(2) {
-            text-align: left;
-            padding-left: 24px;
-        }
-
-        /* Kolom angka & uang memakai font mono agar rapi sejajar, seperti buku kas */
-        td:nth-child(4), td:nth-child(5), td:nth-child(6) {
-            font-family: var(--font-mono);
-        }
-
-        tr:hover td {
-            background-color: var(--foam-soft);
-        }
-
-        /* ==========================================================================
-           8. TOMBOL & KOLOM INPUT (BUTTONS & INPUTS)
-           ========================================================================== */
-        .btn {
-            padding: 10px 20px;
-            border-radius: 12px;
-            border: none;
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 0.85rem;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn:active {
-            transform: scale(0.98);
-        }
-
-        .btn-primary { background-color: var(--deep); color: white; }
-        .btn-success { background-color: var(--success); color: white; }
-        .btn-danger  { background-color: var(--coral); color: white; }
-        .btn-add     { background-color: var(--sea); color: white; }
-        .btn-add:hover { background-color: var(--deep); }
-
-        input[type="text"], input[type="number"] {
-            background-color: var(--paper);
-            border: 1.5px solid var(--line);
-            color: var(--ink);
-            padding: 10px 14px;
-            border-radius: 12px;
-            width: 100%;
-            transition: all 0.3s;
-            font-family: var(--font-mono);
-        }
-
-        input:focus {
-            outline: none;
-            border-color: var(--sea);
-            background-color: #FFFFFF;
-            box-shadow: 0 0 0 4px rgba(111, 190, 178, 0.18);
-        }
-
-        /* ==========================================================================
-           9. KARTU AYAT / QUOTE SPECIAL CARD — kini bertema "matahari di atas laut"
-           ========================================================================== */
-        .quote-card {
-            background: linear-gradient(135deg, var(--sun-soft), var(--sun));
-            border: 1px solid #F2E6A0;
-            border-left: 6px solid var(--deep);
-        }
-
-        .quote-card h3 {
-            color: var(--deep) !important;
-        }
-
-        .quote-card p {
-            color: var(--ink) !important;
-            font-style: italic;
-            font-size: 1.05rem;
-        }
-
-        /* ==========================================================================
-           10. RESPONSIVE LAYOUT (UNTUK LAYAR HP/TABLET)
-           ========================================================================== */
-        @media (max-width: 992px) {
-            .menu-toggle { display: flex; }
-            .sidebar-backdrop { display: block; }
-            .sidebar-backdrop.show { opacity: 1; pointer-events: auto; }
-
-            .sidebar {
-                width: 260px;
-                padding: 24px 16px;
-                transform: translateX(-100%);
-                transition: transform 0.3s ease;
-            }
-            .sidebar.mobile-open {
-                transform: translateX(0);
-            }
-
-            .main-content {
-                margin-left: 0;
-                width: 100%;
-                padding: 20px;
-                padding-top: 76px;
-            }
+        ::-webkit-scrollbar-thumb {
+            background: #12b19b;
+            border-radius: 10px;
         }
     </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-fixed-dim": "#c4c7c9",
+                      "on-primary": "#ffffff",
+                      "surface-container-lowest": "#ffffff",
+                      "primary-fixed-dim": "#55dbc4",
+                      "on-secondary-fixed-variant": "#444749",
+                      "on-background": "#131b2e",
+                      "tertiary-fixed-dim": "#90d3c7",
+                      "on-error-container": "#93000a",
+                      "on-tertiary-fixed-variant": "#005048",
+                      "on-secondary-fixed": "#191c1e",
+                      "on-primary-container": "#003d34",
+                      "secondary": "#5c5f61",
+                      "surface-dim": "#d2d9f4",
+                      "surface": "#faf8ff",
+                      "surface-container": "#eaedff",
+                      "surface-container-low": "#f2f3ff",
+                      "error": "#ba1a1a",
+                      "surface-tint": "#006b5d",
+                      "on-surface-variant": "#3c4946",
+                      "background": "#faf8ff",
+                      "surface-container-high": "#e2e7ff",
+                      "primary-fixed": "#75f8df",
+                      "outline-variant": "#bbcac5",
+                      "tertiary-fixed": "#abf0e3",
+                      "inverse-surface": "#283044",
+                      "primary-container": "#12b19b",
+                      "inverse-on-surface": "#eef0ff",
+                      "inverse-primary": "#55dbc4",
+                      "secondary-fixed": "#e0e3e5",
+                      "error-container": "#ffdad6",
+                      "outline": "#6c7a76",
+                      "on-tertiary": "#ffffff",
+                      "secondary-container": "#e0e3e5",
+                      "surface-bright": "#faf8ff",
+                      "on-tertiary-container": "#003d36",
+                      "on-secondary": "#ffffff",
+                      "on-secondary-container": "#626567",
+                      "on-primary-fixed-variant": "#005045",
+                      "on-surface": "#131b2e",
+                      "tertiary": "#226960",
+                      "surface-container-highest": "#dae2fd",
+                      "on-tertiary-fixed": "#00201c",
+                      "tertiary-container": "#67aa9f",
+                      "primary": "#006b5d",
+                      "on-error": "#ffffff",
+                      "surface-variant": "#dae2fd",
+                      "on-primary-fixed": "#00201b"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "margin-desktop": "40px",
+                      "container-max": "1440px",
+                      "margin-mobile": "16px",
+                      "base": "8px"
+              },
+              "fontFamily": {
+                      "label-caps": ["Plus Jakarta Sans"],
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "body-lg": ["Plus Jakarta Sans"],
+                      "mono-data": ["Geist"],
+                      "headline-md": ["Plus Jakarta Sans"],
+                      "headline-lg-mobile": ["Plus Jakarta Sans"],
+                      "body-md": ["Plus Jakarta Sans"]
+              },
+              "fontSize": {
+                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "mono-data": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
 </head>
-<body>
-
-    <button class="menu-toggle" id="menuToggle" aria-label="Buka menu" aria-expanded="false" aria-controls="sidebarNav">
-        <svg class="icon-menu" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E7F6F3" stroke-width="2.4" stroke-linecap="round">
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
-        </svg>
-        <svg class="icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E7F6F3" stroke-width="2.4" stroke-linecap="round">
-            <line x1="5" y1="5" x2="19" y2="19"></line>
-            <line x1="19" y1="5" x2="5" y2="19"></line>
-        </svg>
-    </button>
-    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
-
-    <div class="sidebar" id="sidebarNav">
-        <div class="sidebar-brand">
-            <span class="brand-icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="5" cy="12" r="3" fill="#A5E9DD"/>
-                    <line x1="8" y1="12" x2="16" y2="12" stroke="#A5E9DD" stroke-width="2" stroke-dasharray="2 2"/>
-                    <circle cx="19" cy="12" r="3" fill="#FDF4AF"/>
-                </svg>
-            </span>
-            <span class="brand-text">RAB</span>
-        </div>
-
-        <ul class="sidebar-menu">
-            <li>
-                <a href="conven.html" class="menu-item">
-                    <span class="menu-text">Conven</span>
-                </a>
-            </li>
-            <li>
-                <a href="ftth.html" class="menu-item">
-                    <span class="menu-text">FTTH</span>
-                </a>
-            </li>
-            <li>
-                <a href="ftth6core.html" class="menu-item">
-                    <span class="menu-text">FTTH X Conven</span>
-                </a>
-            </li>
-            <li>
-                <a href="https://docs.google.com/spreadsheets/d/1NToGtWoxKtLJDHBjUMenJq-jBmQ6bdsW6_bE4GkEGIA/edit?gid=98793551#gid=98793551/edit" class="menu-item" target="_blank">
-                    <span class="menu-text">PA MAKASSAR</span>
-                </a>
-            </li>
-        </ul>
-    </div>
-
-    <div class="main-content">
-
-        <div id="section-dashboard" class="content-section active">
-            <div class="header">
-                <h1>RAB KHS CONVEN & FTTH</h1>
-                <p style="color: var(--deep); font-weight: 700;">Dashboard internal untuk mempermudah efisiensi kerjaan Anda</p>
-                <svg class="header-wave" viewBox="0 0 600 120" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M0,90 C100,40 200,140 300,90 C400,40 500,140 600,90" fill="none" stroke="#6FBEB2" stroke-width="3" stroke-linecap="round"/>
-                    <circle cx="90" cy="75" r="5" fill="#FDF4AF"/>
-                    <circle cx="300" cy="90" r="6" fill="#34908B"/>
-                    <circle cx="480" cy="70" r="5" fill="#A5E9DD"/>
-                </svg>
-            </div>
-
-            <div class="summary-grid">
-                <div class="card">
-                    <h3>Penarikan FO dengan menggunakan kabel besar 6-48Core</h3>
-                    <div class="value" id="dashTotalFTTH">RAB Conven</div>
-                </div>
-                <div class="card">
-                    <h3>Penarikan FO menggunakan kabel kecil seperti Dropwire panjang 50-250m</h3>
-                    <div class="value blue">RAB FTTH</div>
-                </div>
-                <div class="card">
-                    <h3>Penarikan FO dengan menggunakan kabel besar 6core dari ODP</h3>
-                    <div class="value" style="color: var(--success); font-size: 1.8rem; margin-top:8px;">RAB FTTH Conven</div>
-                </div>
-            </div>
-
-            <div class="card quote-card" style="margin-top: 20px;">
-                <h3 style="margin-bottom: 12px;">Pengingat Hari ini</h3>
-                <p style="line-height: 1.6;">
-                    "Satu-satunya batasanmu adalah pikiranmu. Jika pikiranmu mengatakan kamu bisa, kamu pasti akan bisa."
-                </p>
-                <p style="line-height: 1.6;">
-                    "Setiap harimu adalah keberuntungan - Firman sadboy."
-                </p>
-            </div>
-        </div>
-
-        <div id="section-ftth-pro" class="content-section">
-            <div class="header">
-                <h1>RAB Instalasi Jaringan Fiber Optik</h1>
-                <p>Perhitungan Rencana Anggaran Biaya – Pekerjaan Instalasi dan Perangkat</p>
-                <div class="badge-proyek">Wilayah Makassar (FTTH Pro)</div>
-                <svg class="header-wave" viewBox="0 0 600 120" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M0,90 C100,40 200,140 300,90 C400,40 500,140 600,90" fill="none" stroke="#6FBEB2" stroke-width="3" stroke-linecap="round"/>
-                    <circle cx="90" cy="75" r="5" fill="#FDF4AF"/>
-                    <circle cx="300" cy="90" r="6" fill="#34908B"/>
-                    <circle cx="480" cy="70" r="5" fill="#A5E9DD"/>
-                </svg>
-            </div>
-
-            <div class="summary-grid" style="justify-content: flex-end; display: flex;">
-                <div class="card" style="min-width: 350px; text-align: center; border-color: var(--deep); background: var(--foam-soft);">
-                    <h3 style="color: var(--deep);">TOTAL RAB FTTH PRO</h3>
-                    <div class="value" id="grandTotalDisplay" style="color: var(--deep); font-family: var(--font-mono);">Rp 0</div>
-                </div>
-            </div>
-
-            <div class="section-title">
-                <span>PEKERJAAN INSTALASI & TEKNIS</span>
-                <button class="btn btn-add" onclick="tambahInstalasi()">+ Tambah Item</button>
-            </div>
-
-            <div class="table-wrapper">
-                <table id="tabelInstalasi">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Deskripsi</th>
-                            <th>Satuan</th>
-                            <th>Qty</th>
-                            <th>Harga Satuan (Rp)</th>
-                            <th>Total (Rp)</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody id="bodyInstalasi"></tbody>
-                    <tfoot style="background: var(--foam-soft); font-weight:bold;">
-                        <tr>
-                            <td colspan="5" style="text-align:right; color: var(--ink); font-weight: 700;">SUB TOTAL INSTALASI :</td>
-                            <td id="subTotalInstalasi" style="color: var(--deep); font-size: 1.1rem; font-weight: 800; font-family: var(--font-mono);">Rp 0</td>
-                            <td></td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-        </div>
-
-    </div>
-
-    <script>
-        const sidebarNav = document.getElementById('sidebarNav');
-        const menuToggle = document.getElementById('menuToggle');
-        const sidebarBackdrop = document.getElementById('sidebarBackdrop');
-
-        function openSidebar() {
-            sidebarNav.classList.add('mobile-open');
-            sidebarBackdrop.classList.add('show');
-            menuToggle.classList.add('is-open');
-            menuToggle.setAttribute('aria-expanded', 'true');
-        }
-        function closeSidebar() {
-            sidebarNav.classList.remove('mobile-open');
-            sidebarBackdrop.classList.remove('show');
-            menuToggle.classList.remove('is-open');
-            menuToggle.setAttribute('aria-expanded', 'false');
-        }
-        menuToggle.addEventListener('click', () => {
-            sidebarNav.classList.contains('mobile-open') ? closeSidebar() : openSidebar();
-        });
-        sidebarBackdrop.addEventListener('click', closeSidebar);
-        sidebarNav.querySelectorAll('.menu-item').forEach(link => {
-            link.addEventListener('click', closeSidebar);
+<body class="bg-background text-on-surface">
+<!-- SideNavBar Anchor -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-surface-container dark:bg-surface-container-low border-r border-outline-variant dark:border-outline flex flex-col py-base z-50">
+<div class="px-6 py-8">
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">RABIT</h1>
+<p class="text-secondary font-label-caps text-[10px] tracking-widest mt-1">RAB Instalasi Aktivasi</p>
+</div>
+<nav class="flex-1 px-3 space-y-1">
+<!-- Active State Logic: Mapping to Dashboard/Home as we are on the main index -->
+<a class="flex items-center gap-3 px-4 py-3 text-secondary dark:text-secondary-fixed-dim font-medium hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors" href="conven.html">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span>
+<span class="font-label-caps text-label-caps">Conven</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary dark:text-secondary-fixed-dim font-medium hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors" href="ftth.html">
+<span class="material-symbols-outlined" data-icon="settings_input_fiber">settings_input_svideo</span>
+<span class="font-label-caps text-label-caps">FTTH</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary dark:text-secondary-fixed-dim font-medium hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors" href="ftthxconven.html">
+<span class="material-symbols-outlined" data-icon="merge_type">merge_type</span>
+<span class="font-label-caps text-label-caps">FTTH X Conven</span>
+</a>
+</nav>
+<div class="mt-auto px-3 border-t border-outline-variant pt-4 pb-4 opacity-40">
+</div>
+</aside>
+<!-- TopAppBar Anchor -->
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] z-40 bg-surface dark:bg-background border-b border-outline-variant dark:border-outline h-16 flex items-center justify-between px-gutter">
+<div class="flex items-center gap-4">
+<span class="font-headline-md text-headline-md font-extrabold text-on-surface dark:text-inverse-on-surface">RAB Management System</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-3">
+<img class="w-8 h-8 rounded-full border border-outline-variant" data-alt="A professional headshot of a senior network engineer, Caucasian male in his 40s wearing a clean white polo shirt, smiling confidently. The lighting is bright and airy with a blurred office background in shades of light teal and white to match the corporate Lumina style. High-resolution photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4aB9qjLwFhjtAod7_Fw-Seot9xus0_2pg6UklaoV2pK85K6W2RPKHS0MnQTDnAZmGxlIkSUBzlcDmQH5uzJ1rm5-4H19XMzST4Io06Xs9V1-y-V7AqvFN-QpsMLnQ4J-hmrQ7dPjudWxNqRMONhaffcD_4W2T2vnN7W7ej6ofoMIPZRnootV06pKucme-BP33tTd9mY3bFYYGDhZqQYZupeIhpW0aLTkc3oVE0C-iB2sli69PrNIyK3jVoFBQA73Kf_5VEUKRDYV4"/>
+<span class="font-label-caps text-label-caps text-on-surface">RABIT</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-24 pb-12 px-gutter min-h-screen">
+<div class="max-w-container-max mx-auto space-y-8 px-6">
+<!-- Hero Header -->
+<section class="relative overflow-hidden rounded-xl bg-surface-container-low border border-outline-variant p-10">
+<div class="relative z-10">
+<h2 class="font-headline-lg text-headline-lg text-primary mb-2">RAB KHS CONVEN &amp; FTTH</h2>
+<p class="font-body-lg text-body-lg text-secondary max-w-2xl">Tools RAB</p>
+</div>
+<div class="absolute top-0 right-0 h-full w-1/3 opacity-10 pointer-events-none">
+<span class="material-symbols-outlined text-[200px]" data-icon="account_tree">account_tree</span>
+</div>
+</section>
+<!-- Navigation Cards (Bento Style) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- RAB Conven -->
+<div class="group relative bg-white border border-outline-variant rounded-xl p-6 hover:border-primary transition-all duration-300">
+<div class="w-12 h-12 rounded-lg bg-primary-container/10 flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" data-icon="hub">hub</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">RAB Conven</h3>
+<p class="font-body-md text-body-md text-secondary">Penarikan FO dengan menggunakan kabel besar 6-48Core. Ideal untuk proyek backbone dan inter-city.</p>
+</div>
+<!-- RAB FTTH -->
+<div class="group relative bg-white border border-outline-variant rounded-xl p-6 hover:border-primary transition-all duration-300">
+<div class="w-12 h-12 rounded-lg bg-primary-container/10 flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" data-icon="home_repair_service">home_repair_service</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">RAB FTTH</h3>
+<p class="font-body-md text-body-md text-secondary">Penarikan FO menggunakan kabel kecil seperti Dropwire panjang 50-250m. Fokus pada distribusi retail.</p>
+</div>
+<!-- RAB FTTH Conven -->
+<div class="group relative bg-white border border-outline-variant rounded-xl p-6 hover:border-primary transition-all duration-300">
+<div class="w-12 h-12 rounded-lg bg-primary-container/10 flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" data-icon="cable">cable</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">RAB FTTH Conven</h3>
+<p class="font-body-md text-body-md text-secondary">Penarikan FO dengan menggunakan kabel besar 6core dari ODP. Efisiensi tinggi untuk cluster cluster baru.</p>
+</div>
+</div>
+<!-- Daily Reminder & Quick Action Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Daily Reminder Section -->
+<div class="lg:col-span-12 bg-[#F8FAFC] border border-outline-variant rounded-xl p-8 relative overflow-hidden">
+<div class="flex items-start gap-4 relative z-10">
+<span class="material-symbols-outlined text-primary text-4xl" data-icon="format_quote">format_quote</span>
+<div>
+<h4 class="font-label-caps text-label-caps text-secondary mb-4">PENGINGAT HARI INI</h4>
+<p class="font-headline-md text-headline-md italic font-medium text-on-surface mb-4 leading-relaxed">
+                                "Satu-satunya batasanmu adalah pikiranmu. Jika pikiranmu mengatakan kamu bisa, kamu pasti akan bisa."
+                            </p>
+<p class="font-body-lg text-body-lg text-primary-container font-semibold">
+                                — Firman sadboy
+                            </p>
+<div class="mt-6 p-4 bg-white/50 rounded-lg border border-dashed border-primary/30 inline-block">
+<p class="text-body-md text-secondary flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="info">info</span>
+                                    Setiap harimu adalah keberuntungan
+                                </p>
+</div>
+</div>
+</div>
+<!-- Background Visual Decor -->
+<div class="absolute bottom-0 right-0 p-4 opacity-5">
+<span class="material-symbols-outlined text-[120px]" data-icon="lightbulb">lightbulb</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Success Message Micro-Interaction Overlay -->
+<div class="fixed bottom-8 right-8 bg-inverse-surface text-inverse-on-surface px-6 py-3 rounded-lg shadow-2xl flex items-center gap-3 transform translate-y-24 opacity-0 transition-all duration-300 z-[100]" id="toast">
+<span class="material-symbols-outlined text-primary-fixed-dim" data-icon="check_circle">check_circle</span>
+<span class="font-label-caps text-label-caps">Dashboard View Refreshed</span>
+</div>
+<script>
+        // Simple micro-interaction for notification simulation
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const toast = document.getElementById('toast');
+                toast.classList.remove('translate-y-24', 'opacity-0');
+                setTimeout(() => {
+                    toast.classList.add('translate-y-24', 'opacity-0');
+                }, 3000);
+            });
         });
     </script>
-
-</body>
-</html>
+</body></html>
