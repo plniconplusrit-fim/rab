@@ -1,1044 +1,526 @@
 <!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>RAB FTTH</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-
-    <style>
-        /* ==========================================================================
-           PALET "MATAHARI & LAUT" — diturunkan dari swatch (#FDF4AF, #A5E9DD, #6FBEB2, #34908B)
-           Tema halaman ini dibuat gelap (mode kerja/konsol) tapi seluruh aksen,
-           glow, dan highlight memakai warna dari palet yang sama dengan dashboard.
-           ========================================================================== */
-        :root {
-            --sun:        #FDF4AF;
-            --sun-glow:   #FFDE6B;   /* varian lebih jenuh dari sun, untuk highlight nilai uang */
-            --foam:       #A5E9DD;   /* aksen utama — pengganti hijau neon lama */
-            --foam-soft:  rgba(165, 233, 221, 0.14);
-            --sea:        #6FBEB2;
-            --deep:       #34908B;
-            --abyss:      #0A2826;   /* dasar halaman, hitam kehijauan */
-            --abyss-2:    #123330;   /* permukaan kartu/tabel */
-            --abyss-3:    #173D39;   /* permukaan hover / gradasi header */
-            --ink-light:  #E7F6F3;   /* teks utama di atas gelap */
-            --ink-muted:  #88AFAA;   /* teks sekunder */
-            --line:       rgba(165, 233, 221, 0.14);
-            --coral:      #FF6B5B;   /* utilitas: hapus/bahaya */
-            --success:    #21B894;   /* utilitas: simpan/berhasil */
-
-            --font-display: 'Sora', 'Plus Jakarta Sans', sans-serif;
-            --font-body:    'Plus Jakarta Sans', 'Segoe UI', Roboto, sans-serif;
-            --font-mono:    'JetBrains Mono', 'Consolas', monospace;
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RAB FTTH</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Geist:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface-variant": "#3c4946",
+                    "surface-tint": "#006b5d",
+                    "on-primary": "#ffffff",
+                    "secondary": "#5c5f61",
+                    "primary-fixed": "#75f8df",
+                    "on-secondary-container": "#626567",
+                    "inverse-primary": "#55dbc4",
+                    "tertiary-container": "#67aa9f",
+                    "on-primary-fixed-variant": "#005045",
+                    "surface-container": "#eaedff",
+                    "background": "#faf8ff",
+                    "surface": "#faf8ff",
+                    "secondary-fixed": "#e0e3e5",
+                    "secondary-container": "#e0e3e5",
+                    "on-surface": "#131b2e",
+                    "surface-variant": "#dae2fd",
+                    "error": "#ba1a1a",
+                    "secondary-fixed-dim": "#c4c7c9",
+                    "on-primary-fixed": "#00201b",
+                    "surface-container-low": "#f2f3ff",
+                    "tertiary": "#226960",
+                    "primary-fixed-dim": "#55dbc4",
+                    "surface-bright": "#faf8ff",
+                    "inverse-surface": "#283044",
+                    "error-container": "#ffdad6",
+                    "on-primary-container": "#003d34",
+                    "surface-container-high": "#e2e7ff",
+                    "on-tertiary": "#ffffff",
+                    "primary-container": "#12b19b",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary-container": "#003d36",
+                    "tertiary-fixed": "#abf0e3",
+                    "outline": "#6c7a76",
+                    "on-secondary-fixed": "#191c1e",
+                    "outline-variant": "#bbcac5",
+                    "tertiary-fixed-dim": "#90d3c7",
+                    "surface-dim": "#d2d9f4",
+                    "on-error": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-fixed-variant": "#005048",
+                    "on-secondary-fixed-variant": "#444749",
+                    "on-background": "#131b2e",
+                    "primary": "#006b5d",
+                    "surface-container-highest": "#dae2fd",
+                    "on-tertiary-fixed": "#00201c",
+                    "inverse-on-surface": "#eef0ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "base": "8px",
+                    "container-max": "1440px",
+                    "margin-desktop": "40px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "label-caps": ["Plus Jakarta Sans"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "mono-data": ["Geist"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "mono-data": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            font-family: var(--font-body);
-        }
-        body {
-            background:
-                radial-gradient(circle at 12% 0%, rgba(165, 233, 221, 0.07), transparent 45%),
-                radial-gradient(circle at 88% 110%, rgba(255, 222, 107, 0.05), transparent 50%),
-                var(--abyss);
-            padding: 20px 16px;
-            color: var(--ink-light);
-        }
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        :focus-visible {
-            outline: 2px solid var(--foam);
-            outline-offset: 2px;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            *, .fiber-pulse { transition: none !important; animation: none !important; }
-        }
-
-        /* STYLE TOMBOL KEMBALI */
-        .btn-kembali {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--abyss-2);
-            border: 1px solid var(--line);
-            color: var(--ink-light) !important;
-            text-decoration: none !important;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            margin-bottom: 20px;
-        }
-        .btn-kembali:hover {
-            background: var(--foam-soft);
-            color: var(--foam) !important;
-            border-color: var(--foam);
-            text-decoration: none !important;
-            transform: translateY(-2px);
-        }
-
-        /* HEADER */
-        .header {
-            background: linear-gradient(135deg, var(--abyss-2), var(--abyss-3));
-            border: 1px solid var(--line);
-            color: var(--ink-light);
-            border-radius: 28px;
-            margin-bottom: 24px;
-            overflow: hidden;
-            position: relative;
-        }
-        /* Aksen "kabel fiber" yang menyala di tepi atas header — sinyal cahaya berjalan */
-        .fiber-track {
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 3px;
-            background: var(--foam-soft);
-        }
-        .fiber-pulse {
-            position: absolute;
-            top: 0;
-            left: -46px;
-            width: 46px;
-            height: 3px;
-            border-radius: 3px;
-            background: linear-gradient(90deg, transparent, var(--foam), transparent);
-            animation: pulseMove 3.2s linear infinite;
-            opacity: 0;
-        }
-        .fiber-pulse.p2 {
-            background: linear-gradient(90deg, transparent, var(--sun-glow), transparent);
-            animation-delay: 1.05s;
-        }
-        .fiber-pulse.p3 {
-            background: linear-gradient(90deg, transparent, var(--sea), transparent);
-            animation-delay: 2.1s;
-        }
-        @keyframes pulseMove {
-            0%   { left: -46px; opacity: 0; }
-            8%   { opacity: 1; }
-            92%  { opacity: 1; }
-            100% { left: 100%; opacity: 0; }
-        }
-        .header-content {
-            padding: 1.2rem 1.8rem;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .header-content:hover {
-            background: rgba(165, 233, 221, 0.04);
-        }
-        .header h1 {
-            font-family: var(--font-display);
-            font-size: 1.8rem;
-            margin-bottom: 6px;
-            font-weight: 800;
-            color: var(--ink-light);
-            background: linear-gradient(90deg, var(--foam), var(--sun-glow));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: inline-block;
-        }
-        .header p {
-            color: var(--ink-muted);
-            font-size: 0.9rem;
-        }
-        .badge-proyek {
-            background: var(--foam-soft);
-            color: var(--foam);
-            border: 1px solid rgba(165, 233, 221, 0.25);
-            display: inline-block;
-            padding: 5px 12px;
-            border-radius: 40px;
-            font-size: 0.75rem;
-            margin-top: 10px;
-        }
-        .edit-header-hint {
-            font-size: 0.7rem;
-            margin-top: 8px;
-            opacity: 0.55;
-            color: var(--ink-muted);
-        }
-        .header-input, .header-textarea {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--sea);
-            color: var(--ink-light);
-            padding: 8px 12px;
-            border-radius: 12px;
-            width: 100%;
-            margin-bottom: 8px;
-            font-family: var(--font-body);
-        }
-        .btn-save-header {
-            background: var(--success);
-            border: none;
-            color: white;
-            padding: 6px 16px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-        /* TOTAL CARD */
-        .summary {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 28px;
-        }
-        .card-total {
-            background: linear-gradient(135deg, var(--abyss-2), var(--abyss));
-            border: 1px solid var(--line);
-            color: var(--foam);
-            padding: 20px 32px;
-            border-radius: 32px;
-            text-align: center;
-            min-width: 280px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .card-total:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(165, 233, 221, 0.08);
-        }
-        .card-total h3 {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            opacity: 0.85;
-            margin-bottom: 8px;
-            color: var(--ink-muted);
-        }
-        .card-total .value {
-            font-family: var(--font-mono);
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--sun-glow);
-        }
-        /* SECTION TITLE */
-        .section-title {
-            background: var(--abyss-2);
-            border: 1px solid var(--line);
-            padding: 10px 20px;
-            border-radius: 20px;
-            margin: 28px 0 14px 0;
-            font-weight: 700;
-            font-size: 1.2rem;
-            border-left: 6px solid var(--foam);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: var(--ink-light);
-            font-family: var(--font-display);
-        }
-        .add-btn {
-            background: var(--sea);
-            color: var(--abyss);
-            border: none;
-            padding: 6px 14px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: 700;
-            transition: all 0.2s ease;
-        }
-        .add-btn:hover {
-            background: var(--deep);
-            color: white;
-            transform: translateY(-2px);
-        }
-        .btn-excel {
-            background: var(--success);
-            color: white;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.2s ease;
-        }
-        .btn-excel:hover {
-            background: #1a9a7f;
-            transform: translateY(-2px);
-        }
-        /* TABLE WRAPPER */
-        .table-wrapper {
-            background: var(--abyss-2);
-            border-radius: 24px;
-            overflow-x: auto;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-            border: 1px solid var(--line);
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.85rem;
-            min-width: 700px;
-        }
-        th {
-            background: var(--abyss);
-            color: var(--foam);
-            padding: 14px 8px;
-            text-align: center;
-            border-bottom: 1px solid var(--line);
-            font-weight: 700;
-            font-family: var(--font-display);
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            letter-spacing: 0.5px;
-        }
-        td {
-            padding: 10px 8px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            text-align: center;
-            vertical-align: middle;
-            color: var(--ink-muted);
-            font-family: var(--font-mono);
-        }
-        /* DESKRIPSI RATA KIRI */
-        th:nth-child(2) {
-            text-align: left;
-            padding-left: 15px;
-        }
-        td:nth-child(2) {
-            text-align: left;
-            padding-left: 15px;
-            font-weight: 500;
-            color: var(--ink-light);
-            font-family: var(--font-body);
-        }
-        tr:hover td {
-            background: rgba(165, 233, 221, 0.03);
-        }
-        input {
-            width: 100%;
-            padding: 8px 6px;
-            border-radius: 12px;
-            border: 1px solid rgba(111, 190, 178, 0.35);
-            font-size: 0.8rem;
-            text-align: left;
-            background: var(--abyss);
-            color: var(--ink-light);
-            font-family: var(--font-mono);
-        }
-        input:focus {
-            outline: none;
-            border-color: var(--foam);
-            box-shadow: 0 0 0 3px rgba(165, 233, 221, 0.15);
-        }
-        .auto-badge {
-            background: rgba(165, 233, 221, 0.18);
-            font-size: 0.65rem;
-            padding: 2px 6px;
-            border-radius: 12px;
-            margin-left: 8px;
-            color: var(--foam);
-        }
-        .action-buttons {
-            display: flex;
-            gap: 8px;
-            justify-content: center;
-        }
-        .edit-btn, .delete-btn {
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-            padding: 6px 10px;
-            border-radius: 20px;
-            transition: 0.2s;
-            font-weight: 500;
-        }
-        .edit-btn {
-            background: rgba(111, 190, 178, 0.18);
-            color: var(--foam);
-        }
-        .edit-btn:hover {
-            background: var(--sea);
-            color: var(--abyss);
-            transform: translateY(-2px);
-        }
-        .delete-btn {
-            background: rgba(255, 107, 91, 0.14);
-            color: var(--coral);
-        }
-        .delete-btn:hover {
-            background: var(--coral);
-            color: white;
-            transform: translateY(-2px);
-        }
-        button:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-        .save-cancel-buttons {
-            display: flex;
-            gap: 6px;
-            justify-content: center;
-        }
-        .save-btn {
-            background: var(--success);
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.75rem;
-        }
-        .cancel-btn {
-            background: rgba(255, 255, 255, 0.08);
-            color: var(--ink-muted);
-            border: none;
-            padding: 6px 12px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.75rem;
-        }
-        .footer-note {
-            margin-top: 32px;
-            background: var(--abyss-2);
-            border: 1px solid var(--line);
-            padding: 14px 20px;
-            border-radius: 20px;
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            align-items: center;
-            color: var(--ink-muted);
-        }
-        .footer-note span {
-            color: var(--ink-light);
-        }
-        @media (max-width: 680px) {
-            .card-total .value { font-size: 1.6rem; }
-            .card-total { padding: 12px 20px; min-width: 200px; }
-            .edit-btn, .delete-btn { padding: 4px 8px; font-size: 0.75rem; }
-        }
-
-        /* STYLE KHUSUS UNTUK CETAK PDF (tetap terang/hemat tinta, tidak memakai tema gelap) */
+        
         @media print {
-            body {
-                background: white;
-                padding: 0;
-                margin: 0;
+            @page {
+                size: A4;
+                margin: 15mm;
             }
-            .container {
-                margin: 0;
-                padding: 10px;
+            .no-print { display: none !important; }
+            body { background: white !important; margin: 0; padding: 0; color: #000; font-size: 12px; }
+            .print-only { display: block !important; }
+            .content-canvas { margin: 0 !important; padding: 0 !important; width: 100% !important; max-width: 100% !important; }
+            
+            table { 
+                width: 100% !important; 
+                border-collapse: collapse !important; 
+                table-layout: auto !important;
+                page-break-inside: auto;
             }
-            .btn-kembali {
-                display: none !important;
+            tr { page-break-inside: avoid; page-break-after: auto; }
+            thead { display: table-header-group; }
+            
+            th, td { 
+                border: 1px solid #000 !important; 
+                padding: 6px 8px !important;
+                color: #000 !important;
             }
-            .header {
-                background: var(--abyss-2);
-                border: 1px solid #ccc;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
+            th { background-color: #f3f4f6 !important; }
+            
+            .card { border: 1px solid #000 !important; box-shadow: none !important; }
+            section { page-break-before: auto; break-inside: avoid; margin-bottom: 20px; }
+            
+            #grand-total-container {
+                background: white !important;
+                color: black !important;
+                border: 2px solid #000 !important;
+                box-shadow: none !important;
+                page-break-inside: avoid;
             }
-            .fiber-track, .fiber-pulse {
-                display: none !important;
-            }
-            .card-total {
-                background: var(--abyss-2);
-                border: 1px solid #ccc;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-            .add-btn, .btn-excel, .edit-btn, .delete-btn, .save-cancel-buttons, .action-buttons, .footer-note button {
-                display: none !important;
-            }
-            .table-wrapper {
-                background: white;
-                border: 1px solid #ccc;
-            }
-            th {
-                background: #e0e0e0;
-                color: black;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-            td {
-                color: black;
-            }
-            .auto-badge {
-                background: #e8f5e9;
-                color: #1a7a63;
-            }
-            .footer-note {
-                border: none;
-                background: none;
-            }
-            .section-title button {
-                display: none;
-            }
-            .edit-header-hint {
-                display: none;
-            }
+            #grand-total-container * { color: black !important; }
+            
+            .bg-on-surface-variant { background-color: #f3f4f6 !important; }
+            .text-white { color: #000 !important; }
+            .text-primary { color: #000 !important; }
+            
+            .border-l-4 { border-left-width: 4px !important; border-left-color: #000 !important; }
         }
+
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .edit-mode .display-view { display: none !important; }
+        .edit-mode .edit-view { display: flex !important; }
+        
+        #header-display.hidden { display: none !important; }
+        #header-edit.hidden { display: none !important; }
     </style>
 </head>
-<body>
-<div class="container">
-
-    <a href="index.html" class="btn-kembali">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="19" y1="12" x2="5" y2="12"></line>
-            <polyline points="12 19 5 12 12 5"></polyline>
-        </svg>
-        <span>Kembali ke Dashboard</span>
+<body class="bg-background font-body-md text-on-surface selection:bg-primary-container selection:text-white">
+<div class="flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="no-print hidden md:flex fixed h-screen left-0 top-0 w-64 bg-on-surface-variant dark:bg-inverse-surface flex-col py-base gap-2 shadow-lg border-r border-outline-variant/20 z-50">
+<div class="px-6 py-4 mb-4">
+    <a href="index.html" class="block hover:opacity-80 transition-opacity">
+        <div class="text-primary-fixed font-bold text-xl font-headline-md tracking-tight ">RABIT</div>
+        <div class="text-secondary-fixed-dim text-[10px] font-label-caps opacity-70">RAB Instalasi Aktivasi</div>
     </a>
-
-    <div class="header" id="headerBox">
-        <div class="fiber-track" aria-hidden="true"></div>
-        <div class="fiber-pulse p1" aria-hidden="true"></div>
-        <div class="fiber-pulse p2" aria-hidden="true"></div>
-        <div class="fiber-pulse p3" aria-hidden="true"></div>
-        <div class="header-content" id="headerContent">
-            <div id="headerDisplay">
-                <h1>RAB AKTIVASI VIA FTTH </h1>
-                <p>Nama Pelanggan</p>
-                <div class="badge-proyek">KHS AKTIVASI SULAWESI</div>
-                <div class="edit-header-hint">Klik header untuk edit</div>
-            </div>
-            <div id="headerEditor" style="display:none;">
-                <input type="text" id="editTitle" class="header-input" placeholder="Judul">
-                <textarea id="editSubtitle" rows="2" class="header-textarea" placeholder="Subtitle"></textarea>
-                <button class="btn-save-header" id="saveHeaderBtn">Simpan</button>
-                <button class="btn-save-header" id="cancelHeaderBtn" style="background:#5a6e7c;">Batal</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="summary">
-        <div class="card-total">
-            <h3>TOTAL RAB</h3>
-            <div class="value" id="grandTotalDisplay">Rp 0</div>
-        </div>
-    </div>
-
-    <div class="section-title">
-        <span>PEKERJAAN INSTALASI & TEKNIS</span>
-        <button class="add-btn" id="tambahInstalasiBtn">+ Tambah Item</button>
-    </div>
-    <div class="table-wrapper">
-        <table id="tabelInstalasi">
-            <thead>
-                <tr><th>No</th><th>Deskripsi</th><th>Satuan</th><th>Qty</th><th>Harga Satuan (Rp)</th><th>Total (Rp)</th><th>Aksi</th></tr>
-            </thead>
-            <tbody id="bodyInstalasi"></tbody>
-            <tfoot id="footerInstalasi" style="background:#1a1a2e; font-weight:bold;">
-                <tr>
-                    <td colspan="5" style="text-align:right; color:#00e5a0;">SUB TOTAL INSTALASI :</td>
-                    <td id="subTotalInstalasi" style="text-align:center; color:#00e5a0;">Rp 0</td>
-                    <td></td>
-                </tr>
-            </tfoot>
-        </table>
-    </div>
-
-    <div class="section-title">
-        <span>PERANGKAT & MATERIAL KABEL</span>
-        <button class="add-btn" id="tambahMaterialBtn">+ Tambah Item</button>
-    </div>
-    <div class="table-wrapper">
-        <table id="tabelMaterial">
-            <thead>
-                <tr><th>No</th><th>Deskripsi</th><th>Satuan</th><th>Qty</th><th>Harga Satuan (Rp)</th><th>Total (Rp)</th><th>Aksi</th></tr>
-            </thead>
-            <tbody id="bodyMaterial"></tbody>
-            <tfoot id="footerMaterial" style="background:#1a1a2e; font-weight:bold;">
-                <tr>
-                    <td colspan="5" style="text-align:right; color:#00e5a0;">SUB TOTAL PERANGKAT :</td>
-                    <td id="subTotalMaterial" style="text-align:center; color:#00e5a0;">Rp 0</td>
-                    <td></td>
-                </tr>
-            </tfoot>
-        </table>
-    </div>
-
-    <div class="footer-note">
-        <div>
-            <button class="btn-excel" id="exportExcelBtn">Export ke Excel</button>
-            <button class="add-btn" id="cetakBtn" style="background:#2c7a4a; margin-left:10px;">Cetak PDF</button>
-        </div>
-    </div>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-<script>
-    let dataInstalasi = [
-        { id: "t1", no:1, deskripsi:"PEMBUATAN DOKUMENTASI TEKNIS", satuan:"LOT", qty:1, harga:383030, autoCalc: false },
-        { id: "t2", no:2, deskripsi:"INSTALASI DROP WIRE <= 300M", satuan:"LOT", qty:1, harga:285000, autoCalc: false },
-        { id: "t3", no:2, deskripsi:"TRANSPORTASI ADSS SS/LS UNTUK >120KM", satuan:"LOT", qty:1, harga:1051536, autoCalc: false },
-        
-        
-    ];
-
-    let dataMaterial = [
-        { id: "m1", no:1, deskripsi:"GPON,ONT EG8021V5,2.4/5GHz Wi-Fi,,HUAWEI", satuan:"U", qty:1, harga:299200, autoCalc: false },
-        { id: "m2", no:2, deskripsi:"FOC,DropWire3SlgSC-UPC,1F,100m,FIBERHOME", satuan:"U", qty:1, harga:63706, autoCalc: false },
-        { id: "m3", no:3, deskripsi:"FOC,DropWire3SlgSC-UPC,1F,150m,FIBERHOME", satuan:"U", qty:1, harga:86553, autoCalc: false },
-        { id: "m4", no:4, deskripsi:"FOC,DropWire3SlgSC-UPC,1F,250m,FIBERHOME", satuan:"U", qty:1, harga:132248, autoCalc: false },
-        { id: "m6", no:6, deskripsi:"GPON,ONT HG6045D1 2*GE+1*POTS,FIBERHOME", satuan:"U", qty:1, harga:299000, autoCalc: false },
-    ];
-
-    let editingRows = new Set();
-    let tempEditData = new Map();
-    let headerData = {
-        title: "RAB AKTIVASI VIA FTTH",
-        subtitle: "Nama pelanggan",
-        badge: "KHS AKTIVASI SULAWESI"
-    };
-
-    function formatRp(angka) {
-        return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
-    }
-
-    function formatNumber(angka) {
-        return new Intl.NumberFormat('id-ID').format(angka);
-    }
-
-    function escapeHtml(str) {
-        if(!str) return '';
-        return str.replace(/[&<>]/g, function(m) {
-            if(m === '&') return '&amp;';
-            if(m === '<') return '&lt;';
-            if(m === '>') return '&gt;';
-            return m;
-        });
-    }
-
-    function getQtyPenarikanFOC() {
-        const item = dataInstalasi.find(i => i.id === "t3");
-        return item ? item.qty : 0;
-    }
-
-    function hitungDeadend(qtyFOC) {
-        const step1 = qtyFOC / 40;
-        const step2 = step1 / 3;
-        return Math.ceil(step2);
-    }
-
-    function hitungSuspensionAndLabeling(qtyFOC, deadendQty) {
-        const base = qtyFOC / 40;
-        let result = base - deadendQty;
-        if (result < 0) result = 0;
-        return Math.ceil(result);
-    }
-
-    function applyAutoCalculations() {
-        const qtyFOC = getQtyPenarikanFOC();
-        
-        const focMaterial = dataMaterial.find(m => m.id === "m6");
-        if (focMaterial && focMaterial.autoCalc) {
-            focMaterial.qty = qtyFOC;
-        }
-        
-        const deadendQty = hitungDeadend(qtyFOC);
-        const deadendItem = dataInstalasi.find(i => i.id === "t9");
-        if (deadendItem && deadendItem.autoCalc) {
-            deadendItem.qty = deadendQty;
-        }
-        
-        const suspensionAndLabelQty = hitungSuspensionAndLabeling(qtyFOC, deadendQty);
-        const suspensionItem = dataInstalasi.find(i => i.id === "t10");
-        if (suspensionItem && suspensionItem.autoCalc) {
-            suspensionItem.qty = suspensionAndLabelQty;
-        }
-        
-        const labelingKabelItem = dataInstalasi.find(i => i.id === "t6");
-        if (labelingKabelItem && labelingKabelItem.autoCalc) {
-            labelingKabelItem.qty = suspensionAndLabelQty;
-        }
-    }
-
-    function renumberArray(arr) {
-        arr.forEach((item, idx) => { item.no = idx + 1; });
-    }
-
-    function updateSubtotals() {
-        const totalInst = dataInstalasi.reduce((s,i) => s + (i.qty * i.harga), 0);
-        const totalMat = dataMaterial.reduce((s,i) => s + (i.qty * i.harga), 0);
-        document.getElementById('subTotalInstalasi').innerHTML = formatRp(totalInst);
-        document.getElementById('subTotalMaterial').innerHTML = formatRp(totalMat);
-        const grand = totalInst + totalMat;
-        document.getElementById('grandTotalDisplay').innerHTML = formatRp(grand);
-    }
-
-    function startEdit(id, isMaterial) {
-        let item;
-        if (isMaterial) {
-            item = dataMaterial.find(i => i.id === id);
-        } else {
-            item = dataInstalasi.find(i => i.id === id);
-        }
-        if (item && item.autoCalc) return;
-        
-        editingRows.add(id);
-        tempEditData.set(id, {
-            deskripsi: item.deskripsi,
-            satuan: item.satuan,
-            qty: item.qty,
-            harga: item.harga
-        });
-        
-        renderMaterial();
-        renderInstalasi();
-    }
-
-    function saveEdit(id, isMaterial) {
-        const temp = tempEditData.get(id);
-        if (!temp) return;
-        
-        if (isMaterial) {
-            const item = dataMaterial.find(i => i.id === id);
-            if (item && !item.autoCalc) {
-                item.deskripsi = temp.deskripsi;
-                item.satuan = temp.satuan;
-                item.qty = temp.qty;
-                item.harga = temp.harga;
-            }
-        } else {
-            const item = dataInstalasi.find(i => i.id === id);
-            if (item && !item.autoCalc) {
-                item.deskripsi = temp.deskripsi;
-                item.satuan = temp.satuan;
-                item.qty = temp.qty;
-                item.harga = temp.harga;
-                if (item.id === "t3") {
-                    applyAutoCalculations();
-                }
-            }
-        }
-        
-        editingRows.delete(id);
-        tempEditData.delete(id);
-        renderInstalasi();
-        renderMaterial();
-        updateSubtotals();
-    }
-
-    function cancelEdit(id) {
-        editingRows.delete(id);
-        tempEditData.delete(id);
-        renderInstalasi();
-        renderMaterial();
-    }
-
-    function updateEditField(id, field, value, isMaterial) {
-        const temp = tempEditData.get(id);
-        if (temp) {
-            if (field === 'deskripsi') temp.deskripsi = value;
-            if (field === 'satuan') temp.satuan = value;
-            if (field === 'qty') temp.qty = parseFloat(value) || 0;
-            if (field === 'harga') temp.harga = parseFloat(value) || 0;
-        }
-    }
-
-    function renderInstalasi() {
-        const tbody = document.getElementById('bodyInstalasi');
-        tbody.innerHTML = '';
-        renumberArray(dataInstalasi);
-        dataInstalasi.forEach(item => {
-            const row = tbody.insertRow();
-            const isEditing = editingRows.has(item.id);
-            const temp = tempEditData.get(item.id);
-            
-            row.insertCell(0).innerText = item.no;
-            
-            const cellDesc = row.insertCell(1);
-            const cellSatuan = row.insertCell(2);
-            const cellQty = row.insertCell(3);
-            const cellHarga = row.insertCell(4);
-            const cellTotal = row.insertCell(5);
-            const totalVal = (isEditing ? (temp?.qty || 0) : item.qty) * (isEditing ? (temp?.harga || 0) : item.harga);
-            cellTotal.innerText = formatRp(totalVal);
-            const cellAction = row.insertCell(6);
-            
-            if (isEditing) {
-                cellDesc.innerHTML = `<input type="text" class="edit-desc" value="${escapeHtml(temp?.deskripsi || '')}" style="text-align:left;" onchange="updateEditField('${item.id}', 'deskripsi', this.value, false)">`;
-                cellSatuan.innerHTML = `<input type="text" class="edit-satuan" value="${temp?.satuan || ''}" style="width:80px;" onchange="updateEditField('${item.id}', 'satuan', this.value, false)">`;
-                if (item.autoCalc) {
-                    cellQty.innerHTML = `<span style="background:#163C38; padding:4px 8px; border-radius:12px; color:#A5E9DD;">${item.qty} <span class="auto-badge">auto</span></span>`;
-                } else {
-                    cellQty.innerHTML = `<input type="number" class="edit-qty" value="${temp?.qty || 0}" step="any" style="width:80px;" onchange="updateEditField('${item.id}', 'qty', this.value, false)">`;
-                }
-                cellHarga.innerHTML = `<input type="number" class="edit-harga" value="${temp?.harga || 0}" step="any" style="width:110px;" onchange="updateEditField('${item.id}', 'harga', this.value, false)">`;
-                cellAction.innerHTML = `<div class="save-cancel-buttons"><button class="save-btn" onclick="saveEdit('${item.id}', false)">Simpan</button><button class="cancel-btn" onclick="cancelEdit('${item.id}')">Batal</button></div>`;
-            } else {
-                cellDesc.innerText = item.deskripsi;
-                cellSatuan.innerText = item.satuan;
-                if (item.autoCalc) {
-                    cellQty.innerHTML = `<span style="background:#163C38; padding:4px 8px; border-radius:12px; color:#A5E9DD;">${item.qty} <span class="auto-badge">auto</span></span>`;
-                } else {
-                    cellQty.innerText = item.qty;
-                }
-                cellHarga.innerText = formatRp(item.harga);
-                cellAction.innerHTML = `<div class="action-buttons">${!item.autoCalc ? `<button class="edit-btn" onclick="startEdit('${item.id}', false)">Edit</button>` : `<button class="edit-btn" disabled style="opacity:0.4;">Edit</button>`}<button class="delete-btn" onclick="deleteItem('${item.id}', false)">Hapus</button></div>`;
-            }
-        });
-        updateSubtotals();
-    }
-
-    function renderMaterial() {
-        const tbody = document.getElementById('bodyMaterial');
-        tbody.innerHTML = '';
-        renumberArray(dataMaterial);
-        dataMaterial.forEach(item => {
-            const row = tbody.insertRow();
-            const isEditing = editingRows.has(item.id);
-            const temp = tempEditData.get(item.id);
-            
-            row.insertCell(0).innerText = item.no;
-            
-            const cellDesc = row.insertCell(1);
-            const cellSatuan = row.insertCell(2);
-            const cellQty = row.insertCell(3);
-            const cellHarga = row.insertCell(4);
-            const cellTotal = row.insertCell(5);
-            const totalVal = (isEditing ? (temp?.qty || 0) : item.qty) * (isEditing ? (temp?.harga || 0) : item.harga);
-            cellTotal.innerText = formatRp(totalVal);
-            const cellAction = row.insertCell(6);
-            
-            if (isEditing) {
-                cellDesc.innerHTML = `<input type="text" class="edit-desc" value="${escapeHtml(temp?.deskripsi || '')}" style="text-align:left;" onchange="updateEditField('${item.id}', 'deskripsi', this.value, true)">`;
-                cellSatuan.innerHTML = `<input type="text" class="edit-satuan" value="${temp?.satuan || ''}" style="width:80px;" onchange="updateEditField('${item.id}', 'satuan', this.value, true)">`;
-                if (item.autoCalc) {
-                    cellQty.innerHTML = `<span style="background:#163C38; padding:4px 8px; border-radius:12px; color:#A5E9DD;">${item.qty} <span class="auto-badge">auto</span></span>`;
-                } else {
-                    cellQty.innerHTML = `<input type="number" class="edit-qty" value="${temp?.qty || 0}" step="any" style="width:80px;" onchange="updateEditField('${item.id}', 'qty', this.value, true)">`;
-                }
-                cellHarga.innerHTML = `<input type="number" class="edit-harga" value="${temp?.harga || 0}" step="any" style="width:110px;" onchange="updateEditField('${item.id}', 'harga', this.value, true)">`;
-                cellAction.innerHTML = `<div class="save-cancel-buttons"><button class="save-btn" onclick="saveEdit('${item.id}', true)">Simpan</button><button class="cancel-btn" onclick="cancelEdit('${item.id}')">Batal</button></div>`;
-            } else {
-                cellDesc.innerText = item.deskripsi;
-                cellSatuan.innerText = item.satuan;
-                if (item.autoCalc) {
-                    cellQty.innerHTML = `<span style="background:#163C38; padding:4px 8px; border-radius:12px; color:#A5E9DD;">${item.qty} <span class="auto-badge">auto</span></span>`;
-                } else {
-                    cellQty.innerText = item.qty;
-                }
-                cellHarga.innerText = formatRp(item.harga);
-                cellAction.innerHTML = `<div class="action-buttons">${!item.autoCalc ? `<button class="edit-btn" onclick="startEdit('${item.id}', true)">Edit</button>` : `<button class="edit-btn" disabled style="opacity:0.4;">Edit</button>`}<button class="delete-btn" onclick="deleteItem('${item.id}', true)">Hapus</button></div>`;
-            }
-        });
-        updateSubtotals();
-    }
-
-    function deleteItem(id, isMaterial) {
-        if (confirm('Hapus item ini?')) {
-            if (isMaterial) {
-                dataMaterial = dataMaterial.filter(i => i.id !== id);
-            } else {
-                dataInstalasi = dataInstalasi.filter(i => i.id !== id);
-            }
-            editingRows.delete(id);
-            tempEditData.delete(id);
-            renderInstalasi();
-            renderMaterial();
-            updateSubtotals();
-        }
-    }
-
-    function tambahInstalasi() {
-        const newId = 'ins_' + Date.now();
-        dataInstalasi.push({ id: newId, no: dataInstalasi.length+1, deskripsi: "Item Baru", satuan: "LOT", qty: 1, harga: 0, autoCalc: false });
-        startEdit(newId, false);
-    }
-    
-    function tambahMaterial() {
-        const newId = 'mat_' + Date.now();
-        dataMaterial.push({ id: newId, no: dataMaterial.length+1, deskripsi: "Material Baru", satuan: "U", qty: 1, harga: 0, autoCalc: false });
-        startEdit(newId, true);
-    }
-
-    function exportToExcel() {
-        const instalasiRows = dataInstalasi.map(item => ({
-            "No": item.no,
-            "Deskripsi": item.deskripsi,
-            "Satuan": item.satuan,
-            "Qty": item.qty,
-            "Harga Satuan (Rp)": item.harga,
-            "Total (Rp)": item.qty * item.harga
-        }));
-        
-        const materialRows = dataMaterial.map(item => ({
-            "No": item.no,
-            "Deskripsi": item.deskripsi,
-            "Satuan": item.satuan,
-            "Qty": item.qty,
-            "Harga Satuan (Rp)": item.harga,
-            "Total (Rp)": item.qty * item.harga
-        }));
-        
-        const totalInst = dataInstalasi.reduce((s,i) => s + (i.qty * i.harga), 0);
-        const totalMat = dataMaterial.reduce((s,i) => s + (i.qty * i.harga), 0);
-        const grandTotal = totalInst + totalMat;
-        
-        const wsInstalasi = XLSX.utils.json_to_sheet(instalasiRows);
-        const wsMaterial = XLSX.utils.json_to_sheet(materialRows);
-        const summaryRows = [
-            { "Keterangan": "TOTAL INSTALASI", "Nilai (Rp)": totalInst },
-            { "Keterangan": "TOTAL PERANGKAT & MATERIAL", "Nilai (Rp)": totalMat },
-            { "Keterangan": "GRAND TOTAL RAB", "Nilai (Rp)": grandTotal }
-        ];
-        const wsSummary = XLSX.utils.json_to_sheet(summaryRows);
-        
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, wsInstalasi, "PEKERJAAN INSTALASI");
-        XLSX.utils.book_append_sheet(wb, wsMaterial, "PERANGKAT & MATERIAL");
-        XLSX.utils.book_append_sheet(wb, wsSummary, "RINGKASAN RAB");
-        
-        const fileName = `RAB_Instalasi_Fiber_${new Date().toISOString().slice(0,19).replace(/:/g, '-')}.xlsx`;
-        XLSX.writeFile(wb, fileName);
-    }
-
-    function updateHeaderDisplay() {
-        document.getElementById('headerDisplay').innerHTML = `
-            <h1>${escapeHtml(headerData.title)}</h1>
-            <p>${escapeHtml(headerData.subtitle)}</p>
-            <div class="badge-proyek">${escapeHtml(headerData.badge)}</div>
-            <div class="edit-header-hint">Klik header untuk edit</div>
-        `;
-    }
-    
-    function showEditor() {
-        document.getElementById('headerDisplay').style.display = 'none';
-        document.getElementById('headerEditor').style.display = 'block';
-        document.getElementById('editTitle').value = headerData.title;
-        document.getElementById('editSubtitle').value = headerData.subtitle;
-    }
-    
-    function hideEditor() {
-        document.getElementById('headerDisplay').style.display = 'block';
-        document.getElementById('headerEditor').style.display = 'none';
-    }
-    
-    document.getElementById('headerContent').addEventListener('click', (e) => {
-        if(e.target.closest('#saveHeaderBtn') || e.target.closest('#cancelHeaderBtn')) return;
-        showEditor();
-    });
-    document.getElementById('saveHeaderBtn').addEventListener('click', () => {
-        headerData.title = document.getElementById('editTitle').value.trim() || headerData.title;
-        headerData.subtitle = document.getElementById('editSubtitle').value.trim() || headerData.subtitle;
-        updateHeaderDisplay();
-        hideEditor();
-    });
-    document.getElementById('cancelHeaderBtn').addEventListener('click', hideEditor);
-
-    function cetakLaporan() {
-        const printWindow = window.open('', '_blank');
-        if (!printWindow) {
-            alert("Mohon izinkan pop-up untuk mencetak.");
-            return;
-        }
-        
-        const totalInst = dataInstalasi.reduce((s,i) => s + (i.qty * i.harga), 0);
-        const totalMat = dataMaterial.reduce((s,i) => s + (i.qty * i.harga), 0);
-        const grandTotal = totalInst + totalMat;
-        
-        const instalasiRows = dataInstalasi.map(item => `
-            <tr>
-                <td style="border:1px solid #ddd; padding:8px; text-align:center;">${item.no}</td>
-                <td style="border:1px solid #ddd; padding:8px; text-align:left;">${escapeHtml(item.deskripsi)}</td>
-                <td style="border:1px solid #ddd; padding:8px; text-align:center;">${item.satuan}</td>
-                <td style="border:1px solid #ddd; padding:8px; text-align:center;">${item.qty}</td>
-                <td style="border:1px solid #ddd; padding:8px; text-align:right;">${formatRp(item.harga)}</td>
-                <td style="border:1px solid #ddd; padding:8px; text-align:right;">${formatRp(item.qty * item.harga)}</td>
-            </tr>
-        `).join('');
-        
-        const materialRows = dataMaterial.map(item => `
-            <tr>
-                <td style="border:1px solid #ddd; padding:8px; text-align:center;">${item.no}</td>
-                <td style="border:1px solid #ddd; padding:8px; text-align:left;">${escapeHtml(item.deskripsi)}</td>
-                <td style="border:1px solid #ddd; padding:8px; text-align:center;">${item.satuan}</td>
-                <td style="border:1px solid #ddd; padding:8px; text-align:center;">${item.qty}</td>
-                <td style="border:1px solid #ddd; padding:8px; text-align:right;">${formatRp(item.harga)}</td>
-                <td style="border:1px solid #ddd; padding:8px; text-align:right;">${formatRp(item.qty * item.harga)}</td>
-            </tr>
-        `).join('');
-
-        printWindow.document.write(`
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <title>Cetak RAB</title>
-                <style>
-                    body { font-family: 'Segoe UI', sans-serif; padding: 20px; color: #333; }
-                    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-                    th { background: #f2f2f2; padding: 10px; border: 1px solid #ddd; text-align: center; }
-                    .header-print { margin-bottom: 30px; }
-                    .total-rab { margin-top: 30px; font-size: 1.4rem; font-weight: bold; text-align: right; }
-                </style>
-            </head>
-            <body>
-                <div class="header-print">
-                    <h2>${escapeHtml(headerData.title)}</h2>
-                    <p>${escapeHtml(headerData.subtitle)}</p>
-                    <p style="margin-top:5px;"><strong>Proyek:</strong> ${escapeHtml(headerData.badge)}</p>
+<nav class="flex-1 px-2 space-y-1">
+<a class="flex items-center gap-3 text-secondary-fixed-dim hover:text-primary-fixed hover:bg-white/5 rounded-lg mx-2 my-1 px-4 py-3 transition-all" href="conven.html">
+<span class="material-symbols-outlined">cable</span>
+<span class="font-label-caps text-label-caps">CONVEN</span>
+</a>
+<a class="flex items-center gap-3 text-secondary-fixed-dim hover:text-primary-fixed hover:bg-white/5 rounded-lg mx-2 my-1 px-4 py-3 transition-all" href="ftth.html">
+<span class="material-symbols-outlined">router</span>
+<span class="font-label-caps text-label-caps">FTTH</span>
+</a>
+<a class="flex items-center gap-3 text-secondary-fixed-dim hover:text-primary-fixed hover:bg-white/5 rounded-lg mx-2 my-1 px-4 py-3 transition-all" href="ftthxconven.html">
+<span class="material-symbols-outlined">hub</span>
+<span class="font-label-caps text-label-caps">FTTH X CONVEN</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-64 p-margin-mobile md:p-margin-desktop content-canvas">
+<!-- Top App Bar & Actions -->
+<div class="no-print flex flex-col md:flex-row md:items-start justify-between gap-4 mb-8">
+<div class="relative min-h-[80px] flex items-center" id="header-container">
+<!-- Header Display -->
+<div class="display-view flex flex-col cursor-pointer hover:bg-surface-container-low p-2 rounded-lg transition-colors group" id="header-display" onclick="toggleHeaderEdit(true)">
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight" id="title-text">RAB AKTIVASI VIA FTTH</h1>
+<p class="text-secondary font-body-md mt-1 uppercase tracking-wider" id="subtitle-text">Nama Pelanggan</p>
+<span class="material-symbols-outlined absolute -right-8 top-4 opacity-0 group-hover:opacity-100 transition-opacity text-sm text-outline">edit</span>
+</div>
+<!-- Header Edit -->
+<div class="edit-view hidden flex-col gap-3 p-2 bg-surface-container-low rounded-lg border border-outline-variant w-full md:w-[500px]" id="header-edit">
+<input class="w-full bg-white border-outline-variant rounded p-2 font-headline-lg text-headline-lg text-primary focus:ring-primary focus:border-primary" id="input-title" placeholder="Judul RAB" type="text"/>
+<input class="w-full bg-white border-outline-variant rounded p-2 text-secondary font-body-md uppercase focus:ring-primary focus:border-primary" id="input-subtitle" placeholder="Sub-deskripsi" type="text"/>
+<div class="flex justify-end gap-2 mt-2">
+<button class="px-3 py-1 text-sm font-label-caps text-secondary hover:bg-surface-container-high rounded" onclick="toggleHeaderEdit(false)">Batal</button>
+<button class="px-4 py-1 text-sm font-label-caps bg-primary text-white rounded shadow-sm hover:opacity-90" onclick="saveHeader()">Simpan</button>
+</div>
+</div>
+</div>
+<div class="flex gap-2 self-end md:self-start">
+<button class="flex items-center gap-2 bg-surface-container-lowest border border-outline-variant px-4 py-2 rounded-lg font-label-caps text-label-caps text-on-surface-variant hover:bg-surface-container-low transition-colors" onclick="window.print()">
+<span class="material-symbols-outlined text-base">print</span>
+                    CETAK PDF
+                </button>
+</div>
+</div>
+<!-- Print Only Header -->
+<div class="hidden print-only mb-8 text-center border-b-2 border-black pb-4">
+<h1 class="text-2xl font-bold uppercase" id="print-title">RAB AKTIVASI VIA FTTH</h1>
+<p class="uppercase font-semibold" id="print-subtitle">Technical Activation Cost Estimation</p>
+</div>
+<!-- Installation Table Section -->
+<section class="mb-gutter">
+<div class="flex items-center justify-between mb-4">
+<h2 class="font-headline-md text-headline-md text-on-surface border-l-4 border-primary pl-4 uppercase">Pekerjaan Instalasi &amp; Teknis</h2>
+<button class="no-print flex items-center gap-2 bg-secondary-container text-on-secondary-container px-3 py-1.5 rounded font-label-caps text-[11px] hover:opacity-80 transition-opacity" onclick="addItem('install')">
+<span class="material-symbols-outlined text-sm">add</span>
+                    TAMBAH ITEM
+                </button>
+</div>
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden shadow-sm overflow-x-auto print:border-none print:shadow-none">
+<table class="w-full text-left min-w-[800px] print:min-w-full">
+<thead class="bg-on-surface-variant text-white font-label-caps text-[11px] uppercase tracking-widest print:text-black">
+<tr>
+<th class="px-4 py-3 font-bold text-center w-12">No</th>
+<th class="px-4 py-3 font-bold">Deskripsi Pekerjaan</th>
+<th class="px-4 py-3 font-bold text-center w-20">Satuan</th>
+<th class="px-4 py-3 font-bold text-center w-16">Qty</th>
+<th class="px-4 py-3 font-bold text-right w-36">Harga Satuan</th>
+<th class="px-4 py-3 font-bold text-right w-36">Total</th>
+<th class="no-print px-4 py-3 font-bold text-center w-28">Aksi</th>
+</tr>
+</thead>
+<tbody class="font-body-md text-on-surface" id="installation-body"></tbody>
+<tfoot class="bg-surface-container-low border-t border-outline-variant print:bg-white">
+<tr>
+<td class="px-4 py-4 text-right font-headline-md text-on-surface print:font-bold" colspan="5">SUB TOTAL INSTALASI :</td>
+<td class="px-4 py-4 text-right font-mono-data font-bold text-primary print:text-black" id="subtotal-installation">Rp 0</td>
+<td class="no-print"></td>
+</tr>
+</tfoot>
+</table>
+</div>
+</section>
+<!-- Hardware Table Section -->
+<section class="mb-gutter">
+<div class="flex items-center justify-between mb-4">
+<h2 class="font-headline-md text-headline-md text-on-surface border-l-4 border-primary pl-4 uppercase">Perangkat &amp; Material Kabel</h2>
+<button class="no-print flex items-center gap-2 bg-secondary-container text-on-secondary-container px-3 py-1.5 rounded font-label-caps text-[11px] hover:opacity-80 transition-opacity" onclick="addItem('hardware')">
+<span class="material-symbols-outlined text-sm">add</span>
+                    TAMBAH ITEM
+                </button>
+</div>
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden shadow-sm overflow-x-auto print:border-none print:shadow-none">
+<table class="w-full text-left min-w-[800px] print:min-w-full">
+<thead class="bg-on-surface-variant text-white font-label-caps text-[11px] uppercase tracking-widest print:text-black">
+<tr>
+<th class="px-4 py-3 font-bold text-center w-12">No</th>
+<th class="px-4 py-3 font-bold">Deskripsi Perangkat</th>
+<th class="px-4 py-3 font-bold text-center w-20">Satuan</th>
+<th class="px-4 py-3 font-bold text-center w-16">Qty</th>
+<th class="px-4 py-3 font-bold text-right w-36">Harga Satuan</th>
+<th class="px-4 py-3 font-bold text-right w-36">Total</th>
+<th class="no-print px-4 py-3 font-bold text-center w-28">Aksi</th>
+</tr>
+</thead>
+<tbody class="font-body-md text-on-surface" id="hardware-body"></tbody>
+<tfoot class="bg-surface-container-low border-t border-outline-variant print:bg-white">
+<tr>
+<td class="px-4 py-4 text-right font-headline-md text-on-surface print:font-bold" colspan="5">SUB TOTAL MATERIAL :</td>
+<td class="px-4 py-4 text-right font-mono-data font-bold text-primary print:text-black" id="subtotal-hardware">Rp 0</td>
+<td class="no-print"></td>
+</tr>
+</tfoot>
+</table>
+</div>
+</section>
+<!-- Grand Total Section -->
+<section class="flex justify-end mt-8">
+<div class="w-full md:w-96 bg-primary text-white p-6 rounded-xl shadow-lg transform hover:scale-[1.02] transition-transform print:transform-none" id="grand-total-container">
+<div class="flex justify-between items-center mb-2">
+<span class="font-label-caps text-label-caps opacity-80 print:opacity-100">ESTIMASI TOTAL RAB</span>
+<span class="material-symbols-outlined opacity-60 no-print">payments</span>
+</div>
+<div class="font-mono-data text-3xl font-bold text-right" id="grand-total">Rp 0</div>
+<div class="mt-4 pt-4 border-t border-white/20 text-[10px] uppercase font-label-caps opacity-70 print:opacity-100 print:border-black">
+                        Harga belum termasuk PPN 11%
                 </div>
-                
-                <h3>PEKERJAAN INSTALASI & TEKNIS</h3>
-                <table>
-                    <thead>
-                        <tr><th>No</th><th>Deskripsi</th><th>Satuan</th><th>Qty</th><th>Harga Satuan</th><th>Total</th></tr>
-                    </thead>
-                    <tbody>${instalasiRows}</tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="5" style="text-align:right; font-weight:bold; padding:8px;">SUB TOTAL INSTALASI</td>
-                            <td style="text-align:right; font-weight:bold; padding:8px;">${formatRp(totalInst)}</td>
-                        </tr>
-                    </tfoot>
-                </table>
-
-                <h3 style="margin-top:30px;">PERANGKAT & MATERIAL KABEL</h3>
-                <table>
-                    <thead>
-                        <tr><th>No</th><th>Deskripsi</th><th>Satuan</th><th>Qty</th><th>Harga Satuan</th><th>Total</th></tr>
-                    </thead>
-                    <tbody>${materialRows}</tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="5" style="text-align:right; font-weight:bold; padding:8px;">SUB TOTAL PERANGKAT</td>
-                            <td style="text-align:right; font-weight:bold; padding:8px;">${formatRp(totalMat)}</td>
-                        </tr>
-                    </tfoot>
-                </table>
-                
-                <div class="total-rab">GRAND TOTAL RAB : ${formatRp(grandTotal)}</div>
-                <div style="margin-top:20px; font-size:0.8rem; color:#777;">Dicetak pada: ${new Date().toLocaleString('id-ID')}</div>
-            </body>
-            </html>
-        `);
+</div>
+</section>
+</main>
+</div>
+<script>
+    let installationItems = [
+        { id: 1, desc: "PEMBUATAN DOKUMENTASI TEKNIS", unit: "LOT", qty: 1, price: 383030, formula: null, editing: false, isCalculated: false },
+        { id: 2, desc: "INSTALASI DROP WIRE <= 300M", unit: "LOT", qty: 1, price: 285000, formula: null, editing: false, isCalculated: false },
+        { id: 3, desc: "INSTALASI DROP WIRE >300M", unit: "M", qty: 0, price: 801, formula: "trigger", editing: false, isCalculated: false }
         
-        printWindow.document.close();
-        printWindow.print();
+    ];
+
+    let hardwareItems = [
+        { id: 1, desc: "GPON,ONT EG8021V5,2.4/5GHz Wi-Fi,,HUAWEI", unit: "U", qty: 1, price: 299200, editing: false, isCalculated: false },
+        { id: 2, desc: "FOC,DropWire3SlgSC-UPC,1F,100m,FIBERHOME", unit: "U", qty: 1, price: 63706, editing: false, isCalculated: false },
+        { id: 3, desc: "FOC,DropWire3SlgSC-UPC,1F,150m,FIBERHOME", unit: "U", qty: 1, price: 86553, editing: false, isCalculated: false },
+		{ id: 4, desc: "FOC,DropWire3SlgSC-UPC,1F,250m,FIBERHOME", unit: "U", qty: 1, price: 132248,editing: false, isCalculated: false },
+        { id: 5, desc: "GPON,ONT HG6045D1 2*GE+1*POTS,FIBERHOME", unit: "U", qty: 0, price: 299000,editing: false, isCalculated: false },
+    ];
+
+    function toggleHeaderEdit(show) {
+        const display = document.getElementById('header-display');
+        const edit = document.getElementById('header-edit');
+        const inputTitle = document.getElementById('input-title');
+        const inputSubtitle = document.getElementById('input-subtitle');
+
+        if (show) {
+            inputTitle.value = document.getElementById('title-text').innerText;
+            inputSubtitle.value = document.getElementById('subtitle-text').innerText;
+            display.classList.add('hidden');
+            edit.classList.remove('hidden');
+            edit.classList.add('flex');
+            inputTitle.focus();
+        } else {
+            edit.classList.add('hidden');
+            edit.classList.remove('flex');
+            display.classList.remove('hidden');
+        }
     }
 
-    document.getElementById('tambahInstalasiBtn').addEventListener('click', tambahInstalasi);
-    document.getElementById('tambahMaterialBtn').addEventListener('click', tambahMaterial);
-    document.getElementById('cetakBtn').addEventListener('click', cetakLaporan);
-    document.getElementById('exportExcelBtn').addEventListener('click', exportToExcel);
-    
-    window.updateEditField = updateEditField;
-    window.startEdit = startEdit;
-    window.saveEdit = saveEdit;
-    window.cancelEdit = cancelEdit;
-    window.deleteItem = deleteItem;
-    
-    applyAutoCalculations();
-    renderInstalasi();
-    renderMaterial();
-    updateSubtotals();
-    updateHeaderDisplay();
+    function saveHeader() {
+        const title = document.getElementById('input-title').value.trim() || "RAB AKTIVASI VIA CONVEN";
+        const subtitle = document.getElementById('input-subtitle').value.trim() || "TECHNICAL ACTIVATION COST ESTIMATION";
+        document.getElementById('title-text').innerText = title;
+        document.getElementById('subtitle-text').innerText = subtitle;
+        document.getElementById('print-title').innerText = title;
+        document.getElementById('print-subtitle').innerText = subtitle;
+        toggleHeaderEdit(false);
+    }
+
+    function formatIDR(num) {
+        return "Rp " + Math.round(num).toLocaleString('id-ID');
+    }
+
+    function renderTables() {
+        renderTable('installation-body', installationItems, 'install');
+        renderTable('hardware-body', hardwareItems, 'hardware');
+        updateTotals();
+    }
+
+    function renderTable(tbodyId, items, type) {
+        const tbody = document.getElementById(tbodyId);
+        tbody.innerHTML = '';
+
+        items.forEach((item, index) => {
+            const total = item.qty * item.price;
+            const isStriped = index % 2 !== 0 ? 'bg-secondary-container/5' : '';
+            const rowClass = `${isStriped} hover:bg-primary-container/5 transition-colors ${item.editing ? 'bg-primary/5' : ''}`;
+            
+            let contentCells = '';
+            let actionButtons = '';
+
+            if (item.editing) {
+                // Disable Qty input if it's a calculated field
+                const qtyInput = item.isCalculated 
+                    ? `<div class="w-16 mx-auto block p-1 bg-surface-container-low border border-outline-variant rounded text-sm text-center font-mono-data text-secondary opacity-60">${item.qty}</div>`
+                    : `<input type="number" value="${item.qty}" onchange="updateItemQty('${type}', ${item.id}, this.value)" class="w-16 mx-auto block p-1 border border-outline-variant rounded text-sm text-center font-mono-data focus:ring-1 focus:ring-primary"/>`;
+
+                contentCells = `
+                    <td class="px-4 py-3"><input type="text" value="${item.desc}" onchange="updateItemField('${type}', ${item.id}, 'desc', this.value)" class="w-full p-1 border border-outline-variant rounded text-sm focus:ring-1 focus:ring-primary"/></td>
+                    <td class="px-4 py-3"><input type="text" value="${item.unit}" onchange="updateItemField('${type}', ${item.id}, 'unit', this.value)" class="w-16 mx-auto block p-1 border border-outline-variant rounded text-sm text-center focus:ring-1 focus:ring-primary"/></td>
+                    <td class="px-4 py-3">${qtyInput}</td>
+                    <td class="px-4 py-3"><input type="number" value="${item.price}" onchange="updateItemField('${type}', ${item.id}, 'price', parseFloat(this.value))" class="w-28 ml-auto block p-1 border border-outline-variant rounded text-sm text-right font-mono-data focus:ring-1 focus:ring-primary"/></td>
+                `;
+                actionButtons = `
+                    <button onclick="toggleEdit('${type}', ${item.id}, false)" class="text-primary hover:bg-primary/10 p-1.5 rounded-full flex items-center transition-colors" title="Simpan">
+                        <span class="material-symbols-outlined text-lg">check</span>
+                    </button>
+                `;
+            } else {
+                const qtyDisplay = item.isCalculated 
+                    ? `<span class="inline-flex items-center gap-1 text-primary/70" title="Calculated automatically"><span class="material-symbols-outlined text-[10px]">functions</span>${item.qty}</span>`
+                    : item.qty;
+
+                contentCells = `
+                    <td class="px-4 py-3 font-semibold text-on-surface">${item.desc}</td>
+                    <td class="px-4 py-3 text-center text-on-surface-variant">${item.unit}</td>
+                    <td class="px-4 py-3 text-center font-mono-data">${qtyDisplay}</td>
+                    <td class="px-4 py-3 text-right font-mono-data">${formatIDR(item.price)}</td>
+                `;
+                actionButtons = `
+                    <button onclick="toggleEdit('${type}', ${item.id}, true)" class="text-primary hover:bg-primary/10 p-1.5 rounded-full flex items-center transition-colors" title="Edit">
+                        <span class="material-symbols-outlined text-lg">edit</span>
+                    </button>
+                    <button onclick="removeItem('${type}', ${item.id})" class="text-error hover:bg-error/10 p-1.5 rounded-full flex items-center transition-colors" title="Hapus">
+                        <span class="material-symbols-outlined text-lg">delete</span>
+                    </button>
+                `;
+            }
+
+            tbody.innerHTML += `
+                <tr class="${rowClass}">
+                    <td class="px-4 py-3 text-center text-on-surface-variant font-mono-data">${index + 1}</td>
+                    ${contentCells}
+                    <td class="px-4 py-3 text-right font-mono-data font-bold text-on-surface">${formatIDR(total)}</td>
+                    <td class="no-print px-4 py-3">
+                        <div class="flex items-center justify-center gap-1">
+                            ${actionButtons}
+                        </div>
+                    </td>
+                </tr>
+            `;
+        });
+    }
+
+    function updateItemField(type, id, field, val) {
+        const list = type === 'install' ? installationItems : hardwareItems;
+        const item = list.find(i => i.id === id);
+        if (item) {
+            item[field] = val;
+            if (field === 'price' || field === 'qty') updateTotals();
+        }
+    }
+
+    function updateItemQty(type, id, val) {
+        const newQty = parseFloat(val) || 0;
+        const list = type === 'install' ? installationItems : hardwareItems;
+        const item = list.find(i => i.id === id);
+        
+        if (item) {
+            item.qty = newQty;
+            
+            // Check if this is the trigger field: 'PENARIKAN FOC ADSS SHORT SPAN <4000M' (id 3 in install)
+            if (type === 'install' && item.id === 3) {
+                applyFormulas(newQty);
+            }
+            
+            renderTables();
+        }
+    }
+
+    function applyFormulas(focQty) {
+        // 1. FOC Material must match exactly
+        const focMaterial = hardwareItems.find(i => i.id === 4);
+        if (focMaterial) focMaterial.qty = focQty;
+
+        // 2. FITTING DEADEND Qty = Math.ceil((FOC_Qty / 40) / 3)
+        const deadEnd = installationItems.find(i => i.id === 9);
+        let deadEndQty = 0;
+        if (deadEnd) {
+            deadEndQty = Math.ceil((focQty / 40) / 3);
+            deadEnd.qty = deadEndQty;
+        }
+
+        // 3. LABELING KABEL Qty = Math.ceil((focQty / 40) - deadEndQty)
+        const labeling = installationItems.find(i => i.id === 6);
+        if (labeling) {
+            labeling.qty = Math.ceil((focQty / 40) - deadEndQty);
+        }
+
+        // 4. FITTING SUSPENSION Qty = Math.ceil((focQty / 40) - deadEndQty)
+        const suspension = installationItems.find(i => i.id === 10);
+        if (suspension) {
+            suspension.qty = Math.ceil((focQty / 40) - deadEndQty);
+        }
+    }
+
+    function toggleEdit(type, id, state) {
+        const list = type === 'install' ? installationItems : hardwareItems;
+        const item = list.find(i => i.id === id);
+        if (item) {
+            item.editing = state;
+            renderTables();
+        }
+    }
+
+    function addItem(type) {
+        const list = type === 'install' ? installationItems : hardwareItems;
+        const newId = list.length > 0 ? Math.max(...list.map(i => i.id)) + 1 : 1;
+        const newItem = {
+            id: newId,
+            desc: "Item Baru",
+            unit: "U",
+            qty: 1,
+            price: 0,
+            editing: true,
+            isCalculated: false
+        };
+        list.push(newItem);
+        renderTables();
+    }
+
+    function removeItem(type, id) {
+        if (confirm('Hapus item ini?')) {
+            if (type === 'install') {
+                installationItems = installationItems.filter(i => i.id !== id);
+            } else {
+                hardwareItems = hardwareItems.filter(i => i.id !== id);
+            }
+            renderTables();
+        }
+    }
+
+    function updateTotals() {
+        const subTotalInstall = installationItems.reduce((acc, item) => acc + (item.qty * item.price), 0);
+        const subTotalHardware = hardwareItems.reduce((acc, item) => acc + (item.qty * item.price), 0);
+        
+        document.getElementById('subtotal-installation').innerText = formatIDR(subTotalInstall);
+        document.getElementById('subtotal-hardware').innerText = formatIDR(subTotalHardware);
+        document.getElementById('grand-total').innerText = formatIDR(subTotalInstall + subTotalHardware);
+    }
+
+    // Initial calculation based on default value
+    applyFormulas(600);
+    renderTables();
 </script>
-</body>
-</html>
+</body></html>
