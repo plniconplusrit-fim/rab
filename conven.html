@@ -1,308 +1,361 @@
 <!DOCTYPE html>
-
-<html class="light" lang="en"><head>
-	<!-- Library untuk generate PDF otomatis -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>PLN Icon Plus RAB - RAB AKTIVASI VIA CONVEN</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Geist:wght@400;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "on-surface-variant": "#3c4946",
-                    "surface-tint": "#006b5d",
-                    "on-primary": "#ffffff",
-                    "secondary": "#5c5f61",
-                    "primary-fixed": "#75f8df",
-                    "on-secondary-container": "#626567",
-                    "inverse-primary": "#55dbc4",
-                    "tertiary-container": "#67aa9f",
-                    "on-primary-fixed-variant": "#005045",
-                    "surface-container": "#eaedff",
-                    "background": "#faf8ff",
-                    "surface": "#faf8ff",
-                    "secondary-fixed": "#e0e3e5",
-                    "secondary-container": "#e0e3e5",
-                    "on-surface": "#131b2e",
-                    "surface-variant": "#dae2fd",
-                    "error": "#ba1a1a",
-                    "secondary-fixed-dim": "#c4c7c9",
-                    "on-primary-fixed": "#00201b",
-                    "surface-container-low": "#f2f3ff",
-                    "tertiary": "#226960",
-                    "primary-fixed-dim": "#55dbc4",
-                    "surface-bright": "#faf8ff",
-                    "inverse-surface": "#283044",
-                    "error-container": "#ffdad6",
-                    "on-primary-container": "#003d34",
-                    "surface-container-high": "#e2e7ff",
-                    "on-tertiary": "#ffffff",
-                    "primary-container": "#12b19b",
-                    "surface-container-lowest": "#ffffff",
-                    "on-secondary": "#ffffff",
-                    "on-tertiary-container": "#003d36",
-                    "tertiary-fixed": "#abf0e3",
-                    "outline": "#6c7a76",
-                    "on-secondary-fixed": "#191c1e",
-                    "outline-variant": "#bbcac5",
-                    "tertiary-fixed-dim": "#90d3c7",
-                    "surface-dim": "#d2d9f4",
-                    "on-error": "#ffffff",
-                    "on-error-container": "#93000a",
-                    "on-tertiary-fixed-variant": "#005048",
-                    "on-secondary-fixed-variant": "#444749",
-                    "on-background": "#131b2e",
-                    "primary": "#006b5d",
-                    "surface-container-highest": "#dae2fd",
-                    "on-tertiary-fixed": "#00201c",
-                    "inverse-on-surface": "#eef0ff"
-            },
-            "borderRadius": {
-                    "DEFAULT": "0.25rem",
-                    "lg": "0.5rem",
-                    "xl": "0.75rem",
-                    "full": "9999px"
-            },
-            "spacing": {
-                    "margin-mobile": "16px",
-                    "base": "8px",
-                    "container-max": "1440px",
-                    "margin-desktop": "40px",
-                    "gutter": "24px"
-            },
-            "fontFamily": {
-                    "label-caps": ["Plus Jakarta Sans"],
-                    "headline-lg-mobile": ["Plus Jakarta Sans"],
-                    "mono-data": ["Geist"],
-                    "headline-md": ["Plus Jakarta Sans"],
-                    "headline-lg": ["Plus Jakarta Sans"],
-                    "body-lg": ["Plus Jakarta Sans"],
-                    "body-md": ["Plus Jakarta Sans"]
-            },
-            "fontSize": {
-                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
-                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
-                    "mono-data": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
-                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
-                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
-            }
+<html class="light" lang="en">
+<head>
+  <!-- Library untuk generate PDF otomatis -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>PLN Icon Plus RAB - RAB AKTIVASI VIA CONVEN</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Geist:wght@400;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-surface-variant": "#3c4946",
+            "surface-tint": "#006b5d",
+            "on-primary": "#ffffff",
+            "secondary": "#5c5f61",
+            "primary-fixed": "#75f8df",
+            "on-secondary-container": "#626567",
+            "inverse-primary": "#55dbc4",
+            "tertiary-container": "#67aa9f",
+            "on-primary-fixed-variant": "#005045",
+            "surface-container": "#eaedff",
+            "background": "#faf8ff",
+            "surface": "#faf8ff",
+            "secondary-fixed": "#e0e3e5",
+            "secondary-container": "#e0e3e5",
+            "on-surface": "#131b2e",
+            "surface-variant": "#dae2fd",
+            "error": "#ba1a1a",
+            "secondary-fixed-dim": "#c4c7c9",
+            "on-primary-fixed": "#00201b",
+            "surface-container-low": "#f2f3ff",
+            "tertiary": "#226960",
+            "primary-fixed-dim": "#55dbc4",
+            "surface-bright": "#faf8ff",
+            "inverse-surface": "#283044",
+            "error-container": "#ffdad6",
+            "on-primary-container": "#003d34",
+            "surface-container-high": "#e2e7ff",
+            "on-tertiary": "#ffffff",
+            "primary-container": "#12b19b",
+            "surface-container-lowest": "#ffffff",
+            "on-secondary": "#ffffff",
+            "on-tertiary-container": "#003d36",
+            "tertiary-fixed": "#abf0e3",
+            "outline": "#6c7a76",
+            "on-secondary-fixed": "#191c1e",
+            "outline-variant": "#bbcac5",
+            "tertiary-fixed-dim": "#90d3c7",
+            "surface-dim": "#d2d9f4",
+            "on-error": "#ffffff",
+            "on-error-container": "#93000a",
+            "on-tertiary-fixed-variant": "#005048",
+            "on-secondary-fixed-variant": "#444749",
+            "on-background": "#131b2e",
+            "primary": "#006b5d",
+            "surface-container-highest": "#dae2fd",
+            "on-tertiary-fixed": "#00201c",
+            "inverse-on-surface": "#eef0ff"
           },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "margin-mobile": "16px",
+            "base": "8px",
+            "container-max": "1440px",
+            "margin-desktop": "40px",
+            "gutter": "24px"
+          },
+          "fontFamily": {
+            "label-caps": ["Plus Jakarta Sans"],
+            "headline-lg-mobile": ["Plus Jakarta Sans"],
+            "mono-data": ["Geist"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "body-md": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+            "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+            "mono-data": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+            "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+            "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+            "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+            "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+          }
         },
+      },
+    }
+  </script>
+  
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    
+    @media print {
+      @page {
+        size: A4;
+        margin: 15mm;
       }
-    </script>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        
-        @media print {
-            @page {
-                size: A4;
-                margin: 15mm;
-            }
-            .no-print { display: none !important; }
-            body { background: white !important; margin: 0; padding: 0; color: #000; font-size: 12px; }
-            .print-only { display: block !important; }
-            .content-canvas { margin: 0 !important; padding: 0 !important; width: 100% !important; max-width: 100% !important; }
-            
-            table { 
-                width: 100% !important; 
-                border-collapse: collapse !important; 
-                table-layout: auto !important;
-                page-break-inside: auto;
-            }
-            tr { page-break-inside: avoid; page-break-after: auto; }
-            thead { display: table-header-group; }
-            
-            th, td { 
-                border: 1px solid #000 !important; 
-                padding: 6px 8px !important;
-                color: #000 !important;
-            }
-            th { background-color: #f3f4f6 !important; }
-            
-            .card { border: 1px solid #000 !important; box-shadow: none !important; }
-            section { page-break-before: auto; break-inside: avoid; margin-bottom: 20px; }
-            
-            #grand-total-container {
-                background: white !important;
-                color: black !important;
-                border: 2px solid #000 !important;
-                box-shadow: none !important;
-                page-break-inside: avoid;
-            }
-            #grand-total-container * { color: black !important; }
-            
-            .bg-on-surface-variant { background-color: #f3f4f6 !important; }
-            .text-white { color: #000 !important; }
-            .text-primary { color: #000 !important; }
-            
-            .border-l-4 { border-left-width: 4px !important; border-left-color: #000 !important; }
-        }
+      .no-print { display: none !important; }
+      body { background: white !important; margin: 0; padding: 0; color: #000; font-size: 12px; }
+      .print-only { display: block !important; }
+      .content-canvas { margin: 0 !important; padding: 0 !important; width: 100% !important; max-width: 100% !important; }
+      
+      table { 
+        width: 100% !important; 
+        border-collapse: collapse !important; 
+        table-layout: auto !important;
+        page-break-inside: auto;
+      }
+      tr { page-break-inside: avoid; page-break-after: auto; }
+      thead { display: table-header-group; }
+      
+      th, td { 
+        border: 1px solid #000 !important; 
+        padding: 6px 8px !important;
+        color: #000 !important;
+      }
+      th { background-color: #f3f4f6 !important; }
+      
+      .card { border: 1px solid #000 !important; box-shadow: none !important; }
+      section { page-break-before: auto; break-inside: avoid; margin-bottom: 20px; }
+      
+      #grand-total-container {
+        background: white !important;
+        color: black !important;
+        border: 2px solid #000 !important;
+        box-shadow: none !important;
+        page-break-inside: avoid;
+      }
+      #grand-total-container * { color: black !important; }
+      
+      .bg-on-surface-variant { background-color: #f3f4f6 !important; }
+      .text-white { color: #000 !important; }
+      .text-primary { color: #000 !important; }
+      
+      .border-l-4 { border-left-width: 4px !important; border-left-color: #000 !important; }
+    }
 
-        .scrollbar-hide::-webkit-scrollbar { display: none; }
-        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    /* CSS KHUSUS SAAT EXPORT KE PDF AGAR PAS A4 & TIDAK TERPOTONG */
+    body.exporting-pdf aside {
+      display: none !important;
+    }
+    body.exporting-pdf main {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      margin-top: 0 !important;
+      padding: 10px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+    body.exporting-pdf .no-print {
+      display: none !important;
+    }
+    body.exporting-pdf .print-only {
+      display: block !important;
+    }
+    body.exporting-pdf .overflow-x-auto {
+      overflow: visible !important;
+    }
+    body.exporting-pdf table {
+      width: 100% !important;
+      min-width: 100% !important;
+      table-layout: auto !important;
+    }
+    body.exporting-pdf th, body.exporting-pdf td {
+      padding: 8px 6px !important;
+      font-size: 11px !important;
+    }
+    body.exporting-pdf section {
+      page-break-inside: avoid !important;
+      break-inside: avoid !important;
+      margin-bottom: 16px !important;
+    }
 
-        input[type="number"]::-webkit-inner-spin-button,
-        input[type="number"]::-webkit-outer-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 
-        .edit-mode .display-view { display: none !important; }
-        .edit-mode .edit-view { display: flex !important; }
-        
-        #header-display.hidden { display: none !important; }
-        #header-edit.hidden { display: none !important; }
-    </style>
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    .edit-mode .display-view { display: none !important; }
+    .edit-mode .edit-view { display: flex !important; }
+    
+    #header-display.hidden { display: none !important; }
+    #header-edit.hidden { display: none !important; }
+  </style>
 </head>
 <body class="bg-background font-body-md text-on-surface selection:bg-primary-container selection:text-white">
+
 <div class="flex min-h-screen">
-<!-- SideNavBar -->
-<aside class="no-print hidden md:flex fixed h-screen left-0 top-0 w-64 bg-on-surface-variant dark:bg-inverse-surface flex-col py-base gap-2 shadow-lg border-r border-outline-variant/20 z-50">
-<div class="px-6 py-4 mb-4">
-    <a href="dashboard.html" class="block hover:opacity-80 transition-opacity">
-        <div class="text-primary-fixed font-bold text-xl font-headline-md tracking-tight ">RABIT</div>
+  <!-- SideNavBar -->
+  <aside class="no-print hidden md:flex fixed h-screen left-0 top-0 w-64 bg-on-surface-variant dark:bg-inverse-surface flex-col py-base gap-2 shadow-lg border-r border-outline-variant/20 z-50">
+    <div class="px-6 py-4 mb-4">
+      <a href="dashboard.html" class="block hover:opacity-80 transition-opacity">
+        <div class="text-primary-fixed font-bold text-xl font-headline-md tracking-tight">RABIT</div>
         <div class="text-secondary-fixed-dim text-[10px] font-label-caps opacity-70">RAB Instalasi Aktivasi</div>
-    </a>
+      </a>
+    </div>
+    <nav class="flex-1 px-2 space-y-1">
+      <!-- CONVEN (Aktif) -->
+      <a class="flex items-center gap-3 text-primary-fixed bg-white/10 rounded-lg mx-2 my-1 px-4 py-3 transition-all" href="conven.html">
+        <span class="material-symbols-outlined">cable</span>
+        <span class="font-label-caps text-label-caps">CONVEN</span>
+      </a>
+      <a class="flex items-center gap-3 text-secondary-fixed-dim hover:text-primary-fixed hover:bg-white/5 rounded-lg mx-2 my-1 px-4 py-3 transition-all" href="ftth.html">
+        <span class="material-symbols-outlined">router</span>
+        <span class="font-label-caps text-label-caps">FTTH</span>
+      </a>
+      <a class="flex items-center gap-3 text-secondary-fixed-dim hover:text-primary-fixed hover:bg-white/5 rounded-lg mx-2 my-1 px-4 py-3 transition-all" href="ftthxconven.html">
+        <span class="material-symbols-outlined">hub</span>
+        <span class="font-label-caps text-label-caps">FTTH X CONVEN</span>
+      </a>
+      <a class="flex items-center gap-3 text-secondary-fixed-dim hover:text-primary-fixed hover:bg-white/5 rounded-lg mx-2 my-1 px-4 py-3 transition-all" href="riwayat.html">
+        <span class="material-symbols-outlined">history</span>
+        <span class="font-label-caps text-label-caps">RIWAYAT RAB</span>
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main Content Canvas -->
+  <main class="flex-1 md:ml-64 p-margin-mobile md:p-margin-desktop content-canvas">
+    <!-- Top App Bar & Actions -->
+    <div class="no-print flex flex-col md:flex-row md:items-start justify-between gap-4 mb-8">
+      <div class="relative min-h-[80px] flex items-center" id="header-container">
+        <!-- Header Display -->
+        <div class="display-view flex flex-col cursor-pointer hover:bg-surface-container-low p-2 rounded-lg transition-colors group" id="header-display" onclick="toggleHeaderEdit(true)">
+          <h1 class="font-headline-lg text-headline-lg text-primary tracking-tight" id="title-text">RAB AKTIVASI VIA CONVEN</h1>
+          <p class="text-secondary font-body-md mt-1 uppercase tracking-wider" id="subtitle-text">Nama Pelanggan</p>
+          <span class="material-symbols-outlined absolute -right-8 top-4 opacity-0 group-hover:opacity-100 transition-opacity text-sm text-outline">edit</span>
+        </div>
+        <!-- Header Edit -->
+        <div class="edit-view hidden flex-col gap-3 p-2 bg-surface-container-low rounded-lg border border-outline-variant w-full md:w-[500px]" id="header-edit">
+          <input class="w-full bg-white border-outline-variant rounded p-2 font-headline-lg text-headline-lg text-primary focus:ring-primary focus:border-primary" id="input-title" placeholder="Judul RAB" type="text"/>
+          <input class="w-full bg-white border-outline-variant rounded p-2 text-secondary font-body-md uppercase focus:ring-primary focus:border-primary" id="input-subtitle" placeholder="Sub-deskripsi" type="text"/>
+          <div class="flex justify-end gap-2 mt-2">
+            <button class="px-3 py-1 text-sm font-label-caps text-secondary hover:bg-surface-container-high rounded" onclick="toggleHeaderEdit(false)">Batal</button>
+            <button class="px-4 py-1 text-sm font-label-caps bg-primary text-white rounded shadow-sm hover:opacity-90" onclick="saveHeader()">Simpan</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Tombol Simpan ke Drive & Cetak PDF -->
+      <div class="flex gap-2 self-end md:self-start">
+        <button class="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg font-label-caps text-label-caps hover:opacity-90 shadow-sm transition-all" onclick="simpanRAB('CONVEN')">
+          <span class="material-symbols-outlined text-base">cloud_upload</span>
+          SIMPAN KE DRIVE & CETAK PDF
+        </button>
+      </div>
+    </div>
+
+    <!-- Print Only Header (Header Resmi di dalam Dokumen PDF) -->
+    <div class="hidden print-only mb-6 text-center border-b-2 border-primary pb-4">
+      <h1 class="text-2xl font-bold uppercase text-primary" id="print-title">RAB AKTIVASI VIA CONVEN</h1>
+      <p class="uppercase font-semibold text-secondary tracking-widest text-sm" id="print-subtitle">Technical Activation Cost Estimation</p>
+    </div>
+
+    <!-- Installation Table Section -->
+    <section class="mb-gutter">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="font-headline-md text-headline-md text-on-surface border-l-4 border-primary pl-4 uppercase">Pekerjaan Instalasi &amp; Teknis</h2>
+        <button class="no-print flex items-center gap-2 bg-secondary-container text-on-secondary-container px-3 py-1.5 rounded font-label-caps text-[11px] hover:opacity-80 transition-opacity" onclick="addItem('install')">
+          <span class="material-symbols-outlined text-sm">add</span>
+          TAMBAH ITEM
+        </button>
+      </div>
+      <div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden shadow-sm overflow-x-auto print:border-none print:shadow-none">
+        <table class="w-full text-left min-w-[700px] print:min-w-full">
+          <thead class="bg-on-surface-variant text-white font-label-caps text-[11px] uppercase tracking-widest print:text-black">
+            <tr>
+              <th class="px-4 py-3 font-bold text-center w-12">No</th>
+              <th class="px-4 py-3 font-bold">Deskripsi Pekerjaan</th>
+              <th class="px-4 py-3 font-bold text-center w-20">Satuan</th>
+              <th class="px-4 py-3 font-bold text-center w-16">Qty</th>
+              <th class="px-4 py-3 font-bold text-right w-36">Harga Satuan</th>
+              <th class="px-4 py-3 font-bold text-right w-36">Total</th>
+              <th class="no-print px-4 py-3 font-bold text-center w-28">Aksi</th>
+            </tr>
+          </thead>
+          <tbody class="font-body-md text-on-surface" id="installation-body"></tbody>
+          <tfoot class="bg-surface-container-low border-t border-outline-variant print:bg-white">
+            <tr>
+              <td class="px-4 py-4 text-right font-headline-md text-on-surface print:font-bold" colspan="5">SUB TOTAL INSTALASI :</td>
+              <td class="px-4 py-4 text-right font-mono-data font-bold text-primary print:text-black" id="subtotal-installation">Rp 0</td>
+              <td class="no-print"></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </section>
+
+    <!-- Hardware Table Section -->
+    <section class="mb-gutter">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="font-headline-md text-headline-md text-on-surface border-l-4 border-primary pl-4 uppercase">Perangkat &amp; Material Kabel</h2>
+        <button class="no-print flex items-center gap-2 bg-secondary-container text-on-secondary-container px-3 py-1.5 rounded font-label-caps text-[11px] hover:opacity-80 transition-opacity" onclick="addItem('hardware')">
+          <span class="material-symbols-outlined text-sm">add</span>
+          TAMBAH ITEM
+        </button>
+      </div>
+      <div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden shadow-sm overflow-x-auto print:border-none print:shadow-none">
+        <table class="w-full text-left min-w-[700px] print:min-w-full">
+          <thead class="bg-on-surface-variant text-white font-label-caps text-[11px] uppercase tracking-widest print:text-black">
+            <tr>
+              <th class="px-4 py-3 font-bold text-center w-12">No</th>
+              <th class="px-4 py-3 font-bold">Deskripsi Perangkat</th>
+              <th class="px-4 py-3 font-bold text-center w-20">Satuan</th>
+              <th class="px-4 py-3 font-bold text-center w-16">Qty</th>
+              <th class="px-4 py-3 font-bold text-right w-36">Harga Satuan</th>
+              <th class="px-4 py-3 font-bold text-right w-36">Total</th>
+              <th class="no-print px-4 py-3 font-bold text-center w-28">Aksi</th>
+            </tr>
+          </thead>
+          <tbody class="font-body-md text-on-surface" id="hardware-body"></tbody>
+          <tfoot class="bg-surface-container-low border-t border-outline-variant print:bg-white">
+            <tr>
+              <td class="px-4 py-4 text-right font-headline-md text-on-surface print:font-bold" colspan="5">SUB TOTAL MATERIAL :</td>
+              <td class="px-4 py-4 text-right font-mono-data font-bold text-primary print:text-black" id="subtotal-hardware">Rp 0</td>
+              <td class="no-print"></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </section>
+
+    <!-- Grand Total Section -->
+    <section class="flex justify-end mt-8">
+      <div class="w-full md:w-96 bg-primary text-white p-6 rounded-xl shadow-lg transform hover:scale-[1.02] transition-transform print:transform-none" id="grand-total-container">
+        <div class="flex justify-between items-center mb-2">
+          <span class="font-label-caps text-label-caps opacity-80 print:opacity-100">ESTIMASI TOTAL RAB</span>
+          <span class="material-symbols-outlined opacity-60 no-print">payments</span>
+        </div>
+        <div class="font-mono-data text-3xl font-bold text-right" id="grand-total">Rp 0</div>
+        <div class="mt-4 pt-4 border-t border-white/20 text-[10px] uppercase font-label-caps opacity-70 print:opacity-100 print:border-black">
+          Harga belum termasuk PPN 11%
+        </div>
+      </div>
+    </section>
+  </main>
 </div>
-<nav class="flex-1 px-2 space-y-1">
-<a class="flex items-center gap-3 text-secondary-fixed-dim hover:text-primary-fixed hover:bg-white/5 rounded-lg mx-2 my-1 px-4 py-3 transition-all" href="conven.html">
-<span class="material-symbols-outlined">cable</span>
-<span class="font-label-caps text-label-caps">CONVEN</span>
-</a>
-<a class="flex items-center gap-3 text-secondary-fixed-dim hover:text-primary-fixed hover:bg-white/5 rounded-lg mx-2 my-1 px-4 py-3 transition-all" href="ftth.html">
-<span class="material-symbols-outlined">router</span>
-<span class="font-label-caps text-label-caps">FTTH</span>
-</a>
-<a class="flex items-center gap-3 text-secondary-fixed-dim hover:text-primary-fixed hover:bg-white/5 rounded-lg mx-2 my-1 px-4 py-3 transition-all" href="ftthxconven.html">
-<span class="material-symbols-outlined">hub</span>
-<span class="font-label-caps text-label-caps">FTTH X CONVEN</span>
-</a>
-</nav>
-</aside>
-<!-- Main Content Canvas -->
-<main class="flex-1 md:ml-64 p-margin-mobile md:p-margin-desktop content-canvas">
-<!-- Top App Bar & Actions -->
-<div class="no-print flex flex-col md:flex-row md:items-start justify-between gap-4 mb-8">
-<div class="relative min-h-[80px] flex items-center" id="header-container">
-<!-- Header Display -->
-<div class="display-view flex flex-col cursor-pointer hover:bg-surface-container-low p-2 rounded-lg transition-colors group" id="header-display" onclick="toggleHeaderEdit(true)">
-<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight" id="title-text">RAB AKTIVASI VIA CONVEN</h1>
-<p class="text-secondary font-body-md mt-1 uppercase tracking-wider" id="subtitle-text">Nama Pelanggan</p>
-<span class="material-symbols-outlined absolute -right-8 top-4 opacity-0 group-hover:opacity-100 transition-opacity text-sm text-outline">edit</span>
-</div>
-<!-- Header Edit -->
-<div class="edit-view hidden flex-col gap-3 p-2 bg-surface-container-low rounded-lg border border-outline-variant w-full md:w-[500px]" id="header-edit">
-<input class="w-full bg-white border-outline-variant rounded p-2 font-headline-lg text-headline-lg text-primary focus:ring-primary focus:border-primary" id="input-title" placeholder="Judul RAB" type="text"/>
-<input class="w-full bg-white border-outline-variant rounded p-2 text-secondary font-body-md uppercase focus:ring-primary focus:border-primary" id="input-subtitle" placeholder="Sub-deskripsi" type="text"/>
-<div class="flex justify-end gap-2 mt-2">
-<button class="px-3 py-1 text-sm font-label-caps text-secondary hover:bg-surface-container-high rounded" onclick="toggleHeaderEdit(false)">Batal</button>
-<button class="px-4 py-1 text-sm font-label-caps bg-primary text-white rounded shadow-sm hover:opacity-90" onclick="saveHeader()">Simpan</button>
-</div>
-</div>
-</div>
-<div class="flex gap-2 self-end md:self-start">
-<button class="flex items-center gap-2 bg-surface-container-lowest border border-outline-variant px-4 py-2 rounded-lg font-label-caps text-label-caps text-on-surface-variant hover:bg-surface-container-low transition-colors" onclick="window.print()">
-<span class="material-symbols-outlined text-base">print</span>
-                    CETAK PDF
-                </button>
-</div>
-</div>
-<!-- Print Only Header -->
-<div class="hidden print-only mb-8 text-center border-b-2 border-black pb-4">
-<h1 class="text-2xl font-bold uppercase" id="print-title">RAB AKTIVASI VIA CONVEN</h1>
-<p class="uppercase font-semibold" id="print-subtitle">Technical Activation Cost Estimation</p>
-</div>
-<!-- Installation Table Section -->
-<section class="mb-gutter">
-<div class="flex items-center justify-between mb-4">
-<h2 class="font-headline-md text-headline-md text-on-surface border-l-4 border-primary pl-4 uppercase">Pekerjaan Instalasi &amp; Teknis</h2>
-<button class="no-print flex items-center gap-2 bg-secondary-container text-on-secondary-container px-3 py-1.5 rounded font-label-caps text-[11px] hover:opacity-80 transition-opacity" onclick="addItem('install')">
-<span class="material-symbols-outlined text-sm">add</span>
-                    TAMBAH ITEM
-                </button>
-</div>
-<div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden shadow-sm overflow-x-auto print:border-none print:shadow-none">
-<table class="w-full text-left min-w-[800px] print:min-w-full">
-<thead class="bg-on-surface-variant text-white font-label-caps text-[11px] uppercase tracking-widest print:text-black">
-<tr>
-<th class="px-4 py-3 font-bold text-center w-12">No</th>
-<th class="px-4 py-3 font-bold">Deskripsi Pekerjaan</th>
-<th class="px-4 py-3 font-bold text-center w-20">Satuan</th>
-<th class="px-4 py-3 font-bold text-center w-16">Qty</th>
-<th class="px-4 py-3 font-bold text-right w-36">Harga Satuan</th>
-<th class="px-4 py-3 font-bold text-right w-36">Total</th>
-<th class="no-print px-4 py-3 font-bold text-center w-28">Aksi</th>
-</tr>
-</thead>
-<tbody class="font-body-md text-on-surface" id="installation-body"></tbody>
-<tfoot class="bg-surface-container-low border-t border-outline-variant print:bg-white">
-<tr>
-<td class="px-4 py-4 text-right font-headline-md text-on-surface print:font-bold" colspan="5">SUB TOTAL INSTALASI :</td>
-<td class="px-4 py-4 text-right font-mono-data font-bold text-primary print:text-black" id="subtotal-installation">Rp 0</td>
-<td class="no-print"></td>
-</tr>
-</tfoot>
-</table>
-</div>
-</section>
-<!-- Hardware Table Section -->
-<section class="mb-gutter">
-<div class="flex items-center justify-between mb-4">
-<h2 class="font-headline-md text-headline-md text-on-surface border-l-4 border-primary pl-4 uppercase">Perangkat &amp; Material Kabel</h2>
-<button class="no-print flex items-center gap-2 bg-secondary-container text-on-secondary-container px-3 py-1.5 rounded font-label-caps text-[11px] hover:opacity-80 transition-opacity" onclick="addItem('hardware')">
-<span class="material-symbols-outlined text-sm">add</span>
-                    TAMBAH ITEM
-                </button>
-</div>
-<div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden shadow-sm overflow-x-auto print:border-none print:shadow-none">
-<table class="w-full text-left min-w-[800px] print:min-w-full">
-<thead class="bg-on-surface-variant text-white font-label-caps text-[11px] uppercase tracking-widest print:text-black">
-<tr>
-<th class="px-4 py-3 font-bold text-center w-12">No</th>
-<th class="px-4 py-3 font-bold">Deskripsi Perangkat</th>
-<th class="px-4 py-3 font-bold text-center w-20">Satuan</th>
-<th class="px-4 py-3 font-bold text-center w-16">Qty</th>
-<th class="px-4 py-3 font-bold text-right w-36">Harga Satuan</th>
-<th class="px-4 py-3 font-bold text-right w-36">Total</th>
-<th class="no-print px-4 py-3 font-bold text-center w-28">Aksi</th>
-</tr>
-</thead>
-<tbody class="font-body-md text-on-surface" id="hardware-body"></tbody>
-<tfoot class="bg-surface-container-low border-t border-outline-variant print:bg-white">
-<tr>
-<td class="px-4 py-4 text-right font-headline-md text-on-surface print:font-bold" colspan="5">SUB TOTAL MATERIAL :</td>
-<td class="px-4 py-4 text-right font-mono-data font-bold text-primary print:text-black" id="subtotal-hardware">Rp 0</td>
-<td class="no-print"></td>
-</tr>
-</tfoot>
-</table>
-</div>
-</section>
-<!-- Grand Total Section -->
-<section class="flex justify-end mt-8">
-<div class="w-full md:w-96 bg-primary text-white p-6 rounded-xl shadow-lg transform hover:scale-[1.02] transition-transform print:transform-none" id="grand-total-container">
-<div class="flex justify-between items-center mb-2">
-<span class="font-label-caps text-label-caps opacity-80 print:opacity-100">ESTIMASI TOTAL RAB</span>
-<span class="material-symbols-outlined opacity-60 no-print">payments</span>
-</div>
-<div class="font-mono-data text-3xl font-bold text-right" id="grand-total">Rp 0</div>
-<div class="mt-4 pt-4 border-t border-white/20 text-[10px] uppercase font-label-caps opacity-70 print:opacity-100 print:border-black">
-                        Harga belum termasuk PPN 11%
-                </div>
-</div>
-</section>
-</main>
-</div>
+
+<!-- Script Logika & Simpan RAB -->
 <script>
     let installationItems = [
         { id: 1, desc: "PEMBUATAN DOKUMENTASI TEKNIS", unit: "LOT", qty: 1, price: 383030, formula: null, editing: false, isCalculated: false },
@@ -316,23 +369,22 @@
         { id: 9, desc: "FITTING DEADEND, 6 - 48 CORE SATU SISI", unit: "U", qty: 5, price: 92910, formula: "deadend", editing: false, isCalculated: true },
         { id: 10, desc: "FITTING SUSPENSION, 6-48 CORE", unit: "U", qty: 10, price: 56865, formula: "suspension", editing: false, isCalculated: true },
         { id: 11, desc: "PATCH CORD SINGLE MODE 1 PASANG 5M", unit: "U", qty: 2, price: 125576, formula: null, editing: false, isCalculated: false },
-		{ id: 12, desc: "TRANSPORTASI ADSS SS/LS UNTUK >120KM", unit: "U", qty: 1, price: 1051536, formula: null, editing: false, isCalculated: false },
-		{ id: 13, desc: "JOINT BOX 24 CORE", unit: "U", qty: 1, price: 722568, formula: null, editing: false, isCalculated: false },
-		{ id: 14, desc: "INSTALASI ACCESS POINT", unit: "AU", qty: 1, price: 630829, formula: null, editing: false, isCalculated: false },
-		{ id: 15, desc: "PENARIKAN UTP", unit: "M", qty: 1, price: 15187, formula: null, editing: false, isCalculated: false },
+        { id: 12, desc: "TRANSPORTASI ADSS SS/LS UNTUK >120KM", unit: "U", qty: 1, price: 1051536, formula: null, editing: false, isCalculated: false },
+        { id: 13, desc: "JOINT BOX 24 CORE", unit: "U", qty: 1, price: 722568, formula: null, editing: false, isCalculated: false },
+        { id: 14, desc: "INSTALASI ACCESS POINT", unit: "AU", qty: 1, price: 630829, formula: null, editing: false, isCalculated: false },
+        { id: 15, desc: "PENARIKAN UTP", unit: "M", qty: 1, price: 15187, formula: null, editing: false, isCalculated: false },
         { id: 16, desc: "ODF RACK MOUNTED 6 CORE (TIPE SC UPC)", unit: "U", qty: 1, price: 661760, formula: null, editing: false, isCalculated: false }
-
     ];
 
     let hardwareItems = [
         { id: 1, desc: "SWCH,S2510-C-AC,,BDCOM", unit: "U", qty: 1, price: 1122125, editing: false, isCalculated: false },
         { id: 2, desc: "SWCH,SFP 1.25G TX1310nm 40KM DDM,,3TECH", unit: "U", qty: 1, price: 93500, editing: false, isCalculated: false },
         { id: 3, desc: "SWCH,SFP 1.25G TX1550nm 40KM DDM,,3TECH", unit: "U", qty: 1, price: 107200, editing: false, isCalculated: false },
-		{ id: 4, desc: "FOC,ADSS SS 100m,6/1T Kuning,,FIBERHOME", unit: "M", qty: 600, price: 3310,editing: false, isCalculated: false },
-		{ id: 5, desc: "MDM,RG-AP810-L,Indoor AP+PoE 3AF,,RUIJIE", unit: "U", qty: 1, price: 1197260, editing: false, isCalculated: false },
-		{ id: 6, desc: "MDM,RG-AP680, Outdoor AP+PoE,,RUIJIE", unit: "U", qty: 1, price: 2999000, editing: false, isCalculated: false },
-		{ id: 7, desc: "ROUT,RB951Ui-2HnD,5port,MIKROTIK", unit: "U", qty: 1, price: 836000, editing: false, isCalculated: false },
-        { id: 8, desc: "FOC,ADSS SS 100m,24F/4T,FIBERHOME", unit: "M", qty: 0, price: 6040,editing: false, isCalculated: false },
+        { id: 4, desc: "FOC,ADSS SS 100m,6/1T Kuning,,FIBERHOME", unit: "M", qty: 600, price: 3310, editing: false, isCalculated: false },
+        { id: 5, desc: "MDM,RG-AP810-L,Indoor AP+PoE 3AF,,RUIJIE", unit: "U", qty: 1, price: 1197260, editing: false, isCalculated: false },
+        { id: 6, desc: "MDM,RG-AP680, Outdoor AP+PoE,,RUIJIE", unit: "U", qty: 1, price: 2999000, editing: false, isCalculated: false },
+        { id: 7, desc: "ROUT,RB951Ui-2HnD,5port,MIKROTIK", unit: "U", qty: 1, price: 836000, editing: false, isCalculated: false },
+        { id: 8, desc: "FOC,ADSS SS 100m,24F/4T,FIBERHOME", unit: "M", qty: 0, price: 6040, editing: false, isCalculated: false }
     ];
 
     function toggleHeaderEdit(show) {
@@ -388,7 +440,6 @@
             let actionButtons = '';
 
             if (item.editing) {
-                // Disable Qty input if it's a calculated field
                 const qtyInput = item.isCalculated 
                     ? `<div class="w-16 mx-auto block p-1 bg-surface-container-low border border-outline-variant rounded text-sm text-center font-mono-data text-secondary opacity-60">${item.qty}</div>`
                     : `<input type="number" value="${item.qty}" onchange="updateItemQty('${type}', ${item.id}, this.value)" class="w-16 mx-auto block p-1 border border-outline-variant rounded text-sm text-center font-mono-data focus:ring-1 focus:ring-primary"/>`;
@@ -456,22 +507,17 @@
         
         if (item) {
             item.qty = newQty;
-            
-            // Check if this is the trigger field: 'PENARIKAN FOC ADSS SHORT SPAN <4000M' (id 3 in install)
             if (type === 'install' && item.id === 3) {
                 applyFormulas(newQty);
             }
-            
             renderTables();
         }
     }
 
     function applyFormulas(focQty) {
-        // 1. FOC Material must match exactly
         const focMaterial = hardwareItems.find(i => i.id === 4);
         if (focMaterial) focMaterial.qty = focQty;
 
-        // 2. FITTING DEADEND Qty = Math.ceil((FOC_Qty / 40) / 3)
         const deadEnd = installationItems.find(i => i.id === 9);
         let deadEndQty = 0;
         if (deadEnd) {
@@ -479,13 +525,11 @@
             deadEnd.qty = deadEndQty;
         }
 
-        // 3. LABELING KABEL Qty = Math.ceil((focQty / 40) - deadEndQty)
         const labeling = installationItems.find(i => i.id === 6);
         if (labeling) {
             labeling.qty = Math.ceil((focQty / 40) - deadEndQty);
         }
 
-        // 4. FITTING SUSPENSION Qty = Math.ceil((focQty / 40) - deadEndQty)
         const suspension = installationItems.find(i => i.id === 10);
         if (suspension) {
             suspension.qty = Math.ceil((focQty / 40) - deadEndQty);
@@ -540,5 +584,128 @@
     // Initial calculation based on default value
     applyFormulas(600);
     renderTables();
+
+    // =========================================================================
+    // FUNGSI SIMPAN KE GOOGLE DRIVE & RIWAYAT ONLINE (TIPE CONVEN)
+    // =========================================================================
+    const GAS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxhcvWu9rQ2Fu8RCBzGLUJ3r22b3E3owWM8SOzjqsoJL5zMvuQhBzb6MzATZf2I7C-DIA/exec";
+
+    async function simpanRAB(tipe) {
+        // 1. Ambil Judul Pekerjaan
+        const inputTitle = document.getElementById('input-title');
+        const displayTitle = document.getElementById('title-text');
+        const judul = (inputTitle && inputTitle.value.trim()) ? inputTitle.value.trim() : (displayTitle ? displayTitle.innerText.trim() : `RAB AKTIVASI VIA ${tipe}`);
+
+        // 2. Ambil Teks di bawah Judul (Nama Pelanggan / Lokasi)
+        const inputSubtitle = document.getElementById('input-subtitle');
+        const displaySubtitle = document.getElementById('subtitle-text');
+        let subNama = (inputSubtitle && inputSubtitle.value.trim()) ? inputSubtitle.value.trim() : (displaySubtitle ? displaySubtitle.innerText.trim() : "Pelanggan");
+
+        // Bersihkan karakter terlarang sistem file (\ / : * ? " < > |)
+        const subNamaBersih = subNama.replace(/[\\/:*?"<>|]/g, "_");
+
+        // 3. Nama file default otomatis mengikuti tulisan di bawah judul
+        const tipeClean = tipe.replace(/\s+/g, '');
+        const defaultFileName = `RAB_${tipeClean}_${subNamaBersih}`;
+
+        // 4. Popup konfirmasi/edit nama file sebelum disimpan
+        const customName = prompt("Konfirmasi / Edit nama file PDF sebelum disimpan:", defaultFileName);
+
+        if (!customName || customName.trim() === "") {
+            return;
+        }
+
+        const finalFileName = customName.trim().endsWith(".pdf") ? customName.trim() : `${customName.trim()}.pdf`;
+        const namaDokumen = finalFileName.replace(/\.pdf$/i, "");
+
+        const btn = event.currentTarget;
+        const originalText = btn.innerHTML;
+
+        const grandTotalEl = document.getElementById('grand-total');
+        const grandTotalAngka = grandTotalEl ? grandTotalEl.innerText.replace(/[^0-9]/g, "") : 0;
+
+        btn.disabled = true;
+        btn.innerHTML = `<span class="material-symbols-outlined animate-spin text-base">progress_activity</span> Memproses PDF...`;
+
+        // Update teks judul di header cetak resmi
+        const printTitle = document.getElementById('print-title');
+        const printSubtitle = document.getElementById('print-subtitle');
+        if (printTitle) printTitle.innerText = judul;
+        if (printSubtitle) printSubtitle.innerText = subNama;
+
+        // AKTIFKAN MODE EXPORT PDF (Menghilangkan margin sidebar & merapikan tabel ke A4)
+        document.body.classList.add('exporting-pdf');
+
+        // Beri jeda 100ms agar browser selesai menyesuaikan layout
+        await new Promise(r => setTimeout(r, 100));
+
+        const element = document.querySelector('main');
+
+        const opt = {
+            margin: [8, 8, 8, 8],
+            filename: finalFileName,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { 
+                scale: 2, 
+                useCORS: true,
+                scrollY: 0
+            },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+        };
+
+        try {
+            btn.innerHTML = `<span class="material-symbols-outlined animate-spin text-base">cloud_upload</span> Mengunggah ke Drive...`;
+
+            // A. Buat Blob PDF
+            const pdfBlob = await html2pdf().set(opt).from(element).output('blob');
+
+            // B. Download file PDF ke komputer
+            html2pdf().set(opt).from(element).save();
+
+            // C. Konversi ke Base64
+            const base64Data = await new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onloadend = () => resolve(reader.result);
+                reader.readAsDataURL(pdfBlob);
+            });
+
+            // D. Kirim ke Google Apps Script
+            const payload = {
+                nomorRab: namaDokumen,
+                judul: judul,
+                lokasi: subNama,
+                tipeRab: tipe,
+                tanggal: new Date().toLocaleDateString('id-ID', { year: 'numeric', month: 'short', day: 'numeric' }),
+                totalBiaya: grandTotalAngka,
+                fileName: finalFileName,
+                pdfBase64: base64Data
+            };
+
+            const res = await fetch(GAS_WEBAPP_URL, {
+                method: "POST",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify(payload)
+            });
+
+            const result = await res.json();
+
+            if (result.status === "success") {
+                alert(`✓ Sukses!\nFile "${finalFileName}" berhasil disimpan ke Google Drive & dicatat ke Riwayat.`);
+            } else {
+                alert("PDF terunduh, tapi gagal masuk ke Google Drive: " + result.message);
+            }
+
+        } catch (err) {
+            console.error(err);
+            alert("Terjadi kesalahan saat kirim ke Drive: " + err.message);
+        } finally {
+            // MATIKAN KEMBALI MODE EXPORT PDF KE TAMPILAN NORMAL
+            document.body.classList.remove('exporting-pdf');
+            btn.disabled = false;
+            btn.innerHTML = originalText;
+        }
+    }
 </script>
-</body></html>
+</body>
+</html>
