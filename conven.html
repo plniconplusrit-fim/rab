@@ -185,7 +185,19 @@
       break-inside: avoid !important;
       margin-bottom: 16px !important;
     }
-
+  /* FIX: Kunci judul agar 100% rata kiri lurus sejajar tabel */
+    body.exporting-pdf section > div:first-child {
+      display: block !important;
+      text-align: left !important;
+      width: 100% !important;
+      margin-bottom: 8px !important;
+    }
+    body.exporting-pdf h2 {
+      display: block !important;
+      text-align: left !important;
+      width: 100% !important;
+      margin: 0 !important;
+    }
     .scrollbar-hide::-webkit-scrollbar { display: none; }
     .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 
