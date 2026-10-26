@@ -150,6 +150,42 @@
       .border-l-4 { border-left-width: 4px !important; border-left-color: #000 !important; }
     }
 
+    /* CSS KHUSUS SAAT EXPORT KE PDF AGAR PAS A4 & TIDAK TERPOTONG */
+    body.exporting-pdf aside {
+      display: none !important;
+    }
+    body.exporting-pdf main {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      margin-top: 0 !important;
+      padding: 10px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+    body.exporting-pdf .no-print {
+      display: none !important;
+    }
+    body.exporting-pdf .print-only {
+      display: block !important;
+    }
+    body.exporting-pdf .overflow-x-auto {
+      overflow: visible !important;
+    }
+    body.exporting-pdf table {
+      width: 100% !important;
+      min-width: 100% !important;
+      table-layout: auto !important;
+    }
+    body.exporting-pdf th, body.exporting-pdf td {
+      padding: 8px 6px !important;
+      font-size: 11px !important;
+    }
+    body.exporting-pdf section {
+      page-break-inside: avoid !important;
+      break-inside: avoid !important;
+      margin-bottom: 16px !important;
+    }
+
     .scrollbar-hide::-webkit-scrollbar { display: none; }
     .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -199,7 +235,8 @@
 
   <!-- Main Content Canvas -->
   <main class="flex-1 md:ml-64 p-margin-mobile md:p-margin-desktop content-canvas">
-    <!-- Top App Bar & Actions -->
+    
+    <!-- Top App Bar & Actions (Hanya muncul di layar) -->
     <div class="no-print flex flex-col md:flex-row md:items-start justify-between gap-4 mb-8">
       <div class="relative min-h-[80px] flex items-center" id="header-container">
         <!-- Header Display -->
@@ -228,10 +265,10 @@
       </div>
     </div>
 
-    <!-- Print Only Header -->
-    <div class="hidden print-only mb-8 text-center border-b-2 border-black pb-4">
-      <h1 class="text-2xl font-bold uppercase" id="print-title">RAB AKTIVASI VIA FTTHXCONVEN</h1>
-      <p class="uppercase font-semibold" id="print-subtitle">Technical Activation Cost Estimation</p>
+    <!-- Print Only Header (Header Resmi di dalam Dokumen PDF) -->
+    <div class="hidden print-only mb-6 text-center border-b-2 border-primary pb-4">
+      <h1 class="text-2xl font-bold uppercase text-primary" id="print-title">RAB AKTIVASI VIA FTTHXCONVEN</h1>
+      <p class="uppercase font-semibold text-secondary tracking-widest text-sm" id="print-subtitle">Technical Activation Cost Estimation</p>
     </div>
 
     <!-- Installation Table Section -->
@@ -244,7 +281,7 @@
         </button>
       </div>
       <div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden shadow-sm overflow-x-auto print:border-none print:shadow-none">
-        <table class="w-full text-left min-w-[800px] print:min-w-full">
+        <table class="w-full text-left min-w-[700px] print:min-w-full">
           <thead class="bg-on-surface-variant text-white font-label-caps text-[11px] uppercase tracking-widest print:text-black">
             <tr>
               <th class="px-4 py-3 font-bold text-center w-12">No</th>
@@ -278,7 +315,7 @@
         </button>
       </div>
       <div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden shadow-sm overflow-x-auto print:border-none print:shadow-none">
-        <table class="w-full text-left min-w-[800px] print:min-w-full">
+        <table class="w-full text-left min-w-[700px] print:min-w-full">
           <thead class="bg-on-surface-variant text-white font-label-caps text-[11px] uppercase tracking-widest print:text-black">
             <tr>
               <th class="px-4 py-3 font-bold text-center w-12">No</th>
@@ -566,7 +603,6 @@
         // 4. Popup konfirmasi/edit nama file sebelum disimpan
         const customName = prompt("Konfirmasi / Edit nama file PDF sebelum disimpan:", defaultFileName);
 
-        // Jika user klik Batal/Cancel, hentikan proses
         if (!customName || customName.trim() === "") {
             return;
         }
@@ -583,6 +619,18 @@
         btn.disabled = true;
         btn.innerHTML = `<span class="material-symbols-outlined animate-spin text-base">progress_activity</span> Memproses PDF...`;
 
+        // Update teks judul di header cetak resmi
+        const printTitle = document.getElementById('print-title');
+        const printSubtitle = document.getElementById('print-subtitle');
+        if (printTitle) printTitle.innerText = judul;
+        if (printSubtitle) printSubtitle.innerText = subNama;
+
+        // AKTIFKAN MODE EXPORT PDF (Menghilangkan margin sidebar & merapikan tabel ke A4)
+        document.body.classList.add('exporting-pdf');
+
+        // Beri jeda 100ms agar browser selesai menyesuaikan layout
+        await new Promise(r => setTimeout(r, 100));
+
         const element = document.querySelector('main');
 
         const opt = {
@@ -592,9 +640,10 @@
             html2canvas: { 
                 scale: 2, 
                 useCORS: true,
-                ignoreElements: (el) => el.classList && el.classList.contains('no-print')
+                scrollY: 0
             },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
         };
 
         try {
@@ -603,7 +652,7 @@
             // A. Buat Blob PDF
             const pdfBlob = await html2pdf().set(opt).from(element).output('blob');
 
-            // B. Download file PDF ke komputer dengan nama yang telah ditentukan
+            // B. Download file PDF ke komputer
             html2pdf().set(opt).from(element).save();
 
             // C. Konversi ke Base64
@@ -613,7 +662,7 @@
                 reader.readAsDataURL(pdfBlob);
             });
 
-            // D. Kirim ke Google Apps Script (menggunakan nama file pilihan Anda)
+            // D. Kirim ke Google Apps Script
             const payload = {
                 nomorRab: namaDokumen,
                 judul: judul,
@@ -643,6 +692,8 @@
             console.error(err);
             alert("Terjadi kesalahan saat kirim ke Drive: " + err.message);
         } finally {
+            // MATIKAN KEMBALI MODE EXPORT PDF KE TAMPILAN NORMAL
+            document.body.classList.remove('exporting-pdf');
             btn.disabled = false;
             btn.innerHTML = originalText;
         }
