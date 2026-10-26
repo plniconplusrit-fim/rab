@@ -1,0 +1,227 @@
+<!-- ======================= BAGIAN TAB RIWAYAT ======================= -->
+<style>
+  .rab-nav-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 8px;
+  }
+  .rab-tab-btn {
+    padding: 10px 20px;
+    font-weight: 600;
+    border: none;
+    background: #f1f5f9;
+    color: #475569;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: 0.2s;
+  }
+  .rab-tab-btn.active {
+    background: #0284c7;
+    color: white;
+  }
+  .search-box-rab {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .search-box-rab input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+  .search-box-rab button {
+    padding: 10px 18px;
+    background: #0284c7;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .table-riwayat {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  .table-riwayat th, .table-riwayat td {
+    padding: 12px 14px;
+    border-bottom: 1px solid #e2e8f0;
+    text-align: left;
+    font-size: 14px;
+  }
+  .table-riwayat th {
+    background: #0f172a;
+    color: white;
+  }
+  .badge-tipe {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    background: #e0f2fe;
+    color: #0369a1;
+  }
+  /* Modal Preview PDF */
+  .modal-drive {
+    display: none;
+    position: fixed;
+    z-index: 99999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+  }
+  .modal-content-drive {
+    background: white;
+    width: 85%;
+    max-width: 1000px;
+    margin: 3% auto;
+    border-radius: 10px;
+    padding: 20px;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  }
+</style>
+
+<!-- Tombol Tab -->
+<div class="rab-nav-tabs">
+  <button class="rab-tab-btn active" onclick="switchRabTab('menu')">Pilihan RAB</button>
+  <button class="rab-tab-btn" onclick="switchRabTab('riwayat')">Riwayat RAB Online</button>
+</div>
+
+<!-- Tab 1: Menu Pilihan RAB Anda saat ini -->
+<div id="tab-menu-rab">
+  <!-- Taruh kode menu pilihan conven, ftth, ftth6core Anda di sini -->
+</div>
+
+<!-- Tab 2: Riwayat RAB Google Drive -->
+<div id="tab-riwayat-rab" style="display: none;">
+  <div class="search-box-rab">
+    <input type="text" id="inputSearchRab" placeholder="Cari berdasarkan Nomor RAB, Judul, atau Lokasi..." onkeyup="filterTabelLokal()">
+    <button onclick="muatRiwayatDariDrive()">Refresh Data</button>
+  </div>
+
+  <table class="table-riwayat">
+    <thead>
+      <tr>
+        <th>No. RAB</th>
+        <th>Judul Pekerjaan</th>
+        <th>Lokasi</th>
+        <th>Tipe</th>
+        <th>Tanggal</th>
+        <th>Total (Rp)</th>
+        <th>Aksi</th>
+      </tr>
+    </thead>
+    <tbody id="tbodyRiwayat">
+      <tr><td colspan="7" style="text-align:center;">Klik "Riwayat RAB Online" untuk memuat data...</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Modal PDF Viewer -->
+<div id="modalPdfDrive" class="modal-drive">
+  <div class="modal-content-drive">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+      <h3 id="modalDriveTitle" style="margin: 0; color: #0f172a;">Dokumen RAB (Google Drive)</h3>
+      <button onclick="tutupPreviewDrive()" style="padding: 6px 12px; cursor: pointer; background: #ef4444; color: white; border: none; border-radius: 4px;">Tutup</button>
+    </div>
+    <iframe id="iframeDrive" src="" style="width: 100%; height: 75vh; border: none; border-radius: 6px;"></iframe>
+  </div>
+</div>
+
+<script>
+  // GANTI DENGAN URL GOOGLE APPS SCRIPT ANDA
+  const GAS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbx.../exec";
+  let riwayatCache = [];
+
+  function switchRabTab(tab) {
+    document.querySelectorAll(".rab-tab-btn").forEach(b => b.classList.remove("active"));
+    if (tab === 'menu') {
+      document.querySelector(".rab-tab-btn:nth-child(1)").classList.add("active");
+      document.getElementById("tab-menu-rab").style.display = "block";
+      document.getElementById("tab-riwayat-rab").style.display = "none";
+    } else {
+      document.querySelector(".rab-tab-btn:nth-child(2)").classList.add("active");
+      document.getElementById("tab-menu-rab").style.display = "none";
+      document.getElementById("tab-riwayat-rab").style.display = "block";
+      if (riwayatCache.length === 0) {
+        muatRiwayatDariDrive();
+      }
+    }
+  }
+
+  async function muatRiwayatDariDrive() {
+    const tbody = document.getElementById("tbodyRiwayat");
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;">Sedang mengambil riwayat dari Google Drive...</td></tr>`;
+    try {
+      const res = await fetch(GAS_WEBAPP_URL);
+      const json = await res.json();
+      if (json.status === "success") {
+        riwayatCache = json.data;
+        renderTabelRiwayat(riwayatCache);
+      } else {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:red;">Gagal memuat: ${json.message}</td></tr>`;
+      }
+    } catch (err) {
+      tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:red;">Koneksi error: ${err.message}</td></tr>`;
+    }
+  }
+
+  function renderTabelRiwayat(data) {
+    const tbody = document.getElementById("tbodyRiwayat");
+    tbody.innerHTML = "";
+    if (data.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;">Belum ada riwayat RAB yang tersimpan.</td></tr>`;
+      return;
+    }
+    data.forEach(item => {
+      const tr = document.createElement("tr");
+      const nominal = isNaN(item["Total Biaya"]) ? item["Total Biaya"] : Number(item["Total Biaya"]).toLocaleString("id-ID");
+      tr.innerHTML = `
+        <td><b>${item["Nomor RAB"] || "-"}</b></td>
+        <td>${item["Judul"] || "-"}</td>
+        <td>${item["Lokasi"] || "-"}</td>
+        <td><span class="badge-tipe">${item["Tipe RAB"] || "-"}</span></td>
+        <td>${item["Tanggal"] || "-"}</td>
+        <td>Rp ${nominal}</td>
+        <td>
+          <button onclick="bukaPreviewDrive('${item["URL Drive"]}', '${item["Nomor RAB"]} - ${item["Judul"]}')" 
+                  style="background: #0284c7; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">
+            Buka File
+          </button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function filterTabelLokal() {
+    const keyword = document.getElementById("inputSearchRab").value.toLowerCase();
+    const filtered = riwayatCache.filter(item => 
+      String(item["Nomor RAB"]).toLowerCase().includes(keyword) ||
+      String(item["Judul"]).toLowerCase().includes(keyword) ||
+      String(item["Lokasi"]).toLowerCase().includes(keyword)
+    );
+    renderTabelRiwayat(filtered);
+  }
+
+  function bukaPreviewDrive(url, title) {
+    document.getElementById("modalDriveTitle").innerText = "Preview: " + title;
+    document.getElementById("iframeDrive").src = url;
+    document.getElementById("modalPdfDrive").style.display = "block";
+  }
+
+  function tutupPreviewDrive() {
+    document.getElementById("iframeDrive").src = "";
+    document.getElementById("modalPdfDrive").style.display = "none";
+  }
+</script>
