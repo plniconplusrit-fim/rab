@@ -107,7 +107,7 @@
 
 <div class="flex min-h-screen">
 
-  <!-- SideNavBar (Sama dengan FTTH / Conven) -->
+  <!-- SideNavBar -->
   <aside class="hidden md:flex fixed h-screen left-0 top-0 w-64 bg-on-surface-variant dark:bg-inverse-surface flex-col py-base gap-2 shadow-lg border-r border-outline-variant/20 z-50">
     <div class="px-6 py-4 mb-4">
       <a href="dashboard.html" class="block hover:opacity-80 transition-opacity">
@@ -117,25 +117,21 @@
     </div>
 
     <nav class="flex-1 px-2 space-y-1">
-      <!-- Conven -->
       <a class="flex items-center gap-3 text-secondary-fixed-dim hover:text-primary-fixed hover:bg-white/5 rounded-lg mx-2 my-1 px-4 py-3 transition-all" href="conven.html">
         <span class="material-symbols-outlined">cable</span>
         <span class="font-label-caps text-label-caps">CONVEN</span>
       </a>
 
-      <!-- FTTH -->
       <a class="flex items-center gap-3 text-secondary-fixed-dim hover:text-primary-fixed hover:bg-white/5 rounded-lg mx-2 my-1 px-4 py-3 transition-all" href="ftth.html">
         <span class="material-symbols-outlined">router</span>
         <span class="font-label-caps text-label-caps">FTTH</span>
       </a>
 
-      <!-- FTTH X CONVEN -->
       <a class="flex items-center gap-3 text-secondary-fixed-dim hover:text-primary-fixed hover:bg-white/5 rounded-lg mx-2 my-1 px-4 py-3 transition-all" href="ftthxconven.html">
         <span class="material-symbols-outlined">hub</span>
         <span class="font-label-caps text-label-caps">FTTH X CONVEN</span>
       </a>
 
-      <!-- RIWAYAT RAB (Active Tab) -->
       <a class="flex items-center gap-3 text-primary-fixed bg-white/10 rounded-lg mx-2 my-1 px-4 py-3 font-semibold shadow-inner" href="riwayat.html">
         <span class="material-symbols-outlined">history</span>
         <span class="font-label-caps text-label-caps">RIWAYAT RAB</span>
@@ -201,11 +197,11 @@
           <thead class="bg-on-surface-variant text-white font-label-caps text-[11px] uppercase tracking-widest">
             <tr>
               <th class="px-4 py-3 font-bold text-center w-12">No</th>
-              <th class="px-4 py-3 font-bold w-40">No. RAB / Dokumen</th>
+              <th class="px-4 py-3 font-bold w-44">No. RAB / Dokumen</th>
               <th class="px-4 py-3 font-bold">Judul Pekerjaan</th>
               <th class="px-4 py-3 font-bold w-44">Lokasi</th>
               <th class="px-4 py-3 font-bold text-center w-36">Tipe RAB</th>
-              <th class="px-4 py-3 font-bold text-center w-28">Tanggal</th>
+              <th class="px-4 py-3 font-bold text-center w-32">Tanggal</th>
               <th class="px-4 py-3 font-bold text-right w-40">Total RAB</th>
               <th class="px-4 py-3 font-bold text-center w-36">Dokumen Drive</th>
             </tr>
@@ -233,9 +229,15 @@
         <span class="material-symbols-outlined text-primary-fixed">description</span>
         <h3 class="font-headline-md text-lg text-white font-semibold" id="pdfJudulModal">Preview Dokumen Google Drive</h3>
       </div>
-      <button onclick="tutupModal()" class="text-white/80 hover:text-white hover:bg-white/10 rounded-full p-1.5 transition-colors">
-        <span class="material-symbols-outlined">close</span>
-      </button>
+      <div class="flex items-center gap-3">
+        <a id="btnBukaTabBaru" href="#" target="_blank" class="text-xs bg-primary-fixed text-on-primary-fixed px-3 py-1.5 rounded font-label-caps hover:opacity-90 inline-flex items-center gap-1">
+          <span class="material-symbols-outlined text-sm">open_in_new</span>
+          Buka Tab Baru
+        </a>
+        <button onclick="tutupModal()" class="text-white/80 hover:text-white hover:bg-white/10 rounded-full p-1.5 transition-colors">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
     </div>
 
     <!-- Modal Body / Iframe -->
@@ -254,7 +256,6 @@
 </div>
 
 <script>
-  // MASUKKAN URL GOOGLE APPS SCRIPT ANDA DI SINI:
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxhcvWu9rQ2Fu8RCBzGLUJ3r22b3E3owWM8SOzjqsoJL5zMvuQhBzb6MzATZf2I7C-DIA/exec";
 
   let dataRiwayatSemua = [];
@@ -262,6 +263,59 @@
   function formatIDR(num) {
     if (isNaN(num) || num === "" || num === null) return "Rp " + (num || 0);
     return "Rp " + Math.round(Number(num)).toLocaleString('id-ID');
+  }
+
+  function formatTanggal(tglStr) {
+    if (!tglStr) return "-";
+    try {
+      const d = new Date(tglStr);
+      if (!isNaN(d.getTime())) {
+        return d.toLocaleDateString("id-ID", { year: "numeric", month: "short", day: "numeric" });
+      }
+    } catch (e) {}
+    return String(tglStr).split("T")[0];
+  }
+
+  // FITUR PINTAR 1: Otomatis mendeteksi Link Google Drive di kolom mana pun
+  function temukanLinkDrive(item) {
+    // 1. Cek dari nama-nama kolom umum
+    for (let key in item) {
+      const val = String(item[key] || "").trim();
+      if (val.includes("drive.google.com")) {
+        // Ubah link /view menjadi /preview agar bisa di-embed di iframe
+        return val.replace(/\/view(\?.*)?$/, "/preview");
+      }
+    }
+
+    // 2. Jika ada File ID, buat URL preview langsung
+    for (let key in item) {
+      const k = key.toLowerCase();
+      if (k.includes("id") && !k.includes("judul") && !k.includes("nomor")) {
+        const val = String(item[key] || "").trim();
+        if (val.length >= 25 && !val.includes(" ") && !val.includes("/")) {
+          return `https://drive.google.com/file/d/${val}/preview`;
+        }
+      }
+    }
+
+    return null;
+  }
+
+  // FITUR PINTAR 2: Otomatis mendeteksi Tipe RAB
+  function temukanTipeRab(item) {
+    for (let key in item) {
+      const k = key.toLowerCase();
+      if (k.includes("tipe") || k.includes("jenis")) {
+        const val = String(item[key] || "").trim();
+        if (val && val !== "-") return val.toUpperCase();
+      }
+    }
+    // Jika tidak ada kolom tipe, coba tebak dari Nomor atau Judul
+    const str = (item["Nomor RAB"] || item["Judul"] || "").toUpperCase();
+    if (str.includes("CONVEN") && str.includes("FTTH")) return "FTTH X CONVEN";
+    if (str.includes("FTTH")) return "FTTH";
+    if (str.includes("CONVEN")) return "CONVEN";
+    return "RAB";
   }
 
   window.addEventListener("DOMContentLoaded", () => {
@@ -320,23 +374,34 @@
 
     list.forEach((item, index) => {
       const isStriped = index % 2 !== 0 ? 'bg-secondary-container/5' : '';
-      const tipeRab = (item["Tipe RAB"] || "-").toUpperCase();
+      const tipeRab = temukanTipeRab(item);
+      const linkDrive = temukanLinkDrive(item);
+      const tglFormatted = formatTanggal(item["Tanggal"]);
       
+      const noDokumen = item["Nomor RAB"] || item["No. RAB"] || item["Nomor"] || "-";
+      const judul = item["Judul"] || item["Judul Pekerjaan"] || "-";
+      const lokasi = item["Lokasi"] || "-";
+      const total = item["Total Biaya"] || item["Total"] || 0;
+
+      // Encode link agar aman dipassing ke fungsi JavaScript
+      const safeLink = linkDrive ? encodeURIComponent(linkDrive) : "";
+      const safeTitle = encodeURIComponent(`${noDokumen} - ${judul}`);
+
       tbody.innerHTML += `
         <tr class="${isStriped} hover:bg-primary-container/5 transition-colors border-b border-outline-variant/30">
           <td class="px-4 py-3 text-center text-on-surface-variant font-mono-data">${index + 1}</td>
-          <td class="px-4 py-3 font-bold font-mono-data text-primary">${item["Nomor RAB"] || "-"}</td>
-          <td class="px-4 py-3 font-semibold text-on-surface">${item["Judul"] || "-"}</td>
-          <td class="px-4 py-3 text-secondary text-sm">${item["Lokasi"] || "-"}</td>
+          <td class="px-4 py-3 font-bold font-mono-data text-primary">${noDokumen}</td>
+          <td class="px-4 py-3 font-semibold text-on-surface">${judul}</td>
+          <td class="px-4 py-3 text-secondary text-sm">${lokasi}</td>
           <td class="px-4 py-3 text-center">
             <span class="bg-primary/10 text-primary border border-primary/20 text-[11px] font-label-caps px-2.5 py-1 rounded-full uppercase tracking-wider">
               ${tipeRab}
             </span>
           </td>
-          <td class="px-4 py-3 text-center font-mono-data text-secondary text-xs">${item["Tanggal"] || "-"}</td>
-          <td class="px-4 py-3 text-right font-mono-data font-bold text-on-surface">${formatIDR(item["Total Biaya"])}</td>
+          <td class="px-4 py-3 text-center font-mono-data text-secondary text-xs">${tglFormatted}</td>
+          <td class="px-4 py-3 text-right font-mono-data font-bold text-on-surface">${formatIDR(total)}</td>
           <td class="px-4 py-3 text-center">
-            <button onclick="bukaModalDrive('${item["URL Drive"]}', '${item["Nomor RAB"]} - ${item["Judul"]}')" 
+            <button onclick="bukaModalDrive('${safeLink}', '${safeTitle}')" 
                     class="inline-flex items-center gap-1.5 bg-primary text-white hover:bg-primary/90 px-3 py-1.5 rounded font-label-caps text-[11px] transition-all shadow-sm">
               <span class="material-symbols-outlined text-sm">visibility</span>
               LIHAT PDF
@@ -352,12 +417,13 @@
     const tipePilihan = document.getElementById("filterTipe").value.toUpperCase();
 
     const hasilFilter = dataRiwayatSemua.filter(item => {
-      const cocokKeyword = 
-        String(item["Nomor RAB"] || "").toLowerCase().includes(keyword) ||
-        String(item["Judul"] || "").toLowerCase().includes(keyword) ||
-        String(item["Lokasi"] || "").toLowerCase().includes(keyword);
+      const noDokumen = String(item["Nomor RAB"] || item["No. RAB"] || "").toLowerCase();
+      const judul = String(item["Judul"] || "").toLowerCase();
+      const lokasi = String(item["Lokasi"] || "").toLowerCase();
+      const tipeRab = temukanTipeRab(item);
 
-      const cocokTipe = tipePilihan === "" || String(item["Tipe RAB"] || "").toUpperCase().includes(tipePilihan);
+      const cocokKeyword = noDokumen.includes(keyword) || judul.includes(keyword) || lokasi.includes(keyword);
+      const cocokTipe = tipePilihan === "" || tipeRab.includes(tipePilihan);
 
       return cocokKeyword && cocokTipe;
     });
@@ -365,9 +431,18 @@
     renderTabel(hasilFilter);
   }
 
-  function bukaModalDrive(previewUrl, judul) {
-    document.getElementById("pdfJudulModal").innerText = judul;
-    document.getElementById("pdfIframe").src = previewUrl;
+  function bukaModalDrive(encodedUrl, encodedJudul) {
+    const rawUrl = encodedUrl ? decodeURIComponent(encodedUrl) : "";
+    const rawJudul = encodedJudul ? decodeURIComponent(encodedJudul) : "Preview Dokumen";
+
+    if (!rawUrl || rawUrl === "null" || !rawUrl.startsWith("http")) {
+      alert("Link file Google Drive tidak ditemukan untuk baris data ini.\nPastikan kolom Link/URL Drive di Google Sheets Anda sudah terisi.");
+      return;
+    }
+
+    document.getElementById("pdfJudulModal").innerText = rawJudul;
+    document.getElementById("pdfIframe").src = rawUrl;
+    document.getElementById("btnBukaTabBaru").href = rawUrl.replace("/preview", "/view");
     document.getElementById("pdfModal").classList.remove("hidden");
   }
 
