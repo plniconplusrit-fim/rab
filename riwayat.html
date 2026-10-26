@@ -1,231 +1,381 @@
-<!-- ======================= BAGIAN TAB RIWAYAT ======================= -->
-<style>
-  .rab-nav-tabs {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #e2e8f0;
-    padding-bottom: 8px;
-  }
-  .rab-tab-btn {
-    padding: 10px 20px;
-    font-weight: 600;
-    border: none;
-    background: #f1f5f9;
-    color: #475569;
-    cursor: pointer;
-    border-radius: 8px;
-    transition: 0.2s;
-  }
-  .rab-tab-btn.active {
-    background: #0284c7;
-    color: white;
-  }
-  .search-box-rab {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  .search-box-rab input {
-    flex: 1;
-    padding: 10px 14px;
-    border: 1px solid #cbd5e1;
-    border-radius: 6px;
-    font-size: 14px;
-  }
-  .search-box-rab button {
-    padding: 10px 18px;
-    background: #0284c7;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-  }
-  .table-riwayat {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  }
-  .table-riwayat th, .table-riwayat td {
-    padding: 12px 14px;
-    border-bottom: 1px solid #e2e8f0;
-    text-align: left;
-    font-size: 14px;
-  }
-  .table-riwayat th {
-    background: #0f172a;
-    color: white;
-  }
-  .badge-tipe {
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: bold;
-    background: #e0f2fe;
-    color: #0369a1;
-  }
-  /* Modal Preview PDF */
-  .modal-drive {
-    display: none;
-    position: fixed;
-    z-index: 99999;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.6);
-  }
-  .modal-content-drive {
-    background: white;
-    width: 85%;
-    max-width: 1000px;
-    margin: 3% auto;
-    border-radius: 10px;
-    padding: 20px;
-    position: relative;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-  }
-</style>
-<div class="navbar">
-  <h1>Sistem Riwayat RAB Online</h1>
-  <!-- Mengarah kembali ke dashboard.html -->
-  <a href="dashboard.html" class="btn-kembali">← Kembali ke Dashboard</a>
-</div>
-<!-- Tombol Tab -->
-<div class="rab-nav-tabs">
-  <button class="rab-tab-btn active" onclick="switchRabTab('menu')">Pilihan RAB</button>
-  <button class="rab-tab-btn" onclick="switchRabTab('riwayat')">Riwayat RAB Online</button>
-</div>
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Riwayat RAB - RABIT</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Geist:wght@400;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-surface-variant": "#3c4946",
+            "surface-tint": "#006b5d",
+            "on-primary": "#ffffff",
+            "secondary": "#5c5f61",
+            "primary-fixed": "#75f8df",
+            "on-secondary-container": "#626567",
+            "inverse-primary": "#55dbc4",
+            "tertiary-container": "#67aa9f",
+            "on-primary-fixed-variant": "#005045",
+            "surface-container": "#eaedff",
+            "background": "#faf8ff",
+            "surface": "#faf8ff",
+            "secondary-fixed": "#e0e3e5",
+            "secondary-container": "#e0e3e5",
+            "on-surface": "#131b2e",
+            "surface-variant": "#dae2fd",
+            "error": "#ba1a1a",
+            "secondary-fixed-dim": "#c4c7c9",
+            "on-primary-fixed": "#00201b",
+            "surface-container-low": "#f2f3ff",
+            "tertiary": "#226960",
+            "primary-fixed-dim": "#55dbc4",
+            "surface-bright": "#faf8ff",
+            "inverse-surface": "#283044",
+            "error-container": "#ffdad6",
+            "on-primary-container": "#003d34",
+            "surface-container-high": "#e2e7ff",
+            "on-tertiary": "#ffffff",
+            "primary-container": "#12b19b",
+            "surface-container-lowest": "#ffffff",
+            "on-secondary": "#ffffff",
+            "on-tertiary-container": "#003d36",
+            "tertiary-fixed": "#abf0e3",
+            "outline": "#6c7a76",
+            "on-secondary-fixed": "#191c1e",
+            "outline-variant": "#bbcac5",
+            "tertiary-fixed-dim": "#90d3c7",
+            "surface-dim": "#d2d9f4",
+            "on-error": "#ffffff",
+            "on-error-container": "#93000a",
+            "on-tertiary-fixed-variant": "#005048",
+            "on-secondary-fixed-variant": "#444749",
+            "on-background": "#131b2e",
+            "primary": "#006b5d",
+            "surface-container-highest": "#dae2fd",
+            "on-tertiary-fixed": "#00201c",
+            "inverse-on-surface": "#eef0ff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "margin-mobile": "16px",
+            "base": "8px",
+            "container-max": "1440px",
+            "margin-desktop": "40px",
+            "gutter": "24px"
+          },
+          "fontFamily": {
+            "label-caps": ["Plus Jakarta Sans"],
+            "headline-lg-mobile": ["Plus Jakarta Sans"],
+            "mono-data": ["Geist"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "body-md": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+            "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+            "mono-data": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+            "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+            "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+            "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+            "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+          }
+        },
+      },
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+</head>
+<body class="bg-background font-body-md text-on-surface selection:bg-primary-container selection:text-white">
 
-<!-- Tab 1: Menu Pilihan RAB Anda saat ini -->
-<div id="tab-menu-rab">
-  <!-- Taruh kode menu pilihan conven, ftth, ftth6core Anda di sini -->
-</div>
+<div class="flex min-h-screen">
 
-<!-- Tab 2: Riwayat RAB Google Drive -->
-<div id="tab-riwayat-rab" style="display: none;">
-  <div class="search-box-rab">
-    <input type="text" id="inputSearchRab" placeholder="Cari berdasarkan Nomor RAB, Judul, atau Lokasi..." onkeyup="filterTabelLokal()">
-    <button onclick="muatRiwayatDariDrive()">Refresh Data</button>
-  </div>
-
-  <table class="table-riwayat">
-    <thead>
-      <tr>
-        <th>No. RAB</th>
-        <th>Judul Pekerjaan</th>
-        <th>Lokasi</th>
-        <th>Tipe</th>
-        <th>Tanggal</th>
-        <th>Total (Rp)</th>
-        <th>Aksi</th>
-      </tr>
-    </thead>
-    <tbody id="tbodyRiwayat">
-      <tr><td colspan="7" style="text-align:center;">Klik "Riwayat RAB Online" untuk memuat data...</td></tr>
-    </tbody>
-  </table>
-</div>
-
-<!-- Modal PDF Viewer -->
-<div id="modalPdfDrive" class="modal-drive">
-  <div class="modal-content-drive">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-      <h3 id="modalDriveTitle" style="margin: 0; color: #0f172a;">Dokumen RAB (Google Drive)</h3>
-      <button onclick="tutupPreviewDrive()" style="padding: 6px 12px; cursor: pointer; background: #ef4444; color: white; border: none; border-radius: 4px;">Tutup</button>
+  <!-- SideNavBar (Sama dengan FTTH / Conven) -->
+  <aside class="hidden md:flex fixed h-screen left-0 top-0 w-64 bg-on-surface-variant dark:bg-inverse-surface flex-col py-base gap-2 shadow-lg border-r border-outline-variant/20 z-50">
+    <div class="px-6 py-4 mb-4">
+      <a href="dashboard.html" class="block hover:opacity-80 transition-opacity">
+        <div class="text-primary-fixed font-bold text-xl font-headline-md tracking-tight">RABIT</div>
+        <div class="text-secondary-fixed-dim text-[10px] font-label-caps opacity-70">RAB Instalasi Aktivasi</div>
+      </a>
     </div>
-    <iframe id="iframeDrive" src="" style="width: 100%; height: 75vh; border: none; border-radius: 6px;"></iframe>
+
+    <nav class="flex-1 px-2 space-y-1">
+      <!-- Conven -->
+      <a class="flex items-center gap-3 text-secondary-fixed-dim hover:text-primary-fixed hover:bg-white/5 rounded-lg mx-2 my-1 px-4 py-3 transition-all" href="conven.html">
+        <span class="material-symbols-outlined">cable</span>
+        <span class="font-label-caps text-label-caps">CONVEN</span>
+      </a>
+
+      <!-- FTTH -->
+      <a class="flex items-center gap-3 text-secondary-fixed-dim hover:text-primary-fixed hover:bg-white/5 rounded-lg mx-2 my-1 px-4 py-3 transition-all" href="ftth.html">
+        <span class="material-symbols-outlined">router</span>
+        <span class="font-label-caps text-label-caps">FTTH</span>
+      </a>
+
+      <!-- FTTH X CONVEN -->
+      <a class="flex items-center gap-3 text-secondary-fixed-dim hover:text-primary-fixed hover:bg-white/5 rounded-lg mx-2 my-1 px-4 py-3 transition-all" href="ftthxconven.html">
+        <span class="material-symbols-outlined">hub</span>
+        <span class="font-label-caps text-label-caps">FTTH X CONVEN</span>
+      </a>
+
+      <!-- RIWAYAT RAB (Active Tab) -->
+      <a class="flex items-center gap-3 text-primary-fixed bg-white/10 rounded-lg mx-2 my-1 px-4 py-3 font-semibold shadow-inner" href="riwayat.html">
+        <span class="material-symbols-outlined">history</span>
+        <span class="font-label-caps text-label-caps">RIWAYAT RAB</span>
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main Content Canvas -->
+  <main class="flex-1 md:ml-64 p-margin-mobile md:p-margin-desktop content-canvas">
+    
+    <!-- Top App Bar & Header -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+      <div>
+        <h1 class="font-headline-lg text-headline-lg text-primary tracking-tight">RIWAYAT ARSIP RAB</h1>
+        <p class="text-secondary font-body-md mt-1 uppercase tracking-wider">Histori Perhitungan Online & Dokumen Google Drive</p>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button onclick="ambilDataRiwayat()" class="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg font-label-caps text-label-caps hover:opacity-90 shadow-sm transition-all">
+          <span class="material-symbols-outlined text-base">sync</span>
+          REFRESH DATA
+        </button>
+      </div>
+    </div>
+
+    <!-- Filter & Search Bar Section -->
+    <section class="mb-gutter">
+      <div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-4 shadow-sm flex flex-col md:flex-row gap-4 items-center justify-between">
+        <!-- Input Search -->
+        <div class="relative w-full md:w-1/2">
+          <span class="material-symbols-outlined absolute left-3 top-2.5 text-secondary text-lg">search</span>
+          <input 
+            type="text" 
+            id="searchInput" 
+            onkeyup="filterData()"
+            placeholder="Cari berdasarkan Nomor Dokumen, Judul Pekerjaan, atau Lokasi..." 
+            class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-lg text-sm font-body-md text-on-surface focus:ring-1 focus:ring-primary focus:border-primary"
+          />
+        </div>
+
+        <!-- Filter Tipe RAB -->
+        <div class="flex w-full md:w-auto items-center gap-3">
+          <span class="text-xs font-label-caps text-secondary uppercase">Filter Tipe:</span>
+          <select id="filterTipe" onchange="filterData()" class="bg-surface-container-low border border-outline-variant rounded-lg px-3 py-2 text-sm font-body-md text-on-surface focus:ring-1 focus:ring-primary">
+            <option value="">Semua Tipe RAB</option>
+            <option value="CONVEN">CONVEN</option>
+            <option value="FTTH">FTTH</option>
+            <option value="FTTH X CONVEN">FTTH X CONVEN</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Table Section -->
+    <section class="mb-gutter">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="font-headline-md text-headline-md text-on-surface border-l-4 border-primary pl-4 uppercase">Daftar Dokumen Tersimpan</h2>
+        <span class="text-xs font-label-caps text-secondary" id="totalRecordsBadge">Memuat data...</span>
+      </div>
+
+      <div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden shadow-sm overflow-x-auto">
+        <table class="w-full text-left min-w-[950px]">
+          <thead class="bg-on-surface-variant text-white font-label-caps text-[11px] uppercase tracking-widest">
+            <tr>
+              <th class="px-4 py-3 font-bold text-center w-12">No</th>
+              <th class="px-4 py-3 font-bold w-40">No. RAB / Dokumen</th>
+              <th class="px-4 py-3 font-bold">Judul Pekerjaan</th>
+              <th class="px-4 py-3 font-bold w-44">Lokasi</th>
+              <th class="px-4 py-3 font-bold text-center w-36">Tipe RAB</th>
+              <th class="px-4 py-3 font-bold text-center w-28">Tanggal</th>
+              <th class="px-4 py-3 font-bold text-right w-40">Total RAB</th>
+              <th class="px-4 py-3 font-bold text-center w-36">Dokumen Drive</th>
+            </tr>
+          </thead>
+          <tbody class="font-body-md text-on-surface" id="riwayatTbody">
+            <tr>
+              <td colspan="8" class="text-center py-12 text-secondary">
+                <span class="material-symbols-outlined animate-spin text-3xl text-primary mb-2 block">progress_activity</span>
+                Mengambil data arsip dari Google Drive...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- Modal Preview PDF Google Drive -->
+<div id="pdfModal" class="hidden fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4">
+  <div class="bg-surface-container-lowest w-full max-w-5xl rounded-xl shadow-2xl overflow-hidden border border-outline-variant flex flex-col max-h-[92vh]">
+    <!-- Modal Header -->
+    <div class="bg-on-surface-variant text-white px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary-fixed">description</span>
+        <h3 class="font-headline-md text-lg text-white font-semibold" id="pdfJudulModal">Preview Dokumen Google Drive</h3>
+      </div>
+      <button onclick="tutupModal()" class="text-white/80 hover:text-white hover:bg-white/10 rounded-full p-1.5 transition-colors">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+
+    <!-- Modal Body / Iframe -->
+    <div class="flex-1 bg-surface-container-low p-2">
+      <iframe id="pdfIframe" src="" class="w-full h-[70vh] rounded border border-outline-variant bg-white" frameborder="0"></iframe>
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="bg-surface-container-lowest px-6 py-3 border-t border-outline-variant flex justify-between items-center">
+      <span class="text-xs text-secondary font-label-caps">Dokumen resmi tersimpan langsung di Google Drive Anda.</span>
+      <button onclick="tutupModal()" class="px-4 py-2 bg-secondary-container text-on-secondary-container rounded-lg font-label-caps text-xs hover:opacity-80">
+        Tutup
+      </button>
+    </div>
   </div>
 </div>
 
 <script>
-  // GANTI DENGAN URL GOOGLE APPS SCRIPT ANDA
-  const GAS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbx.../exec";
-  let riwayatCache = [];
+  // MASUKKAN URL GOOGLE APPS SCRIPT ANDA DI SINI:
+  const SCRIPT_URL = "MASUKKAN_URL_WEB_APP_APPS_SCRIPT_ANDA";
 
-  function switchRabTab(tab) {
-    document.querySelectorAll(".rab-tab-btn").forEach(b => b.classList.remove("active"));
-    if (tab === 'menu') {
-      document.querySelector(".rab-tab-btn:nth-child(1)").classList.add("active");
-      document.getElementById("tab-menu-rab").style.display = "block";
-      document.getElementById("tab-riwayat-rab").style.display = "none";
-    } else {
-      document.querySelector(".rab-tab-btn:nth-child(2)").classList.add("active");
-      document.getElementById("tab-menu-rab").style.display = "none";
-      document.getElementById("tab-riwayat-rab").style.display = "block";
-      if (riwayatCache.length === 0) {
-        muatRiwayatDariDrive();
-      }
-    }
+  let dataRiwayatSemua = [];
+
+  function formatIDR(num) {
+    if (isNaN(num) || num === "" || num === null) return "Rp " + (num || 0);
+    return "Rp " + Math.round(Number(num)).toLocaleString('id-ID');
   }
 
-  async function muatRiwayatDariDrive() {
-    const tbody = document.getElementById("tbodyRiwayat");
-    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;">Sedang mengambil riwayat dari Google Drive...</td></tr>`;
+  window.addEventListener("DOMContentLoaded", () => {
+    ambilDataRiwayat();
+  });
+
+  async function ambilDataRiwayat() {
+    const tbody = document.getElementById("riwayatTbody");
+    const badge = document.getElementById("totalRecordsBadge");
+    
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="8" class="text-center py-12 text-secondary">
+          <span class="material-symbols-outlined animate-spin text-3xl text-primary mb-2 block">progress_activity</span>
+          Mengambil data arsip dari Google Drive...
+        </td>
+      </tr>
+    `;
+    badge.innerText = "Memuat data...";
+
     try {
-      const res = await fetch(GAS_WEBAPP_URL);
-      const json = await res.json();
-      if (json.status === "success") {
-        riwayatCache = json.data;
-        renderTabelRiwayat(riwayatCache);
+      const response = await fetch(SCRIPT_URL);
+      const result = await response.json();
+
+      if (result.status === "success") {
+        dataRiwayatSemua = result.data;
+        renderTabel(dataRiwayatSemua);
       } else {
-        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:red;">Gagal memuat: ${json.message}</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="8" class="text-center py-8 text-error">Gagal: ${result.message}</td></tr>`;
+        badge.innerText = "Error";
       }
     } catch (err) {
-      tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:red;">Koneksi error: ${err.message}</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="8" class="text-center py-8 text-error">Gagal terhubung ke Google Apps Script: ${err.message}</td></tr>`;
+      badge.innerText = "Koneksi Gagal";
     }
   }
 
-  function renderTabelRiwayat(data) {
-    const tbody = document.getElementById("tbodyRiwayat");
+  function renderTabel(list) {
+    const tbody = document.getElementById("riwayatTbody");
+    const badge = document.getElementById("totalRecordsBadge");
     tbody.innerHTML = "";
-    if (data.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;">Belum ada riwayat RAB yang tersimpan.</td></tr>`;
+
+    badge.innerText = `Menampilkan ${list.length} Dokumen`;
+
+    if (list.length === 0) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="8" class="text-center py-12 text-secondary">
+            <span class="material-symbols-outlined text-4xl opacity-40 mb-2 block">search_off</span>
+            Tidak ada dokumen RAB yang ditemukan.
+          </td>
+        </tr>
+      `;
       return;
     }
-    data.forEach(item => {
-      const tr = document.createElement("tr");
-      const nominal = isNaN(item["Total Biaya"]) ? item["Total Biaya"] : Number(item["Total Biaya"]).toLocaleString("id-ID");
-      tr.innerHTML = `
-        <td><b>${item["Nomor RAB"] || "-"}</b></td>
-        <td>${item["Judul"] || "-"}</td>
-        <td>${item["Lokasi"] || "-"}</td>
-        <td><span class="badge-tipe">${item["Tipe RAB"] || "-"}</span></td>
-        <td>${item["Tanggal"] || "-"}</td>
-        <td>Rp ${nominal}</td>
-        <td>
-          <button onclick="bukaPreviewDrive('${item["URL Drive"]}', '${item["Nomor RAB"]} - ${item["Judul"]}')" 
-                  style="background: #0284c7; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">
-            Buka File
-          </button>
-        </td>
+
+    list.forEach((item, index) => {
+      const isStriped = index % 2 !== 0 ? 'bg-secondary-container/5' : '';
+      const tipeRab = (item["Tipe RAB"] || "-").toUpperCase();
+      
+      tbody.innerHTML += `
+        <tr class="${isStriped} hover:bg-primary-container/5 transition-colors border-b border-outline-variant/30">
+          <td class="px-4 py-3 text-center text-on-surface-variant font-mono-data">${index + 1}</td>
+          <td class="px-4 py-3 font-bold font-mono-data text-primary">${item["Nomor RAB"] || "-"}</td>
+          <td class="px-4 py-3 font-semibold text-on-surface">${item["Judul"] || "-"}</td>
+          <td class="px-4 py-3 text-secondary text-sm">${item["Lokasi"] || "-"}</td>
+          <td class="px-4 py-3 text-center">
+            <span class="bg-primary/10 text-primary border border-primary/20 text-[11px] font-label-caps px-2.5 py-1 rounded-full uppercase tracking-wider">
+              ${tipeRab}
+            </span>
+          </td>
+          <td class="px-4 py-3 text-center font-mono-data text-secondary text-xs">${item["Tanggal"] || "-"}</td>
+          <td class="px-4 py-3 text-right font-mono-data font-bold text-on-surface">${formatIDR(item["Total Biaya"])}</td>
+          <td class="px-4 py-3 text-center">
+            <button onclick="bukaModalDrive('${item["URL Drive"]}', '${item["Nomor RAB"]} - ${item["Judul"]}')" 
+                    class="inline-flex items-center gap-1.5 bg-primary text-white hover:bg-primary/90 px-3 py-1.5 rounded font-label-caps text-[11px] transition-all shadow-sm">
+              <span class="material-symbols-outlined text-sm">visibility</span>
+              LIHAT PDF
+            </button>
+          </td>
+        </tr>
       `;
-      tbody.appendChild(tr);
     });
   }
 
-  function filterTabelLokal() {
-    const keyword = document.getElementById("inputSearchRab").value.toLowerCase();
-    const filtered = riwayatCache.filter(item => 
-      String(item["Nomor RAB"]).toLowerCase().includes(keyword) ||
-      String(item["Judul"]).toLowerCase().includes(keyword) ||
-      String(item["Lokasi"]).toLowerCase().includes(keyword)
-    );
-    renderTabelRiwayat(filtered);
+  function filterData() {
+    const keyword = document.getElementById("searchInput").value.toLowerCase();
+    const tipePilihan = document.getElementById("filterTipe").value.toUpperCase();
+
+    const hasilFilter = dataRiwayatSemua.filter(item => {
+      const cocokKeyword = 
+        String(item["Nomor RAB"] || "").toLowerCase().includes(keyword) ||
+        String(item["Judul"] || "").toLowerCase().includes(keyword) ||
+        String(item["Lokasi"] || "").toLowerCase().includes(keyword);
+
+      const cocokTipe = tipePilihan === "" || String(item["Tipe RAB"] || "").toUpperCase().includes(tipePilihan);
+
+      return cocokKeyword && cocokTipe;
+    });
+
+    renderTabel(hasilFilter);
   }
 
-  function bukaPreviewDrive(url, title) {
-    document.getElementById("modalDriveTitle").innerText = "Preview: " + title;
-    document.getElementById("iframeDrive").src = url;
-    document.getElementById("modalPdfDrive").style.display = "block";
+  function bukaModalDrive(previewUrl, judul) {
+    document.getElementById("pdfJudulModal").innerText = judul;
+    document.getElementById("pdfIframe").src = previewUrl;
+    document.getElementById("pdfModal").classList.remove("hidden");
   }
 
-  function tutupPreviewDrive() {
-    document.getElementById("iframeDrive").src = "";
-    document.getElementById("modalPdfDrive").style.display = "none";
+  function tutupModal() {
+    document.getElementById("pdfIframe").src = "";
+    document.getElementById("pdfModal").classList.add("hidden");
   }
 </script>
+
+</body>
+</html>
