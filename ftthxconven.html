@@ -5,7 +5,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>PLN Icon Plus RAB - RAB AKTIVASI VIA CONVEN</title>
+<title>PLN Icon Plus RAB - RAB AKTIVASI VIA FTTHxCONVEN</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Geist:wght@400;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -97,7 +97,7 @@
           },
         },
       }
-    </script>
+    </>
 <style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
@@ -303,7 +303,7 @@
 </section>
 </main>
 </div>
-<script>
+<>
     let installationItems = [
         { id: 1, desc: "PEMBUATAN DOKUMENTASI TEKNIS", unit: "LOT", qty: 1, price: 383030, formula: null, editing: false, isCalculated: false },
         { id: 2, desc: "SURVEY JALUR KABEL (+SPOT GPSMAX 3 HARI)", unit: "LOT", qty: 1, price: 913289, formula: null, editing: false, isCalculated: false },
@@ -529,8 +529,101 @@
         document.getElementById('grand-total').innerText = formatIDR(subTotalInstall + subTotalHardware);
     }
 
-    // Initial calculation based on default value
+      // Initial calculation based on default value
     applyFormulas(600);
     renderTables();
+
+    // =========================================================================
+    // FUNGSI SIMPAN KE GOOGLE DRIVE & RIWAYAT ONLINE
+    // =========================================================================
+    const GAS_WEBAPP_URL = "MASUKKAN_URL_WEB_APP_APPS_SCRIPT_ANDA";
+
+    async function simpanRAB(tipe) {
+        const btn = event.currentTarget;
+        const originalText = btn.innerHTML;
+        
+        // Ambil data Judul & Lokasi
+        const judul = document.getElementById('title-text') ? document.getElementById('title-text').innerText.trim() : `RAB AKTIVASI VIA ${tipe}`;
+        const lokasi = document.getElementById('subtitle-text') ? document.getElementById('subtitle-text').innerText.trim() : "-";
+        
+        // Ambil nominal angka grand total
+        const grandTotalEl = document.getElementById('grand-total');
+        const grandTotalAngka = grandTotalEl ? grandTotalEl.innerText.replace(/[^0-9]/g, "") : 0;
+
+        // Generate Nomor RAB otomatis (Contoh: RAB-FTTHxCONVEN-20261026-789)
+        const d = new Date();
+        const dateStr = d.getFullYear() + String(d.getMonth() + 1).padStart(2, '0') + String(d.getDate()).padStart(2, '0');
+        const randomCode = Math.floor(100 + Math.random() * 900);
+        const nomorRab = `RAB-${tipe.replace(/\s+/g, '')}-${dateStr}-${randomCode}`;
+
+        // Status loading di tombol
+        btn.disabled = true;
+        btn.innerHTML = `<span class="material-symbols-outlined animate-spin text-base">progress_activity</span> Memproses PDF...`;
+
+        const element = document.querySelector('main');
+
+        const opt = {
+            margin: [8, 8, 8, 8],
+            filename: `RAB_${tipe}_${nomorRab}.pdf`,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { 
+                scale: 2, 
+                useCORS: true,
+                ignoreElements: (el) => el.classList && el.classList.contains('no-print')
+            },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+
+        try {
+            btn.innerHTML = `<span class="material-symbols-outlined animate-spin text-base">cloud_upload</span> Mengunggah ke Drive...`;
+
+            // 1. Buat Blob PDF
+            const pdfBlob = await html2pdf().set(opt).from(element).output('blob');
+
+            // 2. Download file ke laptop
+            html2pdf().set(opt).from(element).save();
+
+            // 3. Konversi ke Base64
+            const base64Data = await new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onloadend = () => resolve(reader.result);
+                reader.readAsDataURL(pdfBlob);
+            });
+
+            // 4. Kirim ke Google Apps Script
+            const payload = {
+                nomorRab: nomorRab,
+                judul: judul,
+                lokasi: lokasi,
+                tipeRab: tipe,
+                tanggal: new Date().toLocaleDateString('id-ID', { year: 'numeric', month: 'short', day: 'numeric' }),
+                totalBiaya: grandTotalAngka,
+                fileName: `RAB_${tipe}_${nomorRab}.pdf`,
+                pdfBase64: base64Data
+            };
+
+            const res = await fetch(GAS_WEBAPP_URL, {
+                method: "POST",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify(payload)
+            });
+
+            const result = await res.json();
+
+            if (result.status === "success") {
+                alert(`✓ Sukses!\nNomor RAB: ${nomorRab}\nPDF berhasil diunduh dan tersimpan di Google Drive & Riwayat.`);
+            } else {
+                alert("PDF terunduh, tapi gagal masuk ke Google Drive: " + result.message);
+            }
+
+        } catch (err) {
+            console.error(err);
+            alert("Terjadi kesalahan saat kirim ke Drive: " + err.message);
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = originalText;
+        }
+    }
 </script>
-</body></html>
+</body>
+</html>
