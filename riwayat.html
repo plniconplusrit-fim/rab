@@ -174,8 +174,8 @@
 
         <!-- Filter Tipe RAB -->
         <div class="flex w-full md:w-auto items-center gap-3">
-          <span class="text-xs font-label-caps text-secondary uppercase">Filter Tipe:</span>
-          <select id="filterTipe" onchange="filterData()" class="bg-surface-container-low border border-outline-variant rounded-lg px-3 py-2 text-sm font-body-md text-on-surface focus:ring-1 focus:ring-primary">
+          <span class="text-xs font-label-caps text-secondary uppercase font-semibold">Filter Tipe:</span>
+          <select id="filterTipe" onchange="filterData()" class="bg-surface-container-low border border-outline-variant rounded-lg px-3 py-2 text-sm font-body-md text-on-surface focus:ring-1 focus:ring-primary cursor-pointer">
             <option value="">Semua Tipe RAB</option>
             <option value="CONVEN">CONVEN</option>
             <option value="FTTH">FTTH</option>
@@ -278,16 +278,13 @@
 
   // FITUR PINTAR 1: Otomatis mendeteksi Link Google Drive di kolom mana pun
   function temukanLinkDrive(item) {
-    // 1. Cek dari nama-nama kolom umum
     for (let key in item) {
       const val = String(item[key] || "").trim();
       if (val.includes("drive.google.com")) {
-        // Ubah link /view menjadi /preview agar bisa di-embed di iframe
         return val.replace(/\/view(\?.*)?$/, "/preview");
       }
     }
 
-    // 2. Jika ada File ID, buat URL preview langsung
     for (let key in item) {
       const k = key.toLowerCase();
       if (k.includes("id") && !k.includes("judul") && !k.includes("nomor")) {
@@ -301,21 +298,40 @@
     return null;
   }
 
-  // FITUR PINTAR 2: Otomatis mendeteksi Tipe RAB
+  // HELPER: Normalisasi teks tipe RAB agar standar
+  function normalisasiTipe(strRaw) {
+    if (!strRaw) return "";
+    const s = String(strRaw).toUpperCase();
+    
+    // Deteksi kombinasi FTTH dan CONVEN
+    const hasFtth = s.includes("FTTH");
+    const hasConven = s.includes("CONVEN") || s.includes("KONVEN");
+
+    if (hasFtth && hasConven) return "FTTH X CONVEN";
+    if (hasFtth) return "FTTH";
+    if (hasConven) return "CONVEN";
+
+    return "";
+  }
+
+  // FITUR PINTAR 2: Otomatis mendeteksi Tipe RAB secara akurat
   function temukanTipeRab(item) {
+    // 1. Cek dari kolom yang mengandung kata 'tipe', 'jenis', atau 'kategori'
     for (let key in item) {
       const k = key.toLowerCase();
-      if (k.includes("tipe") || k.includes("jenis")) {
-        const val = String(item[key] || "").trim();
-        if (val && val !== "-") return val.toUpperCase();
+      if (k.includes("tipe") || k.includes("jenis") || k.includes("kategori")) {
+        const hasil = normalisasiTipe(item[key]);
+        if (hasil) return hasil;
       }
     }
-    // Jika tidak ada kolom tipe, coba tebak dari Nomor atau Judul
-    const str = (item["Nomor RAB"] || item["Judul"] || "").toUpperCase();
-    if (str.includes("CONVEN") && str.includes("FTTH")) return "FTTH X CONVEN";
-    if (str.includes("FTTH")) return "FTTH";
-    if (str.includes("CONVEN")) return "CONVEN";
-    return "RAB";
+
+    // 2. Jika tidak ada kolom tipe eksplisit, cek seluruh data baris (Nomor RAB, Judul, dll)
+    for (let key in item) {
+      const hasil = normalisasiTipe(item[key]);
+      if (hasil) return hasil;
+    }
+
+    return "LAINNYA";
   }
 
   window.addEventListener("DOMContentLoaded", () => {
@@ -342,7 +358,8 @@
 
       if (result.status === "success") {
         dataRiwayatSemua = result.data;
-        renderTabel(dataRiwayatSemua);
+        // Jalankan filterData() agar filter yang sedang dipilih langsung diterapkan
+        filterData();
       } else {
         tbody.innerHTML = `<tr><td colspan="8" class="text-center py-8 text-error">Gagal: ${result.message}</td></tr>`;
         badge.innerText = "Error";
@@ -376,14 +393,13 @@
       const isStriped = index % 2 !== 0 ? 'bg-secondary-container/5' : '';
       const tipeRab = temukanTipeRab(item);
       const linkDrive = temukanLinkDrive(item);
-      const tglFormatted = formatTanggal(item["Tanggal"]);
+      const tglFormatted = formatTanggal(item["Tanggal"] || item["Tgl"]);
       
-      const noDokumen = item["Nomor RAB"] || item["No. RAB"] || item["Nomor"] || "-";
-      const judul = item["Judul"] || item["Judul Pekerjaan"] || "-";
+      const noDokumen = item["Nomor RAB"] || item["No. RAB"] || item["No RAB"] || item["Nomor"] || "-";
+      const judul = item["Judul"] || item["Judul Pekerjaan"] || item["Pekerjaan"] || "-";
       const lokasi = item["Lokasi"] || "-";
-      const total = item["Total Biaya"] || item["Total"] || 0;
+      const total = item["Total Biaya"] || item["Total"] || item["Grand Total"] || 0;
 
-      // Encode link agar aman dipassing ke fungsi JavaScript
       const safeLink = linkDrive ? encodeURIComponent(linkDrive) : "";
       const safeTitle = encodeURIComponent(`${noDokumen} - ${judul}`);
 
@@ -413,17 +429,20 @@
   }
 
   function filterData() {
-    const keyword = document.getElementById("searchInput").value.toLowerCase();
-    const tipePilihan = document.getElementById("filterTipe").value.toUpperCase();
+    const keyword = (document.getElementById("searchInput").value || "").toLowerCase().trim();
+    const tipePilihan = (document.getElementById("filterTipe").value || "").trim().toUpperCase();
 
     const hasilFilter = dataRiwayatSemua.filter(item => {
-      const noDokumen = String(item["Nomor RAB"] || item["No. RAB"] || "").toLowerCase();
-      const judul = String(item["Judul"] || "").toLowerCase();
+      const noDokumen = String(item["Nomor RAB"] || item["No. RAB"] || item["No RAB"] || item["Nomor"] || "").toLowerCase();
+      const judul = String(item["Judul"] || item["Judul Pekerjaan"] || item["Pekerjaan"] || "").toLowerCase();
       const lokasi = String(item["Lokasi"] || "").toLowerCase();
       const tipeRab = temukanTipeRab(item);
 
-      const cocokKeyword = noDokumen.includes(keyword) || judul.includes(keyword) || lokasi.includes(keyword);
-      const cocokTipe = tipePilihan === "" || tipeRab.includes(tipePilihan);
+      // Cocokkan kata kunci pencarian
+      const cocokKeyword = !keyword || noDokumen.includes(keyword) || judul.includes(keyword) || lokasi.includes(keyword);
+
+      // Cocokkan tipe secara eksak
+      const cocokTipe = (tipePilihan === "") || (tipeRab === tipePilihan);
 
       return cocokKeyword && cocokTipe;
     });
