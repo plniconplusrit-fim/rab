@@ -5,104 +5,48 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>RAB FTTH - RABIT</title>
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Geist:wght@400;700&display=swap" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-  
-  <script id="tailwind-config">
+  <title>RAB Aktivasi via FTTH - RABIT</title>
+
+  <!-- Google Fonts: Inter & Material Symbols Outlined -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..24,300..500,0..1,-50..200" rel="stylesheet"/>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+
+  <script>
     tailwind.config = {
       darkMode: "class",
       theme: {
         extend: {
-          "colors": {
-            "on-surface-variant": "#3c4946",
-            "surface-tint": "#006b5d",
-            "on-primary": "#ffffff",
-            "secondary": "#5c5f61",
-            "primary-fixed": "#75f8df",
-            "on-secondary-container": "#626567",
-            "inverse-primary": "#55dbc4",
-            "tertiary-container": "#67aa9f",
-            "on-primary-fixed-variant": "#005045",
-            "surface-container": "#eaedff",
-            "background": "#faf8ff",
-            "surface": "#faf8ff",
-            "secondary-fixed": "#e0e3e5",
-            "secondary-container": "#e0e3e5",
-            "on-surface": "#131b2e",
-            "surface-variant": "#dae2fd",
-            "error": "#ba1a1a",
-            "secondary-fixed-dim": "#c4c7c9",
-            "on-primary-fixed": "#00201b",
-            "surface-container-low": "#f2f3ff",
-            "tertiary": "#226960",
-            "primary-fixed-dim": "#55dbc4",
-            "surface-bright": "#faf8ff",
-            "inverse-surface": "#283044",
-            "error-container": "#ffdad6",
-            "on-primary-container": "#003d34",
-            "surface-container-high": "#e2e7ff",
-            "on-tertiary": "#ffffff",
-            "primary-container": "#12b19b",
-            "surface-container-lowest": "#ffffff",
-            "on-secondary": "#ffffff",
-            "on-tertiary-container": "#003d36",
-            "tertiary-fixed": "#abf0e3",
-            "outline": "#6c7a76",
-            "on-secondary-fixed": "#191c1e",
-            "outline-variant": "#bbcac5",
-            "tertiary-fixed-dim": "#90d3c7",
-            "surface-dim": "#d2d9f4",
-            "on-error": "#ffffff",
-            "on-error-container": "#93000a",
-            "on-tertiary-fixed-variant": "#005048",
-            "on-secondary-fixed-variant": "#444749",
-            "on-background": "#131b2e",
-            "primary": "#006b5d",
-            "surface-container-highest": "#dae2fd",
-            "on-tertiary-fixed": "#00201c",
-            "inverse-on-surface": "#eef0ff"
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
           },
-          "borderRadius": {
-            "DEFAULT": "0.25rem",
-            "lg": "0.5rem",
-            "xl": "0.75rem",
-            "full": "9999px"
-          },
-          "spacing": {
-            "margin-mobile": "16px",
-            "base": "8px",
-            "container-max": "1440px",
-            "margin-desktop": "40px",
-            "gutter": "24px"
-          },
-          "fontFamily": {
-            "label-caps": ["Plus Jakarta Sans"],
-            "headline-lg-mobile": ["Plus Jakarta Sans"],
-            "mono-data": ["Geist"],
-            "headline-md": ["Plus Jakarta Sans"],
-            "headline-lg": ["Plus Jakarta Sans"],
-            "body-lg": ["Plus Jakarta Sans"],
-            "body-md": ["Plus Jakarta Sans"]
-          },
-          "fontSize": {
-            "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
-            "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
-            "mono-data": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
-            "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
-            "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-            "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-            "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+          colors: {
+            crm: {
+              active: '#1e4a42',       // Hijau gelap khas iCRM (dari screenshot)
+              activeHover: '#163b35',
+              blue: '#00529b',         // Biru logo iCRM
+              textMuted: '#52606d',    // Warna teks menu inaktif
+              border: '#e2e8f0',       // Border slate halus
+              bgCanvas: '#f8fafc',     // Latar belakang halaman
+              card: '#ffffff'
+            }
           }
-        },
-      },
+        }
+      }
     }
   </script>
   
   <style>
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
     .material-symbols-outlined {
-      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      font-variation-settings: 'FILL' 0, 'wght' 350, 'GRAD' 0, 'opsz' 22;
+      vertical-align: middle;
     }
     
     @media print {
@@ -143,11 +87,10 @@
       }
       #grand-total-container * { color: black !important; }
       
-      .bg-on-surface-variant { background-color: #f3f4f6 !important; }
       .text-white { color: #000 !important; }
-      .text-primary { color: #000 !important; }
+      .text-crm-active { color: #000 !important; }
       
-      .border-l-4 { border-left-width: 4px !important; border-left-color: #000 !important; }
+      .border-l-3 { border-left-width: 4px !important; border-left-color: #000 !important; }
     }
 
     /* CSS KHUSUS SAAT EXPORT KE PDF AGAR PAS A4 & TIDAK TERPOTONG */
@@ -185,9 +128,18 @@
       break-inside: avoid !important;
       margin-bottom: 16px !important;
     }
-
-    .scrollbar-hide::-webkit-scrollbar { display: none; }
-    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    body.exporting-pdf section > div:first-child {
+      display: block !important;
+      text-align: left !important;
+      width: 100% !important;
+      margin-bottom: 8px !important;
+    }
+    body.exporting-pdf h2 {
+      display: block !important;
+      text-align: left !important;
+      width: 100% !important;
+      margin: 0 !important;
+    }
 
     input[type="number"]::-webkit-inner-spin-button,
     input[type="number"]::-webkit-outer-spin-button {
@@ -195,110 +147,156 @@
       margin: 0;
     }
 
-    .edit-mode .display-view { display: none !important; }
-    .edit-mode .edit-view { display: flex !important; }
-    
     #header-display.hidden { display: none !important; }
     #header-edit.hidden { display: none !important; }
   </style>
 </head>
-<body class="bg-background font-body-md text-on-surface selection:bg-primary-container selection:text-white">
+<body class="bg-crm-bgCanvas text-slate-800 antialiased selection:bg-crm-active selection:text-white">
 
 <div class="flex min-h-screen">
-  <!-- SideNavBar -->
-  <aside class="no-print hidden md:flex fixed h-screen left-0 top-0 w-64 bg-on-surface-variant dark:bg-inverse-surface flex-col py-base gap-2 shadow-lg border-r border-outline-variant/20 z-50">
-    <div class="px-6 py-4 mb-4">
-      <a href="dashboard.html" class="block hover:opacity-80 transition-opacity">
-        <div class="text-primary-fixed font-bold text-xl font-headline-md tracking-tight">RABIT</div>
-        <div class="text-secondary-fixed-dim text-[10px] font-label-caps opacity-70">RAB Instalasi Aktivasi</div>
+  
+  <!-- SideNavBar (Tema Putih Bersih dengan Aksen Hijau Gelap iCRM) -->
+  <aside class="no-print hidden md:flex fixed h-screen left-0 top-0 w-64 bg-white flex-col border-r border-crm-border z-40">
+    
+    <!-- Logo Brand Section -->
+    <div class="px-6 py-5 border-b border-crm-border flex items-center justify-between">
+      <a href="dashboard.html" class="flex items-center gap-2">
+        <div class="flex items-center text-xl font-bold tracking-tight text-crm-blue">
+          <span class="text-crm-active">RAB</span><span>IT</span>
+          <span class="ml-1 inline-flex text-xs font-black">
+            <span class="text-rose-600">+</span>
+          </span>
+        </div>
+        <span class="text-[10px] text-crm-textMuted uppercase font-semibold bg-slate-100 px-2 py-0.5 rounded">v2.0</span>
       </a>
+      <span class="material-symbols-outlined text-slate-400 text-lg cursor-pointer hover:text-slate-600">search</span>
     </div>
-    <nav class="flex-1 px-2 space-y-1">
-      <a class="flex items-center gap-3 text-secondary-fixed-dim hover:text-primary-fixed hover:bg-white/5 rounded-lg mx-2 my-1 px-4 py-3 transition-all" href="conven.html">
-        <span class="material-symbols-outlined">cable</span>
-        <span class="font-label-caps text-label-caps">CONVEN</span>
+
+    <!-- Navigation Menu Items -->
+    <nav class="flex-1 px-3 py-4 space-y-1.5 overflow-y-auto">
+      
+      <!-- Inactive: Dashboard -->
+      <a href="dashboard.html" class="flex items-center justify-between text-crm-textMuted hover:text-slate-900 hover:bg-slate-100/80 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-all group">
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-slate-800">home</span>
+          <span>Dashboard</span>
+        </div>
+        <span class="material-symbols-outlined text-[18px] text-slate-400 group-hover:translate-x-0.5 transition-transform">chevron_right</span>
       </a>
-      <!-- Tab FTTH (Aktif) -->
-      <a class="flex items-center gap-3 text-primary-fixed bg-white/10 rounded-lg mx-2 my-1 px-4 py-3 transition-all" href="ftth.html">
-        <span class="material-symbols-outlined">router</span>
-        <span class="font-label-caps text-label-caps">FTTH</span>
+
+      <!-- Inactive: CONVEN -->
+      <a href="conven.html" class="flex items-center justify-between text-crm-textMuted hover:text-slate-900 hover:bg-slate-100/80 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-all group">
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-slate-800">cable</span>
+          <span>Conven</span>
+        </div>
+        <span class="material-symbols-outlined text-[18px] text-slate-400 group-hover:translate-x-0.5 transition-transform">chevron_right</span>
       </a>
-      <a class="flex items-center gap-3 text-secondary-fixed-dim hover:text-primary-fixed hover:bg-white/5 rounded-lg mx-2 my-1 px-4 py-3 transition-all" href="ftthxconven.html">
-        <span class="material-symbols-outlined">hub</span>
-        <span class="font-label-caps text-label-caps">FTTH X CONVEN</span>
+
+      <!-- ACTIVE Item: FTTH (Sesuai Tombol Hijau Screenshot) -->
+      <a href="ftth.html" class="flex items-center justify-between bg-crm-active text-white rounded-lg px-3.5 py-2.5 text-sm font-medium shadow-sm transition-all">
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-[20px] text-white">router</span>
+          <span>FTTH</span>
+        </div>
       </a>
-      <a class="flex items-center gap-3 text-secondary-fixed-dim hover:text-primary-fixed hover:bg-white/5 rounded-lg mx-2 my-1 px-4 py-3 transition-all" href="riwayat.html">
-        <span class="material-symbols-outlined">history</span>
-        <span class="font-label-caps text-label-caps">RIWAYAT RAB</span>
+
+      <!-- Inactive: FTTH X CONVEN -->
+      <a href="ftthxconven.html" class="flex items-center justify-between text-crm-textMuted hover:text-slate-900 hover:bg-slate-100/80 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-all group">
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-slate-800">hub</span>
+          <span>FTTH X Conven</span>
+        </div>
+        <span class="material-symbols-outlined text-[18px] text-slate-400 group-hover:translate-x-0.5 transition-transform">chevron_right</span>
+      </a>
+
+      <!-- Inactive: RIWAYAT RAB -->
+      <a href="riwayat.html" class="flex items-center justify-between text-crm-textMuted hover:text-slate-900 hover:bg-slate-100/80 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-all group">
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-slate-800">history</span>
+          <span>Riwayat RAB</span>
+        </div>
+        <span class="material-symbols-outlined text-[18px] text-slate-400 group-hover:translate-x-0.5 transition-transform">chevron_right</span>
       </a>
     </nav>
+
+    <!-- Sidebar Footer -->
+    <div class="p-4 border-t border-crm-border text-xs text-slate-400 flex items-center justify-between">
+      <span>RABIT Estimasi</span>
+      <span class="w-2 h-2 rounded-full bg-emerald-500" title="Active"></span>
+    </div>
   </aside>
 
   <!-- Main Content Canvas -->
-  <main class="flex-1 md:ml-64 p-margin-mobile md:p-margin-desktop content-canvas">
+  <main class="flex-1 md:ml-64 p-5 md:p-8 content-canvas">
     
     <!-- Top App Bar & Actions -->
-    <div class="no-print flex flex-col md:flex-row md:items-start justify-between gap-4 mb-8">
-      <div class="relative min-h-[80px] flex items-center" id="header-container">
+    <div class="no-print flex flex-col md:flex-row md:items-start justify-between gap-4 mb-6">
+      <div class="relative min-h-[70px] flex items-center" id="header-container">
+        
         <!-- Header Display -->
-        <div class="display-view flex flex-col cursor-pointer hover:bg-surface-container-low p-2 rounded-lg transition-colors group" id="header-display" onclick="toggleHeaderEdit(true)">
-          <h1 class="font-headline-lg text-headline-lg text-primary tracking-tight" id="title-text">RAB AKTIVASI VIA FTTH</h1>
-          <p class="text-secondary font-body-md mt-1 uppercase tracking-wider" id="subtitle-text">Nama Pelanggan</p>
-          <span class="material-symbols-outlined absolute -right-8 top-4 opacity-0 group-hover:opacity-100 transition-opacity text-sm text-outline">edit</span>
+        <div class="display-view flex flex-col cursor-pointer hover:bg-white p-2 rounded-lg transition-colors group border border-transparent hover:border-crm-border" id="header-display" onclick="toggleHeaderEdit(true)">
+          <div class="flex items-center gap-2">
+            <h1 class="text-2xl font-bold text-slate-900 tracking-tight" id="title-text">RAB AKTIVASI VIA FTTH</h1>
+            <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity text-sm text-slate-400">edit</span>
+          </div>
+          <p class="text-sm font-medium text-crm-textMuted uppercase tracking-wider mt-0.5" id="subtitle-text">Nama Pelanggan</p>
         </div>
+
         <!-- Header Edit -->
-        <div class="edit-view hidden flex-col gap-3 p-2 bg-surface-container-low rounded-lg border border-outline-variant w-full md:w-[500px]" id="header-edit">
-          <input class="w-full bg-white border-outline-variant rounded p-2 font-headline-lg text-headline-lg text-primary focus:ring-primary focus:border-primary" id="input-title" placeholder="Judul RAB" type="text"/>
-          <input class="w-full bg-white border-outline-variant rounded p-2 text-secondary font-body-md uppercase focus:ring-primary focus:border-primary" id="input-subtitle" placeholder="Sub-deskripsi" type="text"/>
-          <div class="flex justify-end gap-2 mt-2">
-            <button class="px-3 py-1 text-sm font-label-caps text-secondary hover:bg-surface-container-high rounded" onclick="toggleHeaderEdit(false)">Batal</button>
-            <button class="px-4 py-1 text-sm font-label-caps bg-primary text-white rounded shadow-sm hover:opacity-90" onclick="saveHeader()">Simpan</button>
+        <div class="edit-view hidden flex-col gap-3 p-3 bg-white rounded-xl border border-crm-border shadow-xs w-full md:w-[480px]" id="header-edit">
+          <input class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-base font-bold text-slate-800 focus:bg-white focus:ring-1 focus:ring-crm-active focus:border-crm-active" id="input-title" placeholder="Judul RAB" type="text"/>
+          <input class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-semibold uppercase text-slate-600 focus:bg-white focus:ring-1 focus:ring-crm-active focus:border-crm-active" id="input-subtitle" placeholder="Sub-deskripsi / Nama Pelanggan" type="text"/>
+          <div class="flex justify-end gap-2 mt-1">
+            <button class="px-3 py-1.5 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-lg" onclick="toggleHeaderEdit(false)">Batal</button>
+            <button class="px-4 py-1.5 text-xs font-semibold bg-crm-active hover:bg-crm-activeHover text-white rounded-lg shadow-xs" onclick="saveHeader()">Simpan</button>
           </div>
         </div>
       </div>
       
       <!-- Tombol Simpan ke Drive & Cetak PDF -->
       <div class="flex gap-2 self-end md:self-start">
-        <button class="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg font-label-caps text-label-caps hover:opacity-90 shadow-sm transition-all" onclick="simpanRAB('FTTH')">
+        <button class="flex items-center gap-2 bg-crm-active hover:bg-crm-activeHover text-white px-4 py-2.5 rounded-lg text-xs font-semibold uppercase tracking-wider shadow-sm transition-all" onclick="simpanRAB('FTTH')">
           <span class="material-symbols-outlined text-base">cloud_upload</span>
-          SIMPAN KE DRIVE & CETAK PDF
+          Simpan ke Drive & Cetak PDF
         </button>
       </div>
     </div>
 
     <!-- Print Only Header (Header Resmi di dalam Dokumen PDF) -->
-    <div class="hidden print-only mb-6 text-center border-b-2 border-primary pb-4">
-      <h1 class="text-2xl font-bold uppercase text-primary" id="print-title">RAB AKTIVASI VIA FTTH</h1>
-      <p class="uppercase font-semibold text-secondary tracking-widest text-sm" id="print-subtitle">Technical Activation Cost Estimation</p>
+    <div class="hidden print-only mb-6 text-center border-b-2 border-slate-900 pb-4">
+      <h1 class="text-2xl font-bold uppercase text-slate-900" id="print-title">RAB AKTIVASI VIA FTTH</h1>
+      <p class="uppercase font-semibold text-slate-600 tracking-widest text-xs mt-1" id="print-subtitle">Technical Activation Cost Estimation</p>
     </div>
 
     <!-- Installation Table Section -->
-    <section class="mb-gutter">
-      <div class="flex items-center justify-between mb-4">
-        <h2 class="font-headline-md text-headline-md text-on-surface border-l-4 border-primary pl-4 uppercase">Pekerjaan Instalasi &amp; Teknis</h2>
-        <button class="no-print flex items-center gap-2 bg-secondary-container text-on-secondary-container px-3 py-1.5 rounded font-label-caps text-[11px] hover:opacity-80 transition-opacity" onclick="addItem('install')">
+    <section class="mb-6">
+      <div class="flex items-center justify-between mb-3 px-1">
+        <h2 class="text-sm font-bold uppercase tracking-wider text-slate-700 border-l-3 border-crm-active pl-3">Pekerjaan Instalasi &amp; Teknis</h2>
+        <button class="no-print flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all" onclick="addItem('install')">
           <span class="material-symbols-outlined text-sm">add</span>
-          TAMBAH ITEM
+          Tambah Item
         </button>
       </div>
-      <div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden shadow-sm overflow-x-auto print:border-none print:shadow-none">
-        <table class="w-full text-left min-w-[700px] print:min-w-full">
-          <thead class="bg-on-surface-variant text-white font-label-caps text-[11px] uppercase tracking-widest print:text-black">
+      
+      <div class="bg-white rounded-xl border border-crm-border overflow-hidden shadow-xs overflow-x-auto print:border-none print:shadow-none">
+        <table class="w-full text-left min-w-[700px] print:min-w-full border-collapse">
+          <thead class="bg-slate-50 text-slate-600 font-semibold text-[11px] uppercase tracking-wider border-b border-crm-border print:text-black">
             <tr>
-              <th class="px-4 py-3 font-bold text-center w-12">No</th>
-              <th class="px-4 py-3 font-bold">Deskripsi Pekerjaan</th>
-              <th class="px-4 py-3 font-bold text-center w-20">Satuan</th>
-              <th class="px-4 py-3 font-bold text-center w-16">Qty</th>
-              <th class="px-4 py-3 font-bold text-right w-36">Harga Satuan</th>
-              <th class="px-4 py-3 font-bold text-right w-36">Total</th>
-              <th class="no-print px-4 py-3 font-bold text-center w-28">Aksi</th>
+              <th class="px-4 py-3 text-center w-12">No</th>
+              <th class="px-4 py-3">Deskripsi Pekerjaan</th>
+              <th class="px-4 py-3 text-center w-20">Satuan</th>
+              <th class="px-4 py-3 text-center w-16">Qty</th>
+              <th class="px-4 py-3 text-right w-36">Harga Satuan</th>
+              <th class="px-4 py-3 text-right w-36">Total</th>
+              <th class="no-print px-4 py-3 text-center w-24">Aksi</th>
             </tr>
           </thead>
-          <tbody class="font-body-md text-on-surface" id="installation-body"></tbody>
-          <tfoot class="bg-surface-container-low border-t border-outline-variant print:bg-white">
+          <tbody class="text-sm text-slate-700 divide-y divide-slate-100" id="installation-body"></tbody>
+          <tfoot class="bg-slate-50/80 border-t border-crm-border font-medium print:bg-white">
             <tr>
-              <td class="px-4 py-4 text-right font-headline-md text-on-surface print:font-bold" colspan="5">SUB TOTAL INSTALASI :</td>
-              <td class="px-4 py-4 text-right font-mono-data font-bold text-primary print:text-black" id="subtotal-installation">Rp 0</td>
+              <td class="px-4 py-3 text-right text-xs font-bold uppercase tracking-wider text-slate-600 print:text-black" colspan="5">Sub Total Instalasi :</td>
+              <td class="px-4 py-3 text-right font-mono font-bold text-crm-active text-sm print:text-black" id="subtotal-installation">Rp 0</td>
               <td class="no-print"></td>
             </tr>
           </tfoot>
@@ -307,32 +305,33 @@
     </section>
 
     <!-- Hardware Table Section -->
-    <section class="mb-gutter">
-      <div class="flex items-center justify-between mb-4">
-        <h2 class="font-headline-md text-headline-md text-on-surface border-l-4 border-primary pl-4 uppercase">Perangkat &amp; Material Kabel</h2>
-        <button class="no-print flex items-center gap-2 bg-secondary-container text-on-secondary-container px-3 py-1.5 rounded font-label-caps text-[11px] hover:opacity-80 transition-opacity" onclick="addItem('hardware')">
+    <section class="mb-6">
+      <div class="flex items-center justify-between mb-3 px-1">
+        <h2 class="text-sm font-bold uppercase tracking-wider text-slate-700 border-l-3 border-crm-active pl-3">Perangkat &amp; Material Kabel</h2>
+        <button class="no-print flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all" onclick="addItem('hardware')">
           <span class="material-symbols-outlined text-sm">add</span>
-          TAMBAH ITEM
+          Tambah Item
         </button>
       </div>
-      <div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden shadow-sm overflow-x-auto print:border-none print:shadow-none">
-        <table class="w-full text-left min-w-[700px] print:min-w-full">
-          <thead class="bg-on-surface-variant text-white font-label-caps text-[11px] uppercase tracking-widest print:text-black">
+      
+      <div class="bg-white rounded-xl border border-crm-border overflow-hidden shadow-xs overflow-x-auto print:border-none print:shadow-none">
+        <table class="w-full text-left min-w-[700px] print:min-w-full border-collapse">
+          <thead class="bg-slate-50 text-slate-600 font-semibold text-[11px] uppercase tracking-wider border-b border-crm-border print:text-black">
             <tr>
-              <th class="px-4 py-3 font-bold text-center w-12">No</th>
-              <th class="px-4 py-3 font-bold">Deskripsi Perangkat</th>
-              <th class="px-4 py-3 font-bold text-center w-20">Satuan</th>
-              <th class="px-4 py-3 font-bold text-center w-16">Qty</th>
-              <th class="px-4 py-3 font-bold text-right w-36">Harga Satuan</th>
-              <th class="px-4 py-3 font-bold text-right w-36">Total</th>
-              <th class="no-print px-4 py-3 font-bold text-center w-28">Aksi</th>
+              <th class="px-4 py-3 text-center w-12">No</th>
+              <th class="px-4 py-3">Deskripsi Perangkat</th>
+              <th class="px-4 py-3 text-center w-20">Satuan</th>
+              <th class="px-4 py-3 text-center w-16">Qty</th>
+              <th class="px-4 py-3 text-right w-36">Harga Satuan</th>
+              <th class="px-4 py-3 text-right w-36">Total</th>
+              <th class="no-print px-4 py-3 text-center w-24">Aksi</th>
             </tr>
           </thead>
-          <tbody class="font-body-md text-on-surface" id="hardware-body"></tbody>
-          <tfoot class="bg-surface-container-low border-t border-outline-variant print:bg-white">
+          <tbody class="text-sm text-slate-700 divide-y divide-slate-100" id="hardware-body"></tbody>
+          <tfoot class="bg-slate-50/80 border-t border-crm-border font-medium print:bg-white">
             <tr>
-              <td class="px-4 py-4 text-right font-headline-md text-on-surface print:font-bold" colspan="5">SUB TOTAL MATERIAL :</td>
-              <td class="px-4 py-4 text-right font-mono-data font-bold text-primary print:text-black" id="subtotal-hardware">Rp 0</td>
+              <td class="px-4 py-3 text-right text-xs font-bold uppercase tracking-wider text-slate-600 print:text-black" colspan="5">Sub Total Material :</td>
+              <td class="px-4 py-3 text-right font-mono font-bold text-crm-active text-sm print:text-black" id="subtotal-hardware">Rp 0</td>
               <td class="no-print"></td>
             </tr>
           </tfoot>
@@ -342,13 +341,13 @@
 
     <!-- Grand Total Section -->
     <section class="flex justify-end mt-8">
-      <div class="w-full md:w-96 bg-primary text-white p-6 rounded-xl shadow-lg transform hover:scale-[1.02] transition-transform print:transform-none" id="grand-total-container">
-        <div class="flex justify-between items-center mb-2">
-          <span class="font-label-caps text-label-caps opacity-80 print:opacity-100">ESTIMASI TOTAL RAB</span>
-          <span class="material-symbols-outlined opacity-60 no-print">payments</span>
+      <div class="w-full md:w-96 bg-crm-active text-white p-6 rounded-xl shadow-md transform hover:scale-[1.01] transition-all print:transform-none" id="grand-total-container">
+        <div class="flex justify-between items-center mb-1">
+          <span class="text-xs font-semibold uppercase tracking-wider text-emerald-100 print:text-black">Estimasi Total RAB</span>
+          <span class="material-symbols-outlined text-emerald-200/60 no-print text-xl">payments</span>
         </div>
-        <div class="font-mono-data text-3xl font-bold text-right" id="grand-total">Rp 0</div>
-        <div class="mt-4 pt-4 border-t border-white/20 text-[10px] uppercase font-label-caps opacity-70 print:opacity-100 print:border-black">
+        <div class="font-mono text-3xl font-extrabold text-right tracking-tight" id="grand-total">Rp 0</div>
+        <div class="mt-3 pt-3 border-t border-white/20 text-[10px] uppercase tracking-wider text-emerald-100/70 print:text-black print:border-black">
           Harga belum termasuk PPN 11%
         </div>
       </div>
@@ -419,54 +418,54 @@
 
         items.forEach((item, index) => {
             const total = item.qty * item.price;
-            const isStriped = index % 2 !== 0 ? 'bg-secondary-container/5' : '';
-            const rowClass = `${isStriped} hover:bg-primary-container/5 transition-colors ${item.editing ? 'bg-primary/5' : ''}`;
+            const isStriped = index % 2 !== 0 ? 'bg-slate-50/50' : 'bg-white';
+            const rowClass = `${isStriped} hover:bg-slate-100/60 transition-colors ${item.editing ? 'bg-emerald-50/30' : ''}`;
             
             let contentCells = '';
             let actionButtons = '';
 
             if (item.editing) {
                 const qtyInput = item.isCalculated 
-                    ? `<div class="w-16 mx-auto block p-1 bg-surface-container-low border border-outline-variant rounded text-sm text-center font-mono-data text-secondary opacity-60">${item.qty}</div>`
-                    : `<input type="number" value="${item.qty}" onchange="updateItemQty('${type}', ${item.id}, this.value)" class="w-16 mx-auto block p-1 border border-outline-variant rounded text-sm text-center font-mono-data focus:ring-1 focus:ring-primary"/>`;
+                    ? `<div class="w-16 mx-auto block p-1 bg-slate-100 border border-slate-200 rounded text-xs text-center font-mono text-slate-400">${item.qty}</div>`
+                    : `<input type="number" value="${item.qty}" onchange="updateItemQty('${type}', ${item.id}, this.value)" class="w-16 mx-auto block p-1 bg-white border border-slate-200 rounded text-xs text-center font-mono focus:ring-1 focus:ring-crm-active focus:border-crm-active"/>`;
 
                 contentCells = `
-                    <td class="px-4 py-3"><input type="text" value="${item.desc}" onchange="updateItemField('${type}', ${item.id}, 'desc', this.value)" class="w-full p-1 border border-outline-variant rounded text-sm focus:ring-1 focus:ring-primary"/></td>
-                    <td class="px-4 py-3"><input type="text" value="${item.unit}" onchange="updateItemField('${type}', ${item.id}, 'unit', this.value)" class="w-16 mx-auto block p-1 border border-outline-variant rounded text-sm text-center focus:ring-1 focus:ring-primary"/></td>
-                    <td class="px-4 py-3">${qtyInput}</td>
-                    <td class="px-4 py-3"><input type="number" value="${item.price}" onchange="updateItemField('${type}', ${item.id}, 'price', parseFloat(this.value))" class="w-28 ml-auto block p-1 border border-outline-variant rounded text-sm text-right font-mono-data focus:ring-1 focus:ring-primary"/></td>
+                    <td class="px-4 py-2.5"><input type="text" value="${item.desc}" onchange="updateItemField('${type}', ${item.id}, 'desc', this.value)" class="w-full p-1 bg-white border border-slate-200 rounded text-xs focus:ring-1 focus:ring-crm-active focus:border-crm-active"/></td>
+                    <td class="px-4 py-2.5"><input type="text" value="${item.unit}" onchange="updateItemField('${type}', ${item.id}, 'unit', this.value)" class="w-16 mx-auto block p-1 bg-white border border-slate-200 rounded text-xs text-center focus:ring-1 focus:ring-crm-active focus:border-crm-active"/></td>
+                    <td class="px-4 py-2.5">${qtyInput}</td>
+                    <td class="px-4 py-2.5"><input type="number" value="${item.price}" onchange="updateItemField('${type}', ${item.id}, 'price', parseFloat(this.value))" class="w-28 ml-auto block p-1 bg-white border border-slate-200 rounded text-xs text-right font-mono focus:ring-1 focus:ring-crm-active focus:border-crm-active"/></td>
                 `;
                 actionButtons = `
-                    <button onclick="toggleEdit('${type}', ${item.id}, false)" class="text-primary hover:bg-primary/10 p-1.5 rounded-full flex items-center transition-colors" title="Simpan">
-                        <span class="material-symbols-outlined text-lg">check</span>
+                    <button onclick="toggleEdit('${type}', ${item.id}, false)" class="text-crm-active hover:bg-emerald-50 p-1 rounded-md transition-colors" title="Simpan">
+                        <span class="material-symbols-outlined text-base">check</span>
                     </button>
                 `;
             } else {
                 const qtyDisplay = item.isCalculated 
-                    ? `<span class="inline-flex items-center gap-1 text-primary/70" title="Calculated automatically"><span class="material-symbols-outlined text-[10px]">functions</span>${item.qty}</span>`
-                    : item.qty;
+                    ? `<span class="inline-flex items-center gap-1 text-crm-active/80 font-mono text-xs" title="Otomatis terhitung"><span class="material-symbols-outlined text-[11px]">functions</span>${item.qty}</span>`
+                    : `<span class="font-mono text-xs">${item.qty}</span>`;
 
                 contentCells = `
-                    <td class="px-4 py-3 font-semibold text-on-surface">${item.desc}</td>
-                    <td class="px-4 py-3 text-center text-on-surface-variant">${item.unit}</td>
-                    <td class="px-4 py-3 text-center font-mono-data">${qtyDisplay}</td>
-                    <td class="px-4 py-3 text-right font-mono-data">${formatIDR(item.price)}</td>
+                    <td class="px-4 py-3 font-medium text-slate-800 text-xs">${item.desc}</td>
+                    <td class="px-4 py-3 text-center text-slate-500 text-xs">${item.unit}</td>
+                    <td class="px-4 py-3 text-center">${qtyDisplay}</td>
+                    <td class="px-4 py-3 text-right font-mono text-slate-600 text-xs">${formatIDR(item.price)}</td>
                 `;
                 actionButtons = `
-                    <button onclick="toggleEdit('${type}', ${item.id}, true)" class="text-primary hover:bg-primary/10 p-1.5 rounded-full flex items-center transition-colors" title="Edit">
-                        <span class="material-symbols-outlined text-lg">edit</span>
+                    <button onclick="toggleEdit('${type}', ${item.id}, true)" class="text-slate-400 hover:text-crm-active p-1 rounded-md transition-colors" title="Edit">
+                        <span class="material-symbols-outlined text-[17px]">edit</span>
                     </button>
-                    <button onclick="removeItem('${type}', ${item.id})" class="text-error hover:bg-error/10 p-1.5 rounded-full flex items-center transition-colors" title="Hapus">
-                        <span class="material-symbols-outlined text-lg">delete</span>
+                    <button onclick="removeItem('${type}', ${item.id})" class="text-slate-400 hover:text-rose-600 p-1 rounded-md transition-colors" title="Hapus">
+                        <span class="material-symbols-outlined text-[17px]">delete</span>
                     </button>
                 `;
             }
 
             tbody.innerHTML += `
                 <tr class="${rowClass}">
-                    <td class="px-4 py-3 text-center text-on-surface-variant font-mono-data">${index + 1}</td>
+                    <td class="px-4 py-3 text-center text-slate-400 font-mono text-xs">${index + 1}</td>
                     ${contentCells}
-                    <td class="px-4 py-3 text-right font-mono-data font-bold text-on-surface">${formatIDR(total)}</td>
+                    <td class="px-4 py-3 text-right font-mono font-semibold text-slate-900 text-xs">${formatIDR(total)}</td>
                     <td class="no-print px-4 py-3">
                         <div class="flex items-center justify-center gap-1">
                             ${actionButtons}
@@ -557,24 +556,18 @@
     const GAS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxhcvWu9rQ2Fu8RCBzGLUJ3r22b3E3owWM8SOzjqsoJL5zMvuQhBzb6MzATZf2I7C-DIA/exec";
 
     async function simpanRAB(tipe) {
-        // 1. Ambil Judul Pekerjaan
         const inputTitle = document.getElementById('input-title');
         const displayTitle = document.getElementById('title-text');
         const judul = (inputTitle && inputTitle.value.trim()) ? inputTitle.value.trim() : (displayTitle ? displayTitle.innerText.trim() : `RAB AKTIVASI VIA ${tipe}`);
 
-        // 2. Ambil Teks di bawah Judul (Nama Pelanggan / Lokasi)
         const inputSubtitle = document.getElementById('input-subtitle');
         const displaySubtitle = document.getElementById('subtitle-text');
         let subNama = (inputSubtitle && inputSubtitle.value.trim()) ? inputSubtitle.value.trim() : (displaySubtitle ? displaySubtitle.innerText.trim() : "Pelanggan");
 
-        // Bersihkan karakter terlarang sistem file (\ / : * ? " < > |)
         const subNamaBersih = subNama.replace(/[\\/:*?"<>|]/g, "_");
-
-        // 3. Nama file default otomatis mengikuti tulisan di bawah judul
         const tipeClean = tipe.replace(/\s+/g, '');
         const defaultFileName = `RAB_${tipeClean}_${subNamaBersih}`;
 
-        // 4. Popup konfirmasi/edit nama file sebelum disimpan
         const customName = prompt("Konfirmasi / Edit nama file PDF sebelum disimpan:", defaultFileName);
 
         if (!customName || customName.trim() === "") {
@@ -593,16 +586,12 @@
         btn.disabled = true;
         btn.innerHTML = `<span class="material-symbols-outlined animate-spin text-base">progress_activity</span> Memproses PDF...`;
 
-        // Update teks judul di header cetak resmi
         const printTitle = document.getElementById('print-title');
         const printSubtitle = document.getElementById('print-subtitle');
         if (printTitle) printTitle.innerText = judul;
         if (printSubtitle) printSubtitle.innerText = subNama;
 
-        // AKTIFKAN MODE EXPORT PDF (Menghilangkan margin sidebar & merapikan tabel ke A4)
         document.body.classList.add('exporting-pdf');
-
-        // Beri jeda 100ms agar browser selesai menyesuaikan layout
         await new Promise(r => setTimeout(r, 100));
 
         const element = document.querySelector('main');
@@ -623,20 +612,15 @@
         try {
             btn.innerHTML = `<span class="material-symbols-outlined animate-spin text-base">cloud_upload</span> Mengunggah ke Drive...`;
 
-            // A. Buat Blob PDF
             const pdfBlob = await html2pdf().set(opt).from(element).output('blob');
-
-            // B. Download file PDF ke komputer
             html2pdf().set(opt).from(element).save();
 
-            // C. Konversi ke Base64
             const base64Data = await new Promise((resolve) => {
                 const reader = new FileReader();
                 reader.onloadend = () => resolve(reader.result);
                 reader.readAsDataURL(pdfBlob);
             });
 
-            // D. Kirim ke Google Apps Script
             const payload = {
                 nomorRab: namaDokumen,
                 judul: judul,
@@ -666,7 +650,6 @@
             console.error(err);
             alert("Terjadi kesalahan saat kirim ke Drive: " + err.message);
         } finally {
-            // MATIKAN KEMBALI MODE EXPORT PDF KE TAMPILAN NORMAL
             document.body.classList.remove('exporting-pdf');
             btn.disabled = false;
             btn.innerHTML = originalText;
