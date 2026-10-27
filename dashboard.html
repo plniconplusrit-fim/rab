@@ -24,7 +24,7 @@
           },
           colors: {
             crm: {
-              active: '#1e4a42',       // Hijau gelap khas iCRM (dari screenshot)
+              active: '#1e4a42',       // Hijau gelap khas iCRM
               activeHover: '#163b35',
               blue: '#00529b',         // Biru logo iCRM
               textMuted: '#52606d',    // Warna teks menu inaktif
@@ -46,28 +46,17 @@
       font-variation-settings: 'FILL' 0, 'wght' 350, 'GRAD' 0, 'opsz' 22;
       vertical-align: middle;
     }
-    /* Scrollbar halus */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #f1f5f9;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 9999px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #94a3b8;
-    }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
   </style>
 </head>
 <body class="bg-crm-bgCanvas text-slate-800 antialiased selection:bg-crm-active selection:text-white">
 
 <div class="flex min-h-screen">
 
-  <!-- SideNavBar (Tema Putih Bersih dengan Aksen Hijau Gelap iCRM) -->
+  <!-- SideNavBar -->
   <aside class="hidden md:flex fixed h-screen left-0 top-0 w-64 bg-white flex-col border-r border-crm-border z-50">
     
     <!-- Logo Brand Section -->
@@ -87,7 +76,7 @@
     <!-- Navigation Menu Items -->
     <nav class="flex-1 px-3 py-4 space-y-1.5 overflow-y-auto">
       
-      <!-- ACTIVE Item: Home / Dashboard (Sesuai Tombol Hijau Screenshot) -->
+      <!-- ACTIVE: Dashboard -->
       <a href="dashboard.html" class="flex items-center justify-between bg-crm-active text-white rounded-lg px-3.5 py-2.5 text-sm font-medium shadow-sm transition-all">
         <div class="flex items-center gap-3">
           <span class="material-symbols-outlined text-[20px] text-white">home</span>
@@ -95,7 +84,16 @@
         </div>
       </a>
 
-      <!-- Inactive Item: CONVEN -->
+      <!-- MENU BARU: SMART RAB (OTOMATIS) -->
+      <a href="smart-rab.html" class="flex items-center justify-between text-crm-textMuted hover:text-slate-900 hover:bg-emerald-50/60 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-all group border border-dashed border-emerald-300/60 bg-emerald-50/20">
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-[20px] text-emerald-700 group-hover:scale-110 transition-transform">auto_awesome</span>
+          <span class="font-semibold text-slate-900">Smart RAB</span>
+        </div>
+        <span class="text-[9px] font-bold uppercase bg-emerald-600 text-white px-1.5 py-0.5 rounded">AUTO</span>
+      </a>
+
+      <!-- Inactive: CONVEN -->
       <a href="conven.html" class="flex items-center justify-between text-crm-textMuted hover:text-slate-900 hover:bg-slate-100/80 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-all group">
         <div class="flex items-center gap-3">
           <span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-slate-800">cable</span>
@@ -104,7 +102,7 @@
         <span class="material-symbols-outlined text-[18px] text-slate-400 group-hover:translate-x-0.5 transition-transform">chevron_right</span>
       </a>
 
-      <!-- Inactive Item: FTTH -->
+      <!-- Inactive: FTTH -->
       <a href="ftth.html" class="flex items-center justify-between text-crm-textMuted hover:text-slate-900 hover:bg-slate-100/80 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-all group">
         <div class="flex items-center gap-3">
           <span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-slate-800">router</span>
@@ -113,7 +111,7 @@
         <span class="material-symbols-outlined text-[18px] text-slate-400 group-hover:translate-x-0.5 transition-transform">chevron_right</span>
       </a>
 
-      <!-- Inactive Item: FTTH X CONVEN -->
+      <!-- Inactive: FTTH X CONVEN -->
       <a href="ftthxconven.html" class="flex items-center justify-between text-crm-textMuted hover:text-slate-900 hover:bg-slate-100/80 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-all group">
         <div class="flex items-center gap-3">
           <span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-slate-800">hub</span>
@@ -122,7 +120,7 @@
         <span class="material-symbols-outlined text-[18px] text-slate-400 group-hover:translate-x-0.5 transition-transform">chevron_right</span>
       </a>
 
-      <!-- Inactive Item: RIWAYAT RAB -->
+      <!-- Inactive: RIWAYAT RAB -->
       <a href="riwayat.html" class="flex items-center justify-between text-crm-textMuted hover:text-slate-900 hover:bg-slate-100/80 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-all group">
         <div class="flex items-center gap-3">
           <span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-slate-800">history</span>
@@ -146,6 +144,10 @@
     </div>
 
     <div class="flex items-center gap-4">
+      <a href="smart-rab.html" class="hidden sm:inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-800 border border-emerald-200 px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-emerald-100 transition-all">
+        <span class="material-symbols-outlined text-[16px]">auto_awesome</span>
+        Buka Smart RAB
+      </a>
       <div class="flex items-center gap-3 pl-4 border-l border-slate-200">
         <div class="w-8 h-8 rounded-full bg-crm-active text-white flex items-center justify-center font-bold text-xs shadow-xs">
           RB
@@ -162,105 +164,116 @@
   <main class="flex-1 md:ml-64 pt-24 pb-12 px-6 md:px-8 min-h-screen">
     <div class="max-w-7xl mx-auto space-y-6">
 
-      <!-- Hero Banner Section -->
-      <section class="relative overflow-hidden rounded-xl bg-white border border-crm-border p-8 shadow-xs">
+      <!-- HERO BANNER DENGAN PINTASAN SMART RAB BARU -->
+      <section class="relative overflow-hidden rounded-xl bg-gradient-to-r from-emerald-900 via-slate-900 to-slate-900 text-white p-8 shadow-sm">
         <div class="relative z-10 max-w-2xl">
-          <span class="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-crm-active bg-emerald-50 border border-emerald-100 px-3 py-1 rounded-full mb-3">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
-            Aplikasi Estimasi Biaya
+          <span class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-emerald-300 bg-white/10 px-3 py-1 rounded-full mb-3">
+            <span class="material-symbols-outlined text-[14px]">auto_awesome</span>
+            Fitur Otomasi Baru Tersedia
           </span>
-          <h1 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight mb-2">
-            RAB KHS CONVEN & FTTH
+          <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-2 text-white">
+            Smart RAB Estimator Otomatis
           </h1>
-          <p class="text-sm text-crm-textMuted leading-relaxed">
-            Sistem terintegrasi untuk pembuatan rencana anggaran biaya instalasi kabel fiber optic, penarikan dropwire, hingga arsip cloud Google Drive.
+          <p class="text-xs md:text-sm text-slate-300 leading-relaxed mb-5">
+            Cukup pilih KP/KR dan masukkan Tikor pelanggan dari Google Maps. Jarak otomatis diukur, transport kelipatan $\ge 100\text{ km}$, joint box, dan material dropwire langsung terhitung siap ekspor ke PDF.
           </p>
+          <div class="flex flex-wrap gap-3">
+            <a href="smart-rab.html" class="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-slate-900 px-5 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all shadow-md">
+              <span class="material-symbols-outlined text-base">bolt</span>
+              Mulai Buat RAB Otomatis
+            </a>
+          </div>
         </div>
-        <!-- Decorative Watermark Icon -->
-        <div class="absolute -right-6 -bottom-8 opacity-[0.04] pointer-events-none select-none">
-          <span class="material-symbols-outlined text-[200px] text-slate-900">account_tree</span>
+        <div class="absolute -right-6 -bottom-8 opacity-10 pointer-events-none select-none">
+          <span class="material-symbols-outlined text-[220px]">auto_awesome</span>
         </div>
       </section>
 
-      <!-- Bento Cards Grid (Tools Navigasi Utama) -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <!-- Bento Cards Grid (Tools Form Manual Lengkap) -->
+      <div>
+        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 px-1">
+          Atau Pilih Form Input Manual Detail:
+        </h3>
         
-        <!-- Kartu 1: RAB Conven -->
-        <a href="conven.html" class="group bg-white border border-crm-border rounded-xl p-6 hover:border-crm-active hover:shadow-md transition-all duration-200 flex flex-col justify-between">
-          <div>
-            <div class="w-11 h-11 rounded-lg bg-emerald-50 text-crm-active flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
-              <span class="material-symbols-outlined text-[22px]">hub</span>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          
+          <!-- Kartu 1: RAB Conven -->
+          <a href="conven.html" class="group bg-white border border-crm-border rounded-xl p-6 hover:border-crm-active hover:shadow-md transition-all duration-200 flex flex-col justify-between">
+            <div>
+              <div class="w-11 h-11 rounded-lg bg-emerald-50 text-crm-active flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                <span class="material-symbols-outlined text-[22px]">cable</span>
+              </div>
+              <h3 class="text-base font-bold text-slate-900 group-hover:text-crm-active transition-colors mb-1.5">
+                RAB Conven
+              </h3>
+              <p class="text-xs text-crm-textMuted leading-relaxed">
+                Penarikan FO kabel besar 6-48 Core. Ideal untuk proyek backbone, inter-city, dan jaringan korporat.
+              </p>
             </div>
-            <h3 class="text-base font-bold text-slate-900 group-hover:text-crm-active transition-colors mb-1.5">
-              RAB Conven
-            </h3>
-            <p class="text-xs text-crm-textMuted leading-relaxed">
-              Penarikan FO dengan menggunakan kabel besar 6-48 Core. Ideal untuk proyek backbone dan inter-city link.
-            </p>
-          </div>
-          <div class="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-crm-active">
-            <span>Buka Form RAB</span>
-            <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
-          </div>
-        </a>
-
-        <!-- Kartu 2: RAB FTTH -->
-        <a href="ftth.html" class="group bg-white border border-crm-border rounded-xl p-6 hover:border-crm-active hover:shadow-md transition-all duration-200 flex flex-col justify-between">
-          <div>
-            <div class="w-11 h-11 rounded-lg bg-emerald-50 text-crm-active flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
-              <span class="material-symbols-outlined text-[22px]">router</span>
+            <div class="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-crm-active">
+              <span>Buka Form Manual</span>
+              <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
             </div>
-            <h3 class="text-base font-bold text-slate-900 group-hover:text-crm-active transition-colors mb-1.5">
-              RAB FTTH
-            </h3>
-            <p class="text-xs text-crm-textMuted leading-relaxed">
-              Penarikan FO menggunakan kabel kecil seperti Dropwire panjang 50-250m yang berfokus pada distribusi retail pelanggan.
-            </p>
-          </div>
-          <div class="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-crm-active">
-            <span>Buka Form RAB</span>
-            <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
-          </div>
-        </a>
+          </a>
 
-        <!-- Kartu 3: RAB FTTH Conven -->
-        <a href="ftthxconven.html" class="group bg-white border border-crm-border rounded-xl p-6 hover:border-crm-active hover:shadow-md transition-all duration-200 flex flex-col justify-between">
-          <div>
-            <div class="w-11 h-11 rounded-lg bg-emerald-50 text-crm-active flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
-              <span class="material-symbols-outlined text-[22px]">cable</span>
+          <!-- Kartu 2: RAB FTTH -->
+          <a href="ftth.html" class="group bg-white border border-crm-border rounded-xl p-6 hover:border-crm-active hover:shadow-md transition-all duration-200 flex flex-col justify-between">
+            <div>
+              <div class="w-11 h-11 rounded-lg bg-emerald-50 text-crm-active flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                <span class="material-symbols-outlined text-[22px]">router</span>
+              </div>
+              <h3 class="text-base font-bold text-slate-900 group-hover:text-crm-active transition-colors mb-1.5">
+                RAB FTTH
+              </h3>
+              <p class="text-xs text-crm-textMuted leading-relaxed">
+                Penarikan kabel Dropwire 50-250m khusus distribusi ritel pelanggan dan aktivasi modem ONT.
+              </p>
             </div>
-            <h3 class="text-base font-bold text-slate-900 group-hover:text-crm-active transition-colors mb-1.5">
-              RAB FTTH Conven
-            </h3>
-            <p class="text-xs text-crm-textMuted leading-relaxed">
-              Penarikan FO gabungan kabel besar 6 Core dari ODP. Memberikan efisiensi tinggi untuk ekspansi kluster baru.
-            </p>
-          </div>
-          <div class="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-crm-active">
-            <span>Buka Form RAB</span>
-            <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
-          </div>
-        </a>
+            <div class="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-crm-active">
+              <span>Buka Form Manual</span>
+              <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+            </div>
+          </a>
 
+          <!-- Kartu 3: RAB FTTH Conven -->
+          <a href="ftthxconven.html" class="group bg-white border border-crm-border rounded-xl p-6 hover:border-crm-active hover:shadow-md transition-all duration-200 flex flex-col justify-between">
+            <div>
+              <div class="w-11 h-11 rounded-lg bg-emerald-50 text-crm-active flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                <span class="material-symbols-outlined text-[22px]">hub</span>
+              </div>
+              <h3 class="text-base font-bold text-slate-900 group-hover:text-crm-active transition-colors mb-1.5">
+                RAB FTTH Conven
+              </h3>
+              <p class="text-xs text-crm-textMuted leading-relaxed">
+                Kombinasi kabel 6 Core dari ODP untuk efisiensi kluster baru dengan ONT pelanggan.
+              </p>
+            </div>
+            <div class="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-crm-active">
+              <span>Buka Form Manual</span>
+              <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+            </div>
+          </a>
+
+        </div>
       </div>
 
       <!-- Quick Action: Riwayat RAB Banner Link -->
-      <a href="riwayat.html" class="group block bg-gradient-to-r from-slate-900 to-slate-800 text-white rounded-xl p-6 border border-slate-800 hover:shadow-lg transition-all duration-200">
+      <a href="riwayat.html" class="group block bg-white border border-crm-border rounded-xl p-6 hover:shadow-md transition-all duration-200">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div class="flex items-center gap-4">
-            <div class="w-12 h-12 rounded-lg bg-white/10 flex items-center justify-center text-white shrink-0">
+            <div class="w-12 h-12 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0">
               <span class="material-symbols-outlined text-2xl">history</span>
             </div>
             <div>
-              <h4 class="text-base font-bold text-white group-hover:text-emerald-300 transition-colors">
+              <h4 class="text-base font-bold text-slate-900 group-hover:text-crm-active transition-colors">
                 Riwayat Arsip & Dokumen PDF Google Drive
               </h4>
-              <p class="text-xs text-slate-300 mt-0.5">
-                Lihat dokumen yang sudah tersimpan, download salinan, atau cek detail nomor RAB.
+              <p class="text-xs text-slate-500 mt-0.5">
+                Cari dokumen lama, filter tipe RAB, preview PDF di tab browser, atau download dokumen resmi.
               </p>
             </div>
           </div>
-          <span class="inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wider bg-white/15 group-hover:bg-white/25 px-4 py-2 rounded-lg transition-colors w-fit">
+          <span class="inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wider bg-slate-100 group-hover:bg-crm-active group-hover:text-white px-4 py-2 rounded-lg transition-all w-fit">
             Buka Riwayat
             <span class="material-symbols-outlined text-sm">arrow_forward</span>
           </span>
@@ -279,45 +292,13 @@
             <p class="text-xs font-semibold text-crm-active">
               — Firman sadboy
             </p>
-            <div class="mt-4 p-3 bg-slate-50 rounded-lg border border-slate-200 inline-block">
-              <p class="text-xs text-slate-600 flex items-center gap-2">
-                <span class="material-symbols-outlined text-sm text-slate-400">info</span>
-                Setiap harimu adalah keberuntungan.
-              </p>
-            </div>
           </div>
-        </div>
-
-        <!-- Background Decor -->
-        <div class="absolute -bottom-4 -right-4 opacity-[0.03] pointer-events-none">
-          <span class="material-symbols-outlined text-[130px] text-slate-900">lightbulb</span>
         </div>
       </section>
 
     </div>
   </main>
 </div>
-
-<!-- Toast Feedback Micro-Interaction -->
-<div id="toast" class="fixed bottom-6 right-6 bg-slate-900 text-white px-5 py-3 rounded-lg shadow-xl flex items-center gap-3 transform translate-y-24 opacity-0 transition-all duration-300 z-50 text-xs font-medium">
-  <span class="material-symbols-outlined text-emerald-400 text-lg">check_circle</span>
-  <span>Halaman Dashboard Berhasil Diperbarui</span>
-</div>
-
-<script>
-  // Micro-interaction simulation
-  document.querySelectorAll('button').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const toast = document.getElementById('toast');
-      if (toast) {
-        toast.classList.remove('translate-y-24', 'opacity-0');
-        setTimeout(() => {
-          toast.classList.add('translate-y-24', 'opacity-0');
-        }, 3000);
-      }
-    });
-  });
-</script>
 
 </body>
 </html>
