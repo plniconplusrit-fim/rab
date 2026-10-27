@@ -45,6 +45,8 @@
       vertical-align: middle;
     }
   </style>
+  <!-- RABIT Auth Guard — penegak akses berbasis role -->
+  <script src="auth-guard.js"></script>
 </head>
 <body class="bg-crm-bgCanvas text-slate-800 antialiased selection:bg-crm-active selection:text-white">
 
@@ -114,7 +116,7 @@
   </aside>
 
   <!-- Main Content Canvas -->
-  <main class="flex-1 md:ml-64 p-5 md:p-8">
+  <main class="flex-1 min-w-0 md:ml-64 p-5 md:p-8">
     
     <!-- Top App Bar & Header -->
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
