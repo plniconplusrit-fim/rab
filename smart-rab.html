@@ -84,6 +84,8 @@
       margin: 0;
     }
   </style>
+  <!-- RABIT Auth Guard — penegak akses berbasis role -->
+  <script src="auth-guard.js"></script>
 </head>
 <body class="bg-crm-bgCanvas text-slate-800 antialiased selection:bg-crm-active selection:text-white">
 
@@ -161,7 +163,7 @@
   </aside>
 
   <!-- Main Content Canvas -->
-  <main class="flex-1 md:ml-64 p-5 md:p-8 content-canvas">
+  <main class="flex-1 min-w-0 md:ml-64 p-5 md:p-8 content-canvas">
     
     <!-- Top Action Header -->
     <div class="no-print flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
@@ -320,7 +322,7 @@
           </h2>
         </div>
         
-        <div class="bg-white rounded-xl border border-crm-border overflow-hidden shadow-xs print:border-none print:shadow-none">
+        <div class="bg-white rounded-xl border border-crm-border overflow-hidden overflow-x-auto shadow-xs print:border-none print:shadow-none">
           <table class="w-full text-left border-collapse">
             <thead class="bg-slate-50 text-slate-600 font-semibold text-[11px] uppercase tracking-wider border-b border-crm-border print:text-black">
               <tr>
@@ -351,7 +353,7 @@
           </h2>
         </div>
         
-        <div class="bg-white rounded-xl border border-crm-border overflow-hidden shadow-xs print:border-none print:shadow-none">
+        <div class="bg-white rounded-xl border border-crm-border overflow-hidden overflow-x-auto shadow-xs print:border-none print:shadow-none">
           <table class="w-full text-left border-collapse">
             <thead class="bg-slate-50 text-slate-600 font-semibold text-[11px] uppercase tracking-wider border-b border-crm-border print:text-black">
               <tr>
