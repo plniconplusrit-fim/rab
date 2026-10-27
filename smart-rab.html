@@ -152,6 +152,12 @@
         <span class="material-symbols-outlined text-[18px] text-slate-400">chevron_right</span>
       </a>
     </nav>
+
+    <!-- Sidebar Footer -->
+    <div class="p-4 border-t border-crm-border text-xs text-slate-400 flex items-center justify-between">
+      <span>RABIT Management</span>
+      <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+    </div>
   </aside>
 
   <!-- Main Content Canvas -->
@@ -161,10 +167,10 @@
     <div class="no-print flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
       <div>
         <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
-          <span class="material-symbols-outlined text-crm-active text-28px">auto_awesome</span>
+          <span class="material-symbols-outlined text-crm-active text-[28px]">auto_awesome</span>
           Smart RAB Estimator
         </h1>
-        <p class="text-xs text-crm-textMuted mt-0.5">Generator RAB Instan Berbasis Aturan Teknis & Jarak Geografis</p>
+        <p class="text-xs text-crm-textMuted mt-0.5">Generator RAB Instan Berbasis Aturan Teknis & Rute Jalan Raya Riil</p>
       </div>
 
       <div class="flex items-center gap-2">
@@ -178,34 +184,25 @@
     <!-- FORM INPUT PINTAR (NO PRINT) -->
     <div class="no-print bg-white rounded-xl border border-crm-border p-5 shadow-xs mb-6 space-y-5">
       
-      <!-- 1. Pemilihan Metode Tarikan -->
+      <!-- 1. Pemilihan Metode Tarikan (Deskripsi di bawah sudah dihilangkan) -->
       <div>
         <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
           1. Pilih Metode Tarikan:
         </label>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <label class="flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-all border-slate-200 hover:bg-slate-50" id="label-metode-conven">
+          <label class="flex items-center gap-2.5 px-4 py-3 rounded-lg border cursor-pointer transition-all border-slate-200 hover:bg-slate-50" id="label-metode-conven">
             <input type="radio" name="metodeTarikan" value="CONVEN" checked onchange="gantiMetode('CONVEN')" class="text-crm-active focus:ring-crm-active"/>
-            <div>
-              <div class="text-xs font-bold text-slate-900">CONVEN</div>
-              <div class="text-[11px] text-slate-500">Backbone / Inter-city kabel besar</div>
-            </div>
+            <span class="text-xs font-bold text-slate-900 tracking-wide">CONVEN</span>
           </label>
 
-          <label class="flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-all border-slate-200 hover:bg-slate-50" id="label-metode-ftth">
+          <label class="flex items-center gap-2.5 px-4 py-3 rounded-lg border cursor-pointer transition-all border-slate-200 hover:bg-slate-50" id="label-metode-ftth">
             <input type="radio" name="metodeTarikan" value="FTTH" onchange="gantiMetode('FTTH')" class="text-crm-active focus:ring-crm-active"/>
-            <div>
-              <div class="text-xs font-bold text-slate-900">FTTH</div>
-              <div class="text-[11px] text-slate-500">Retail Dropwire & ONT Huawei</div>
-            </div>
+            <span class="text-xs font-bold text-slate-900 tracking-wide">FTTH</span>
           </label>
 
-          <label class="flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-all border-slate-200 hover:bg-slate-50" id="label-metode-ftthxconven">
+          <label class="flex items-center gap-2.5 px-4 py-3 rounded-lg border cursor-pointer transition-all border-slate-200 hover:bg-slate-50" id="label-metode-ftthxconven">
             <input type="radio" name="metodeTarikan" value="FTTH X CONVEN" onchange="gantiMetode('FTTH X CONVEN')" class="text-crm-active focus:ring-crm-active"/>
-            <div>
-              <div class="text-xs font-bold text-slate-900">FTTH X CONVEN</div>
-              <div class="text-[11px] text-slate-500">Ekspansi Kluster + ONT Huawei</div>
-            </div>
+            <span class="text-xs font-bold text-slate-900 tracking-wide">FTTH X CONVEN</span>
           </label>
         </div>
       </div>
@@ -248,7 +245,7 @@
         </div>
       </div>
 
-      <!-- 3. Parameter Teknis Sesuai Rules -->
+      <!-- 3. Parameter Teknis Sesuai Rules (Deskripsi di bawah panjang tarikan sudah dihilangkan) -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-3 border-t border-slate-100">
         
         <!-- Panjang Tarikan -->
@@ -259,7 +256,6 @@
               class="w-full bg-white border border-slate-200 rounded-lg p-2 pr-8 text-xs font-mono font-bold text-slate-800 focus:ring-1 focus:ring-crm-active focus:border-crm-active"/>
             <span class="absolute right-3 top-2 text-xs text-slate-400 font-semibold">m</span>
           </div>
-          <span id="hintPanjang" class="text-[10px] text-slate-400 mt-1 block"></span>
         </div>
 
         <!-- Khusus CONVEN: Cut Over Kabel -->
@@ -277,16 +273,15 @@
           <label class="block text-xs font-semibold text-slate-600 mb-1">Total AP (Access Point):</label>
           <input type="number" id="inputTotalAp" value="0" min="0" oninput="kalkulasiSemua()"
             class="w-full bg-white border border-slate-200 rounded-lg p-2 text-xs font-mono font-bold text-slate-800 focus:ring-1 focus:ring-crm-active focus:border-crm-active"/>
-          <span class="text-[10px] text-slate-400 mt-1 block">Jika 0: Material AP & Router otomatis dihilangkan</span>
         </div>
       </div>
 
-      <!-- Bar Indikator Status Hasil Deteksi -->
+      <!-- Bar Indikator Status Hasil Deteksi Rute Jalan Raya Riil -->
       <div class="p-3 bg-slate-50 rounded-lg border border-slate-200 flex flex-wrap items-center justify-between gap-3 text-xs">
         <div class="flex items-center gap-4">
           <div class="flex items-center gap-1.5">
-            <span class="material-symbols-outlined text-sm text-slate-400">near_me</span>
-            <span>Jarak Tikor: <strong id="infoJarakKm" class="font-mono text-slate-800">0 km</strong></span>
+            <span class="material-symbols-outlined text-sm text-crm-blue">directions_car</span>
+            <span>Rute Jalan Riil: <strong id="infoJarakKm" class="font-mono text-slate-800">0 km</strong></span>
           </div>
           <div class="flex items-center gap-1.5">
             <span class="material-symbols-outlined text-sm text-slate-400">local_shipping</span>
@@ -297,8 +292,12 @@
             <span>Joint Box: <strong id="infoJointBoxQty" class="font-mono text-slate-800">0 U</strong></span>
           </div>
         </div>
-        <div class="text-[11px] text-slate-500">
-          *Aturan: Jarak &ge; 100km auto 1 lot & kelipatan.
+        <div class="flex items-center gap-3">
+          <a id="linkGmapsRute" href="#" target="_blank" class="hidden text-crm-blue hover:underline inline-flex items-center gap-1 font-semibold text-[11px]">
+            <span class="material-symbols-outlined text-sm">map</span>
+            Lihat di Google Maps
+          </a>
+          <span class="text-[11px] text-slate-400">*Jarak &ge; 100km auto 1 lot & kelipatan</span>
         </div>
       </div>
 
@@ -393,15 +392,16 @@
   </main>
 </div>
 
-<!-- Logika Perhitungan Cerdas Sesuai Seluruh Aturan User -->
+<!-- Logika Perhitungan Cerdas & Rute Jalan Raya Riil -->
 <script>
   const GAS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxhcvWu9rQ2Fu8RCBzGLUJ3r22b3E3owWM8SOzjqsoJL5zMvuQhBzb6MzATZf2I7C-DIA/exec";
 
   let metodeAktif = "CONVEN";
+  let jarakJalanKm = 0;
+  let timerDebounce = null;
 
-  // Database Master Harga Resmi
+  // Master Database Harga
   const MASTER_HARGA = {
-    // Instalasi Umum
     dokTeknis: { desc: "PEMBUATAN DOKUMENTASI TEKNIS", unit: "LOT", price: 383030 },
     survey: { desc: "SURVEY JALUR KABEL (+SPOT GPSMAX 3 HARI)", unit: "LOT", price: 913289 },
     tarikAdss: { desc: "PENARIKAN FOC ADSS SHORT SPAN <4000M", unit: "M", price: 4124 },
@@ -419,11 +419,9 @@
     tarikUtp: { desc: "PENARIKAN UTP", unit: "M", price: 15187 },
     odfRack: { desc: "ODF RACK MOUNTED 6 CORE (TIPE SC UPC)", unit: "U", price: 661760 },
     
-    // FTTH Khusus
     installDropWireStd: { desc: "INSTALASI DROP WIRE <= 300M", unit: "LOT", price: 285000 },
     installDropWireExtra: { desc: "INSTALASI DROP WIRE >300M", unit: "M", price: 801 },
 
-    // Material Umum & CONVEN
     swBdcom: { desc: "SWCH,S2510-C-AC,,BDCOM", unit: "U", price: 1122125 },
     sfp1310: { desc: "SWCH,SFP 1.25G TX1310nm 40KM DDM,,3TECH", unit: "U", price: 93500 },
     sfp1550: { desc: "SWCH,SFP 1.25G TX1550nm 40KM DDM,,3TECH", unit: "U", price: 107200 },
@@ -432,7 +430,6 @@
     apIndoor: { desc: "MDM,RG-AP810-L,Indoor AP+PoE 3AF,,RUIJIE", unit: "U", price: 1197260 },
     routerMikrotik: { desc: "ROUT,RB951Ui-2HnD,5port,MIKROTIK", unit: "U", price: 836000 },
 
-    // Material FTTH & ONT
     ontHuawei: { desc: "GPON,ONT EG8021V5,2.4/5GHz Wi-Fi,,HUAWEI", unit: "U", price: 299200 },
     dropwire100: { desc: "FOC,DropWire3SlgSC-UPC,1F,100m,FIBERHOME", unit: "U", price: 63706 },
     dropwire150: { desc: "FOC,DropWire3SlgSC-UPC,1F,150m,FIBERHOME", unit: "U", price: 86553 },
@@ -443,8 +440,8 @@
     return "Rp " + Math.round(num || 0).toLocaleString('id-ID');
   }
 
-  // Rumus Haversine menghitung jarak geolokasi dalam KM
-  function hitungJarakKm(lat1, lon1, lat2, lon2) {
+  // Rumus Haversine Fallback
+  function hitungJarakHaversine(lat1, lon1, lat2, lon2) {
     const R = 6371;
     const dLat = (lat2 - lat1) * Math.PI / 180;
     const dLon = (lon2 - lon1) * Math.PI / 180;
@@ -453,6 +450,25 @@
               Math.sin(dLon / 2) * Math.sin(dLon / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return R * c;
+  }
+
+  // =========================================================================
+  // FITUR: AMBIL RUTE JALAN RAYA RIIL (DRIVING ROUTE SEPERTI GOOGLE MAPS)
+  // =========================================================================
+  async function ambilRuteJalanRayaRiil(lat1, lon1, lat2, lon2) {
+    try {
+      // Menggunakan OSRM Routing Engine (Mengukur rute jalan raya resmi belokan per belokan)
+      const url = `https://router.project-osrm.org/route/v1/driving/${lon1},${lat1};${lon2},${lat2}?overview=false`;
+      const res = await fetch(url);
+      const data = await res.json();
+      if (data.code === 'Ok' && data.routes && data.routes.length > 0) {
+        return Math.round(data.routes[0].distance / 1000); // Mengembalikan jarak dalam Kilometer riil
+      }
+    } catch (err) {
+      console.warn("Koneksi rute jalan darat fallback ke estimasi:", err);
+    }
+    // Fallback jika jaringan offline
+    return Math.round(hitungJarakHaversine(lat1, lon1, lat2, lon2) * 1.18);
   }
 
   function ekstrakTikor(teks) {
@@ -464,93 +480,85 @@
 
   function gantiMetode(metode) {
     metodeAktif = metode;
-    
-    // Update judul otomatis jika masih default
-    const inputJudul = document.getElementById("inputJudul");
-    inputJudul.value = `RAB AKTIVASI VIA ${metode}`;
+    document.getElementById("inputJudul").value = `RAB AKTIVASI VIA ${metode}`;
 
-    // Tampilkan / Sembunyikan field input khusus sesuai metode
     const wrapCO = document.getElementById("wrapper-cutover");
     const wrapAP = document.getElementById("wrapper-total-ap");
-    const hintPanjang = document.getElementById("hintPanjang");
     const infoJointWrap = document.getElementById("infoJointBoxWrap");
 
     if (metode === "CONVEN") {
       wrapCO.classList.remove("hidden");
       wrapAP.classList.remove("hidden");
       infoJointWrap.classList.remove("hidden");
-      hintPanjang.innerText = "Tiap >= 4000m auto +1 Joint Box kelipatan.";
-    } else if (metode === "FTTH") {
+    } else {
       wrapCO.classList.add("hidden");
       wrapAP.classList.add("hidden");
       infoJointWrap.classList.add("hidden");
-      hintPanjang.innerText = "<80m: DW 100m | 81-130m: DW 150m | 131-230m: DW 250m";
-    } else if (metode === "FTTH X CONVEN") {
-      wrapCO.classList.add("hidden");
-      wrapAP.classList.add("hidden");
-      infoJointWrap.classList.add("hidden");
-      hintPanjang.innerText = "Kabel 6 core & fitting otomatis mengikuti panjang tarikan.";
     }
 
-    // Border highlight radio card
     document.querySelectorAll("[id^='label-metode-']").forEach(el => {
-      el.classList.remove("border-crm-active", "bg-emerald-50/40");
+      el.classList.remove("border-crm-active", "bg-emerald-50/50");
     });
     const activeLabel = document.getElementById(`label-metode-${metode.toLowerCase().replace(/\s+/g, '')}`);
-    if (activeLabel) activeLabel.classList.add("border-crm-active", "bg-emerald-50/40");
+    if (activeLabel) activeLabel.classList.add("border-crm-active", "bg-emerald-50/50");
 
     kalkulasiSemua();
   }
 
-  // =========================================================================
-  // LOGIKA UTAMA KALKULASI PINTAR (MENERAPKAN SELURUH RULES USER)
-  // =========================================================================
   function kalkulasiSemua() {
+    clearTimeout(timerDebounce);
+    
+    const tikorAwal = ekstrakTikor(document.getElementById("selectKpKr").value);
+    const tikorUser = ekstrakTikor(document.getElementById("inputTikorUser").value);
+    const linkGmaps = document.getElementById("linkGmapsRute");
+
+    if (tikorAwal && tikorUser) {
+      document.getElementById("infoJarakKm").innerHTML = `<span class="inline-flex items-center gap-1 text-slate-400"><span class="material-symbols-outlined animate-spin text-[14px]">sync</span> Mengukur rute jalan...</span>`;
+      linkGmaps.href = `https://www.google.com/maps/dir/${tikorAwal.lat},${tikorAwal.lng}/${tikorUser.lat},${tikorUser.lng}`;
+      linkGmaps.classList.remove("hidden");
+
+      // Debounce pemanggilan API rute 350ms agar hemat data saat mengetik
+      timerDebounce = setTimeout(async () => {
+        jarakJalanKm = await ambilRuteJalanRayaRiil(tikorAwal.lat, tikorAwal.lng, tikorUser.lat, tikorUser.lng);
+        document.getElementById("infoJarakKm").innerText = `${jarakJalanKm} km`;
+        prosesKalkulasiRAB(jarakJalanKm);
+      }, 350);
+    } else {
+      jarakJalanKm = 0;
+      document.getElementById("infoJarakKm").innerText = `0 km`;
+      linkGmaps.classList.add("hidden");
+      prosesKalkulasiRAB(0);
+    }
+  }
+
+  function prosesKalkulasiRAB(jarakKm) {
     const panjang = parseFloat(document.getElementById("inputPanjang").value) || 0;
-    const tikorAwalStr = document.getElementById("selectKpKr").value;
-    const tikorUserStr = document.getElementById("inputTikorUser").value;
     const coPilihan = document.getElementById("selectCutOver").value;
     const totalAp = parseInt(document.getElementById("inputTotalAp").value) || 0;
 
-    // 1. HITUNG JARAK & TRANSPORTASI
-    // Rules: jika tikor user >= 100km maka transport otomatis terisi 1 dan berlaku kelipatan. Jika < 100km maka transport dihilangkan.
-    const tikorAwal = ekstrakTikor(tikorAwalStr);
-    const tikorUser = ekstrakTikor(tikorUserStr);
-    let jarakKm = 0;
+    // Aturan Transport: Jarak >= 100km auto 1 lot & kelipatan. Jika < 100km dihilangkan
     let qtyTransport = 0;
-
-    if (tikorAwal && tikorUser) {
-      jarakKm = Math.round(hitungJarakKm(tikorAwal.lat, tikorAwal.lng, tikorUser.lat, tikorUser.lng) * 1.15); // Faktor jalan
-      if (jarakKm >= 100) {
-        qtyTransport = Math.floor(jarakKm / 100);
-      }
+    if (jarakKm >= 100) {
+      qtyTransport = Math.floor(jarakKm / 100);
     }
 
-    document.getElementById("infoJarakKm").innerText = `${jarakKm} km`;
     document.getElementById("infoTransportLot").innerText = qtyTransport > 0 ? `${qtyTransport} Lot` : "0 Lot (Free / Dihilangkan)";
 
     let listInstalasi = [];
     let listMaterial = [];
 
-    // =======================================================================
-    // A. RULES METODE: CONVEN
-    // =======================================================================
+    // A. RULES CONVEN
     if (metodeAktif === "CONVEN") {
-      
-      // Rule 2 & 4: Joint Box
-      // Panjang >= 4000m: auto 1 joint box kelipatan
       let jointBoxFromPanjang = panjang >= 4000 ? Math.floor(panjang / 4000) : 0;
       let jointBoxFromCO = (coPilihan === "6" || coPilihan === "24") ? 2 : 0;
       let totalJointBox = (coPilihan === "none") ? jointBoxFromPanjang : (jointBoxFromPanjang + jointBoxFromCO);
 
       document.getElementById("infoJointBoxQty").innerText = `${totalJointBox} U`;
 
-      // Fitting kabel otomatis
       const deadEndQty = Math.ceil((panjang / 40) / 3);
       const suspensionQty = Math.max(0, Math.ceil((panjang / 40) - deadEndQty));
       const labelingQty = suspensionQty;
 
-      // Item Instalasi CONVEN
       listInstalasi.push({ ...MASTER_HARGA.dokTeknis, qty: 1 });
       listInstalasi.push({ ...MASTER_HARGA.survey, qty: 1 });
       listInstalasi.push({ ...MASTER_HARGA.tarikAdss, qty: panjang });
@@ -563,17 +571,14 @@
       listInstalasi.push({ ...MASTER_HARGA.suspension, qty: suspensionQty });
       listInstalasi.push({ ...MASTER_HARGA.patchCord, qty: 2 });
 
-      // Rule 3: Transport jika >= 100km
       if (qtyTransport > 0) {
         listInstalasi.push({ ...MASTER_HARGA.transport100, qty: qtyTransport });
       }
 
-      // Rule 2 & 4: Joint box jika > 0
       if (totalJointBox > 0) {
         listInstalasi.push({ ...MASTER_HARGA.jointBox, qty: totalJointBox });
       }
 
-      // Rule 5: Instalasi AP jika total AP > 0
       if (totalAp > 0) {
         listInstalasi.push({ ...MASTER_HARGA.instalasiAp, qty: totalAp });
         listInstalasi.push({ ...MASTER_HARGA.tarikUtp, qty: totalAp * 10 });
@@ -581,51 +586,37 @@
 
       listInstalasi.push({ ...MASTER_HARGA.odfRack, qty: 1 });
 
-      // Item Material CONVEN
       listMaterial.push({ ...MASTER_HARGA.swBdcom, qty: 1 });
       listMaterial.push({ ...MASTER_HARGA.sfp1310, qty: 1 });
       listMaterial.push({ ...MASTER_HARGA.sfp1550, qty: 1 });
 
-      // Rule 4: Pilihan CO Kabel 24 core vs 6 core
       if (coPilihan === "24") {
         listMaterial.push({ ...MASTER_HARGA.kabel24Core, qty: panjang });
-      } else if (coPilihan === "6") {
-        listMaterial.push({ ...MASTER_HARGA.kabel6Core, qty: panjang });
       } else {
-        // Jika tidak CO, kabel 6 core standar tetap dipasang sesuai panjang
         listMaterial.push({ ...MASTER_HARGA.kabel6Core, qty: panjang });
       }
 
-      // Rule 5: AP & Router (Material 5, 6, 7)
       if (totalAp > 0) {
         listMaterial.push({ ...MASTER_HARGA.apIndoor, qty: totalAp });
         listMaterial.push({ ...MASTER_HARGA.routerMikrotik, qty: 1 });
       }
     }
 
-    // =======================================================================
-    // B. RULES METODE: FTTH
-    // =======================================================================
+    // B. RULES FTTH
     else if (metodeAktif === "FTTH") {
-      
-      // Item Instalasi FTTH
       listInstalasi.push({ ...MASTER_HARGA.dokTeknis, qty: 1 });
       listInstalasi.push({ ...MASTER_HARGA.installDropWireStd, qty: 1 });
 
-      // Rule 2: Transport jika >= 100km
       if (qtyTransport > 0) {
         listInstalasi.push({ ...MASTER_HARGA.transport100, qty: qtyTransport });
       }
 
-      // Rule 4: Jika tarikan < 230m maka point 4 (Drop Wire >300m/extra) dihilangkan
+      // Rule 4: Tarikan < 230m point 4 dihilangkan
       if (panjang >= 230) {
         listInstalasi.push({ ...MASTER_HARGA.installDropWireExtra, qty: Math.max(0, panjang - 230) });
       }
 
-      // Rule 3: Pemilihan material hanya ada 2 (Kabel Dropwire & ONT Huawei)
-      // - < 80m: Dropwire 100m
-      // - 81m - 130m: Dropwire 150m
-      // - 131m - 230m (atau lebih): Dropwire 250m
+      // Rule 3: Material hanya 2 saja (Kabel Dropwire & ONT)
       listMaterial.push({ ...MASTER_HARGA.ontHuawei, qty: 1 });
 
       if (panjang <= 80) {
@@ -637,11 +628,8 @@
       }
     }
 
-    // =======================================================================
-    // C. RULES METODE: FTTH X CONVEN
-    // =======================================================================
+    // C. RULES FTTH X CONVEN
     else if (metodeAktif === "FTTH X CONVEN") {
-      
       const deadEndQty = Math.ceil((panjang / 40) / 3);
       const suspensionQty = Math.max(0, Math.ceil((panjang / 40) - deadEndQty));
       const labelingQty = suspensionQty;
@@ -658,21 +646,16 @@
       listInstalasi.push({ ...MASTER_HARGA.suspension, qty: suspensionQty });
       listInstalasi.push({ ...MASTER_HARGA.patchCord, qty: 2 });
 
-      // Rule 2: Transport jika >= 100km
       if (qtyTransport > 0) {
         listInstalasi.push({ ...MASTER_HARGA.transport100, qty: qtyTransport });
       }
 
       listInstalasi.push({ ...MASTER_HARGA.odfRack, qty: 1 });
 
-      // Rule 3: ONT Otomatis Huawei GPON
       listMaterial.push({ ...MASTER_HARGA.ontHuawei, qty: 1 });
-
-      // Rule 4: Kabel 6 Core otomatis mengikuti panjang tarikan
       listMaterial.push({ ...MASTER_HARGA.kabel6Core, qty: panjang });
     }
 
-    // RENDER TABEL & HITUNG TOTAL
     renderTabelRAB(listInstalasi, listMaterial);
   }
 
@@ -686,7 +669,6 @@
     let subtotalIns = 0;
     let subtotalMat = 0;
 
-    // Render Tabel Instalasi
     instalasi.forEach((item, index) => {
       const total = item.qty * item.price;
       subtotalIns += total;
@@ -704,7 +686,6 @@
       `;
     });
 
-    // Render Tabel Material
     material.forEach((item, index) => {
       const total = item.qty * item.price;
       subtotalMat += total;
@@ -727,14 +708,10 @@
     document.getElementById("subtotalMaterial").innerText = formatIDR(subtotalMat);
     document.getElementById("labelGrandTotal").innerText = formatIDR(grandTotal);
 
-    // Update Header Cetak
     document.getElementById("printJudul").innerText = document.getElementById("inputJudul").value;
     document.getElementById("printPelanggan").innerText = document.getElementById("inputPelanggan").value;
   }
 
-  // =========================================================================
-  // EXPORT KE PDF DAN SIMPAN KE GOOGLE DRIVE
-  // =========================================================================
   async function simpanDanDownloadPDF() {
     const judul = document.getElementById("inputJudul").value.trim() || `RAB AKTIVASI VIA ${metodeAktif}`;
     const pelanggan = document.getElementById("inputPelanggan").value.trim() || "PELANGGAN";
@@ -769,11 +746,9 @@
     try {
       btn.innerHTML = `<span class="material-symbols-outlined animate-spin text-base">cloud_upload</span> Mengunggah ke Drive...`;
 
-      // 1. Download file PDF ke komputer sales
       const pdfBlob = await html2pdf().set(opt).from(element).output('blob');
       html2pdf().set(opt).from(element).save();
 
-      // 2. Upload ke Google Apps Script (Drive & Sheet Riwayat)
       const base64Data = await new Promise((resolve) => {
         const reader = new FileReader();
         reader.onloadend = () => resolve(reader.result);
@@ -813,7 +788,6 @@
     }
   }
 
-  // Jalankan kalkulasi perdana saat halaman terbuka
   window.addEventListener("DOMContentLoaded", () => {
     gantiMetode("CONVEN");
   });
