@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>Dashboard - RABIT</title>
+  <title>Dashboard - RAB Management System</title>
 
   <!-- Google Fonts: Inter & Material Symbols Outlined -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,12 +24,12 @@
           },
           colors: {
             crm: {
-              active: '#1e4a42',       // Hijau gelap khas iCRM
+              active: '#1e4a42',
               activeHover: '#163b35',
-              blue: '#00529b',         // Biru logo iCRM
-              textMuted: '#52606d',    // Warna teks menu inaktif
-              border: '#e2e8f0',       // Border slate halus
-              bgCanvas: '#f8fafc',     // Latar belakang halaman
+              blue: '#00529b',
+              textMuted: '#52606d',
+              border: '#e2e8f0',
+              bgCanvas: '#f8fafc',
               card: '#ffffff'
             }
           }
@@ -46,111 +46,55 @@
       font-variation-settings: 'FILL' 0, 'wght' 350, 'GRAD' 0, 'opsz' 22;
       vertical-align: middle;
     }
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #f1f5f9; }
-    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
-    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
   </style>
-  <!-- RABIT Auth Guard — penegak akses berbasis role -->
-  <script src="auth-guard.js"></script>
 </head>
-<body class="bg-crm-bgCanvas text-slate-800 antialiased selection:bg-crm-active selection:text-white">
+<body class="bg-crm-bgCanvas text-slate-800 antialiased min-h-screen selection:bg-crm-active selection:text-white">
 
-<div class="flex min-h-screen">
-
-  <!-- SideNavBar -->
-  <aside class="hidden md:flex fixed h-screen left-0 top-0 w-64 bg-white flex-col border-r border-crm-border z-50">
+  <!-- Top App Bar / Header (Lebar Penuh & Menempel Rapi) -->
+  <header class="fixed top-0 left-0 w-full z-50 bg-white border-b border-crm-border h-16 flex items-center justify-between px-6 lg:px-10 shadow-xs">
     
-    <!-- Logo Brand Section -->
-    <div class="px-6 py-5 border-b border-crm-border flex items-center justify-between">
-      <a href="dashboard.html" class="flex items-center gap-2">
-        <div class="flex items-center text-xl font-bold tracking-tight text-crm-blue">
-          <span class="text-crm-active">RAB</span><span>IT</span>
-          <span class="ml-1 inline-flex text-xs font-black">
-            <span class="text-rose-600">+</span>
-          </span>
+    <!-- Brand Title & Navigation Links -->
+    <div class="flex items-center gap-8">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-emerald-50 text-crm-active rounded-lg flex items-center justify-center font-bold text-sm border border-emerald-100">
+          <span class="material-symbols-outlined text-[20px]">lan</span>
         </div>
-        <span class="text-[10px] text-crm-textMuted uppercase font-semibold bg-slate-100 px-2 py-0.5 rounded">v2.0</span>
-      </a>
-      <span class="material-symbols-outlined text-slate-400 text-lg cursor-pointer hover:text-slate-600">search</span>
+        <span class="text-base font-bold text-slate-900 tracking-tight">RAB Management System</span>
+      </div>
+
+      <!-- Navigasi Menu Header -->
+      <nav class="hidden md:flex items-center gap-1">
+        <a href="dashboard.html" class="px-3.5 py-2 text-xs font-bold text-crm-active bg-emerald-50/60 rounded-lg transition-colors">
+          Dashboard
+        </a>
+        <a href="smart-rab.html" class="px-3.5 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded-lg transition-colors flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-emerald-600 text-[16px]">auto_awesome</span>
+          Smart RAB
+          <span class="text-[9px] font-bold uppercase bg-emerald-600 text-white px-1.5 py-0.2 rounded">AUTO</span>
+        </a>
+        <a href="conven.html" class="px-3.5 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded-lg transition-colors">
+          Conven
+        </a>
+        <a href="ftth.html" class="px-3.5 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded-lg transition-colors">
+          FTTH
+        </a>
+        <a href="ftthxconven.html" class="px-3.5 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded-lg transition-colors">
+          FTTH X Conven
+        </a>
+        <a href="riwayat.html" class="px-3.5 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded-lg transition-colors">
+          Riwayat RAB
+        </a>
+      </nav>
     </div>
 
-    <!-- Navigation Menu Items -->
-    <nav class="flex-1 px-3 py-4 space-y-1.5 overflow-y-auto">
-      
-      <!-- ACTIVE: Dashboard -->
-      <a href="dashboard.html" class="flex items-center justify-between bg-crm-active text-white rounded-lg px-3.5 py-2.5 text-sm font-medium shadow-sm transition-all">
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-[20px] text-white">home</span>
-          <span>Dashboard</span>
-        </div>
-      </a>
-
-      <!-- MENU BARU: SMART RAB (OTOMATIS) -->
-      <a href="smart-rab.html" class="flex items-center justify-between text-crm-textMuted hover:text-slate-900 hover:bg-emerald-50/60 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-all group border border-dashed border-emerald-300/60 bg-emerald-50/20">
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-[20px] text-emerald-700 group-hover:scale-110 transition-transform">auto_awesome</span>
-          <span class="font-semibold text-slate-900">Smart RAB</span>
-        </div>
-        <span class="text-[9px] font-bold uppercase bg-emerald-600 text-white px-1.5 py-0.5 rounded">AUTO</span>
-      </a>
-
-      <!-- Inactive: CONVEN -->
-      <a href="conven.html" class="flex items-center justify-between text-crm-textMuted hover:text-slate-900 hover:bg-slate-100/80 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-all group">
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-slate-800">cable</span>
-          <span>Conven</span>
-        </div>
-        <span class="material-symbols-outlined text-[18px] text-slate-400 group-hover:translate-x-0.5 transition-transform">chevron_right</span>
-      </a>
-
-      <!-- Inactive: FTTH -->
-      <a href="ftth.html" class="flex items-center justify-between text-crm-textMuted hover:text-slate-900 hover:bg-slate-100/80 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-all group">
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-slate-800">router</span>
-          <span>FTTH</span>
-        </div>
-        <span class="material-symbols-outlined text-[18px] text-slate-400 group-hover:translate-x-0.5 transition-transform">chevron_right</span>
-      </a>
-
-      <!-- Inactive: FTTH X CONVEN -->
-      <a href="ftthxconven.html" class="flex items-center justify-between text-crm-textMuted hover:text-slate-900 hover:bg-slate-100/80 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-all group">
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-slate-800">hub</span>
-          <span>FTTH X Conven</span>
-        </div>
-        <span class="material-symbols-outlined text-[18px] text-slate-400 group-hover:translate-x-0.5 transition-transform">chevron_right</span>
-      </a>
-
-      <!-- Inactive: RIWAYAT RAB -->
-      <a href="riwayat.html" class="flex items-center justify-between text-crm-textMuted hover:text-slate-900 hover:bg-slate-100/80 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-all group">
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-slate-800">history</span>
-          <span>Riwayat RAB</span>
-        </div>
-        <span class="material-symbols-outlined text-[18px] text-slate-400 group-hover:translate-x-0.5 transition-transform">chevron_right</span>
-      </a>
-    </nav>
-
-    <!-- Sidebar Footer -->
-    <div class="p-4 border-t border-crm-border text-xs text-slate-400 flex items-center justify-between">
-      <span>RABIT Management</span>
-      <span class="w-2 h-2 rounded-full bg-emerald-500" title="System Online"></span>
-    </div>
-  </aside>
-
-  <!-- Top App Bar -->
-  <header class="fixed top-0 right-0 w-full md:w-[calc(100%-16rem)] z-40 bg-white border-b border-crm-border h-16 flex items-center justify-between px-6 md:px-8">
-    <div class="flex items-center gap-3">
-      <h2 class="text-base font-bold text-slate-900 tracking-tight">RAB Management System</h2>
-    </div>
-
+    <!-- Right Header Actions (Smart RAB Button & Profile) -->
     <div class="flex items-center gap-4">
-      <a href="smart-rab.html" class="hidden sm:inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-800 border border-emerald-200 px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-emerald-100 transition-all">
+      <a href="smart-rab.html" class="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-800 border border-emerald-200 px-3.5 py-1.5 rounded-lg text-xs font-semibold hover:bg-emerald-100 transition-all shadow-xs">
         <span class="material-symbols-outlined text-[16px]">auto_awesome</span>
         Buka Smart RAB
       </a>
-      <div class="flex items-center gap-3 pl-4 border-l border-slate-200">
+
+      <div class="flex items-center gap-3 pl-3 border-l border-slate-200">
         <div class="w-8 h-8 rounded-full bg-crm-active text-white flex items-center justify-center font-bold text-xs shadow-xs">
           RB
         </div>
@@ -162,13 +106,13 @@
     </div>
   </header>
 
-  <!-- Main Content Canvas -->
-  <main class="flex-1 min-w-0 md:ml-64 pt-24 pb-12 px-6 md:px-8 min-h-screen">
-    <div class="max-w-7xl mx-auto space-y-6">
+  <!-- Main Content Canvas (LEBAR PENUH - TANPA SPACE KOSONG DI KIRI & KANAN) -->
+  <main class="w-full pt-22 pb-12 px-6 lg:px-10">
+    <div class="w-full space-y-6">
 
-      <!-- HERO BANNER DENGAN PINTASAN SMART RAB BARU -->
-      <section class="relative overflow-hidden rounded-xl bg-gradient-to-r from-emerald-900 via-slate-900 to-slate-900 text-white p-8 shadow-sm">
-        <div class="relative z-10 max-w-2xl">
+      <!-- HERO BANNER: SMART RAB ESTIMATOR OTOMATIS (Full Width) -->
+      <section class="w-full relative overflow-hidden rounded-xl bg-gradient-to-r from-emerald-950 via-slate-900 to-slate-900 text-white p-7 md:p-9 shadow-sm border border-slate-800">
+        <div class="relative z-10 max-w-4xl">
           <span class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-emerald-300 bg-white/10 px-3 py-1 rounded-full mb-3">
             <span class="material-symbols-outlined text-[14px]">auto_awesome</span>
             Fitur Otomasi Baru Tersedia
@@ -176,28 +120,28 @@
           <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-2 text-white">
             Smart RAB Estimator Otomatis
           </h1>
-          <p class="text-xs md:text-sm text-slate-300 leading-relaxed mb-5">
-            Cukup pilih KP/KR dan masukkan Tikor pelanggan dari Google Maps. Jarak otomatis diukur, transport , joint box, dan material langsung terhitung siap ekspor ke PDF.
+          <p class="text-xs md:text-sm text-slate-300 leading-relaxed mb-6 max-w-3xl">
+            Cukup pilih KP/KR dan masukkan Tikor pelanggan dari Google Maps. Jarak otomatis diukur melalui rute jalan raya riil, transport $\ge 100\text{ km}$, joint box, dan material dropwire langsung terhitung siap ekspor ke PDF.
           </p>
-          <div class="flex flex-wrap gap-3">
-            <a href="smart-rab.html" class="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-slate-900 px-5 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all shadow-md">
+          <div>
+            <a href="smart-rab.html" class="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 px-5 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all shadow-md">
               <span class="material-symbols-outlined text-base">bolt</span>
               Mulai Buat RAB Otomatis
             </a>
           </div>
         </div>
         <div class="absolute -right-6 -bottom-8 opacity-10 pointer-events-none select-none">
-          <span class="material-symbols-outlined text-[220px]">auto_awesome</span>
+          <span class="material-symbols-outlined text-[240px]">auto_awesome</span>
         </div>
       </section>
 
-      <!-- Bento Cards Grid (Tools Form Manual Lengkap) -->
-      <div>
+      <!-- SECTION: FORM INPUT MANUAL DETAIL (3 KARTU MELEBAR PENUH) -->
+      <div class="w-full">
         <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 px-1">
           Atau Pilih Form Input Manual Detail:
         </h3>
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 w-full">
           
           <!-- Kartu 1: RAB Conven -->
           <a href="conven.html" class="group bg-white border border-crm-border rounded-xl p-6 hover:border-crm-active hover:shadow-md transition-all duration-200 flex flex-col justify-between">
@@ -259,8 +203,8 @@
         </div>
       </div>
 
-      <!-- Quick Action: Riwayat RAB Banner Link -->
-      <a href="riwayat.html" class="group block bg-white border border-crm-border rounded-xl p-6 hover:shadow-md transition-all duration-200">
+      <!-- BANNER RIWAYAT DOKUMEN (Full Width) -->
+      <a href="riwayat.html" class="group block w-full bg-white border border-crm-border rounded-xl p-6 hover:shadow-md transition-all duration-200">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div class="flex items-center gap-4">
             <div class="w-12 h-12 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0">
@@ -282,13 +226,13 @@
         </div>
       </a>
 
-      <!-- Daily Reminder Section -->
-      <section class="bg-white border border-crm-border rounded-xl p-6 shadow-xs relative overflow-hidden">
+      <!-- PENGINGAT HARI INI (Full Width) -->
+      <section class="w-full bg-white border border-crm-border rounded-xl p-6 shadow-xs relative overflow-hidden">
         <div class="flex items-start gap-4 relative z-10">
           <span class="material-symbols-outlined text-crm-active text-3xl opacity-80 shrink-0">format_quote</span>
           <div>
             <h4 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Pengingat Hari Ini</h4>
-            <p class="text-sm md:text-base italic font-medium text-slate-800 leading-relaxed mb-3">
+            <p class="text-sm md:text-base italic font-medium text-slate-800 leading-relaxed mb-2">
               "Satu-satunya batasanmu adalah pikiranmu. Jika pikiranmu mengatakan kamu bisa, kamu pasti akan bisa."
             </p>
             <p class="text-xs font-semibold text-crm-active">
@@ -300,7 +244,6 @@
 
     </div>
   </main>
-</div>
 
 </body>
 </html>
