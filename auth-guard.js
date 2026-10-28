@@ -154,6 +154,10 @@
       if (!href) return;
 
       var pageName = href.split('/').pop().split('?')[0].split('#')[0];
+      if (pageName && pageName.indexOf('.html') === -1 && pageName !== '') {
+        pageName += '.html';
+      }
+
       var allowed = PAGE_ACCESS[pageName];
 
       if (allowed && allowed.indexOf(session.role) === -1) {
@@ -161,12 +165,13 @@
       }
     });
 
-    // Alihkan link logo brand ke halaman utama role masing-masing (Smart RAB untuk smart_rab_only)
-    var brandLink = document.querySelector('aside a[href="dashboard.html"]');
-    if (brandLink && session.role !== 'admin') {
-      brandLink.setAttribute('href', homeFor(session.role));
+    var brandLinks = document.querySelectorAll('aside a[href*="dashboard"]');
+    brandLinks.forEach(function (brandLink) {
       brandLink.style.display = '';
-    }
+      if (session.role !== 'admin') {
+        brandLink.setAttribute('href', homeFor(session.role));
+      }
+    });
   }
 
   function boot() {
