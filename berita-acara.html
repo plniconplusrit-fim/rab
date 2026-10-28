@@ -152,7 +152,7 @@
           </div>
         </div>
         <div class="flex items-center gap-2">
-          <select id="selectDataSheet" onchange="loadDataSelectedSheet(this.value)" class="bg-white border border-slate-300 rounded-lg p-2 text-xs font-semibold text-slate-800 focus:ring-1 focus:ring-crm-active min-w-[240px]">
+          <select id="selectDataSheet" onchange="loadDataSelectedSheet(this.value)" class="bg-white border border-slate-300 rounded-lg p-2 text-xs font-semibold text-slate-800 focus:ring-1 focus:ring-crm-active min-w-[260px]">
             <option value="">-- Memuat data sheet... --</option>
           </select>
           <button onclick="fetchSheetListData()" class="bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 px-3 py-2 rounded-lg text-xs font-medium inline-flex items-center gap-1">
@@ -163,57 +163,82 @@
 
       <!-- Form Edit Manual -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        
+        <!-- Kalender Pick Date -->
         <div>
           <label class="block text-xs font-semibold text-slate-600 mb-1">Hari & Tanggal Pekerjaan:</label>
-          <input type="text" id="inTglTerbilang" value="Jumat , Tanggal Sembilan Januari Tahun Dua Ribu Dua Puluh Enam" oninput="updateBA()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800"/>
+          <input type="date" id="inTglPicker" onchange="onDatePickerChange(this.value)" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-xs font-semibold text-slate-800 focus:ring-1 focus:ring-crm-active cursor-pointer"/>
         </div>
+
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Layanan:</label>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Layanan (SERVICE):</label>
           <input type="text" id="inLayanan" value="METRONET" oninput="updateBA()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800"/>
         </div>
+
         <div>
           <label class="block text-xs font-semibold text-slate-600 mb-1">Service ID (SID):</label>
           <input type="text" id="inServiceID" value="411202000703" oninput="updateBA()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800 font-mono"/>
         </div>
+
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Pelanggan:</label>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Pelanggan (PELANGGAN):</label>
           <input type="text" id="inPelanggan" value="PT CITRA PRIMA MEDIA" oninput="updateBA()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800 font-bold"/>
         </div>
+
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">No Sales Order / ID PA:</label>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">No Sales Order (ID_PA):</label>
           <input type="text" id="inNoSO" value="A411202000728" oninput="updateBA()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800 font-mono"/>
         </div>
+
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">Bandwidth & Interface:</label>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Bandwidth (BANDWITH) & Interface:</label>
           <div class="flex gap-2">
             <input type="text" id="inBw" value="650Mbps" oninput="updateBA()" class="w-1/2 bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800"/>
             <input type="text" id="inInterface" value="Ethernet" oninput="updateBA()" class="w-1/2 bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800"/>
           </div>
         </div>
+
         <div class="md:col-span-3">
-          <label class="block text-xs font-semibold text-slate-600 mb-1">Originating (Alamat Asal/CPE):</label>
-          <input type="text" id="inOriginating" value="JL. A. P. PETTARANI NO.7, MASALE, KEC. PANAKKUKANG, KOTA MAKASSAR, SULAWESI SELATAN 90231" oninput="updateBA()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800"/>
-        </div>
-        <div class="md:col-span-3">
-          <label class="block text-xs font-semibold text-slate-600 mb-1">Terminating (Alamat Tujuan):</label>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Terminating (TERMINATING):</label>
           <input type="text" id="inTerminating" value="CQQF+32Q JUPPANDANG, KABUPATEN ENREKANG, SULAWESI SELATAN" oninput="updateBA()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800"/>
         </div>
+
+        <!-- POP Manual Fill -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Alamat / Lokasi POP (Manual):</label>
+          <input type="text" id="inPop" value="ULP ENREKANG" oninput="updateBA()" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-xs text-slate-800"/>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Koordinat POP (Manual):</label>
+          <input type="text" id="inKoorPop" value="EXISTING" oninput="updateBA()" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-xs text-slate-800"/>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Perangkat POP (Manual):</label>
+          <input type="text" id="inPerangkatPop" value="RIT-RAYON.ENREKANG-ZYXEL.MGS3520-CPE-01 PORT 14" oninput="updateBA()" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-xs font-mono text-slate-800"/>
+        </div>
+
         <div class="md:col-span-3">
           <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Perangkat & SFP (Satu Per Baris):</label>
           <textarea id="inPerangkat" rows="3" oninput="updateBA()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800 font-mono">SWCH,ISCOM S2600-8T4S-AC,,RAISECOM | 1500A24C12A0219G&#10;SWCH,SFP-BIDI 1.25G,1310nm,40KM,,ZTT | OKF90902349&#10;SWCH,SFP-BIDI 1.25G,1550nm,40KM,,ZTT | OKF90903972</textarea>
         </div>
+
         <div>
           <label class="block text-xs font-semibold text-slate-600 mb-1">Wakil Pelanggan (Nama):</label>
-          <input type="text" id="inWakilNama" value="          " oninput="updateBA()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800"/>
+          <input type="text" id="inWakilNama" value="A M Zulkarnaen Eka Putra" oninput="updateBA()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800"/>
         </div>
+
         <div>
           <label class="block text-xs font-semibold text-slate-600 mb-1">Wakil Pelanggan (Jabatan):</label>
-          <input type="text" id="inWakilJabatan" value="          " oninput="updateBA()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800"/>
+          <input type="text" id="inWakilJabatan" value="Direktur" oninput="updateBA()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800"/>
         </div>
+
         <div>
           <label class="block text-xs font-semibold text-slate-600 mb-1">Project Manager PLN Icon Plus:</label>
           <input type="text" id="inPmName" value="Fadhil Ilham" oninput="updateBA()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800"/>
         </div>
+
       </div>
     </div>
 
@@ -264,11 +289,6 @@
             <td class="py-1 font-semibold">Bandwidth</td>
             <td class="py-1 text-center">:</td>
             <td class="py-1 font-semibold" id="outBw">650Mbps</td>
-          </tr>
-          <tr>
-            <td class="py-1 font-semibold align-top">Originating</td>
-            <td class="py-1 text-center align-top">:</td>
-            <td class="py-1 uppercase" id="outOriginating">JL. A. P. PETTARANI NO.7, MASALE, KEC. PANAKKUKANG, KOTA MAKASSAR, SULAWESI SELATAN 90231</td>
           </tr>
           <tr>
             <td class="py-1 font-semibold align-top">Terminating</td>
@@ -337,21 +357,15 @@
         Demikian Berita Acara ini dibuat dalam rangkap 2 (dua) asli, yang sama bunyinya dan mempunyai kekuatan Hukum yang sama setelah ditandatangi kedua belah pihak.
       </p>
 
-      <!-- Tanda Tangan -->
+      <!-- Tanda Tangan (PLN ICON PLUS CLEAN / TANPA WATERMARK) -->
       <div class="grid grid-cols-2 text-center text-xs font-bold pt-4">
         <div>
-          <p class="mb-20 uppercase" id="outPelangganTTD">PT CITRA PRIMA MEDIA</p>
-          <p>( <span id="outWakilNamaTTD">A M Zulkarnaen Eka Putra</span> )</p>
+          <p class="mb-24 uppercase" id="outPelangganTTD">PT CITRA PRIMA MEDIA</p>
+          <p>( <span id="outWakilNamaTTD">A M Zulkarnaen Eka Putr</span> )</p>
         </div>
         <div>
-          <p class="mb-12">PLN ICON PLUS</p>
-          <!-- Stempel & Tanda Tangan Digital -->
-          <div class="flex justify-center -my-8 relative">
-            <div class="w-32 h-20 border-2 border-blue-700 text-blue-700 rounded-full flex items-center justify-center text-[10px] font-black transform -rotate-12 opacity-80">
-              PT INDONESIA COMNETS PLUS
-            </div>
-          </div>
-          <p class="mt-8">( <span id="outPmNameTTD">Fadhil Ilham</span> )</p>
+          <p class="mb-24">PLN ICON PLUS</p>
+          <p>( <span id="outPmNameTTD">Fadhil Ilham</span> )</p>
         </div>
       </div>
 
@@ -359,14 +373,47 @@
   </main>
 </div>
 
-<!-- LOGIKA KONEKSI GOOGLE SHEETS & AUTOFILL REALTIME -->
+<!-- LOGIKA KONEKSI GOOGLE SHEETS & TANGGAL TERBILANG AUTOMATION -->
 <script>
-  // 1. URL Web App Apps Script milik Anda
-  const GAS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzbYtKsqtQvhjJVpVQ3doy0VCrjgVP4_JKq6CTNbDdSN1xSs3lArA9OiEV4u2pwR0pJJQ/exec";
+  const GAS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxhcvWu9rQ2Fu8RCBzGLUJ3r22b3E3owWM8SOzjqsoJL5zMvuQhBzb6MzATZf2I7C-DIA/exec";
 
   let listDataAktivasi = [];
+  let tglTerbilangText = "Jumat , Tanggal Sembilan Januari Tahun Dua Ribu Dua Puluh Enam";
 
-  // 2. Ambil data dari Google Sheets saat halaman dimuat
+  // Helper: Angka ke Kalimat Terbilang
+  function angkaKeTerbilang(n) {
+    const satuan = ["", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas"];
+    if (n < 12) return satuan[n];
+    if (n < 20) return angkaKeTerbilang(n - 10) + " Belas";
+    if (n < 100) return angkaKeTerbilang(Math.floor(n / 10)) + " Puluh " + satuan[n % 10];
+    if (n < 200) return "Seribu " + angkaKeTerbilang(n - 100);
+    if (n < 1000) return angkaKeTerbilang(Math.floor(n / 100)) + " Ratus " + angkaKeTerbilang(n % 100);
+    if (n < 2000) return "Dua Ribu " + angkaKeTerbilang(n - 1000);
+    if (n < 10000) return angkaKeTerbilang(Math.floor(n / 1000)) + " Ribu " + angkaKeTerbilang(n % 1000);
+    return n.toString();
+  }
+
+  // Helper: Format Tanggal DatePicker ke Terbilang
+  function formatTanggalTerbilang(dateStr) {
+    if (!dateStr) return "";
+    const dt = new Date(dateStr + "T00:00:00");
+    const namaHari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"][dt.getDay()];
+    const namaBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"][dt.getMonth()];
+    
+    const tglWords = angkaKeTerbilang(dt.getDate()).trim();
+    const thnWords = angkaKeTerbilang(dt.getFullYear()).trim();
+
+    return `${namaHari} , Tanggal ${tglWords} ${namaBulan} Tahun ${thnWords}`;
+  }
+
+  function onDatePickerChange(val) {
+    if (val) {
+      tglTerbilangText = formatTanggalTerbilang(val);
+      updateBA();
+    }
+  }
+
+  // 1. Ambil data dari Google Sheets saat halaman dimuat
   async function fetchSheetListData() {
     const selectEl = document.getElementById("selectDataSheet");
     selectEl.innerHTML = `<option value="">⏳ Sync data Google Sheets...</option>`;
@@ -380,8 +427,8 @@
 
       if (Array.isArray(data) && data.length > 0) {
         data.forEach((item, index) => {
-          const idPa = item["ID_PA"] || item["ID PA"] || item["NO_SO"] || item["No SO"] || `ROW-${index + 1}`;
-          const namaPelanggan = item["NAMA_PELANGGAN"] || item["Nama Pelanggan"] || "Pelanggan";
+          const idPa = item["ID_PA"] || item["ID PA"] || item["NO_SO"] || `ROW-${index + 1}`;
+          const namaPelanggan = item["PELANGGAN"] || item["Nama Pelanggan"] || "Pelanggan";
           selectEl.innerHTML += `<option value="${index}">${idPa} - ${namaPelanggan}</option>`;
         });
       } else {
@@ -393,44 +440,51 @@
     }
   }
 
-  // 3. Auto-fill form berdasarkan pilihan baris sheet
+  // 2. Auto-fill form berdasarkan pilihan baris sheet
   function loadDataSelectedSheet(index) {
     if (index === "" || !listDataAktivasi[index]) return;
 
     const row = listDataAktivasi[index];
 
-    // Pemetaan header kolom Google Sheets ke Input Form
-    if (row["NAMA_LAYANAN"] || row["Layanan"]) {
-      document.getElementById("inLayanan").value = row["NAMA_LAYANAN"] || row["Layanan"];
+    // Pemetaan Header Sesuai Struktur Sheet
+    if (row["SERVICE"] || row["SERVICE_NAME"]) {
+      document.getElementById("inLayanan").value = row["SERVICE"] || row["SERVICE_NAME"];
     }
-    if (row["SERVICE_ID"] || row["SID"] || row["Service ID"]) {
-      document.getElementById("inServiceID").value = row["SERVICE_ID"] || row["SID"] || row["Service ID"];
+    if (row["SID"] || row["SERVICE_ID"]) {
+      document.getElementById("inServiceID").value = row["SID"] || row["SERVICE_ID"];
     }
-    if (row["NAMA_PELANGGAN"] || row["Nama Pelanggan"]) {
-      document.getElementById("inPelanggan").value = row["NAMA_PELANGGAN"] || row["Nama Pelanggan"];
+    if (row["PELANGGAN"] || row["NAMA_PELANGGAN"]) {
+      document.getElementById("inPelanggan").value = row["PELANGGAN"] || row["NAMA_PELANGGAN"];
     }
-    if (row["BANDWIDTH"] || row["Bandwidth"]) {
-      document.getElementById("inBw").value = row["BANDWIDTH"] || row["Bandwidth"];
+    if (row["ID_PA"] || row["NO_SO"]) {
+      document.getElementById("inNoSO").value = row["ID_PA"] || row["NO_SO"];
     }
-    if (row["NO_SO"] || row["No SO"] || row["ID_PA"] || row["ID PA"]) {
-      document.getElementById("inNoSO").value = row["NO_SO"] || row["No SO"] || row["ID_PA"] || row["ID PA"];
+    if (row["TERMINATING"] || row["ALAMAT_TERMINATING"]) {
+      document.getElementById("inTerminating").value = row["TERMINATING"] || row["ALAMAT_TERMINATING"];
     }
-    if (row["ORIGINATING"] || row["Originating"]) {
-      document.getElementById("inOriginating").value = row["ORIGINATING"] || row["Originating"];
+
+    // Ekstraksi Bandwidth: Ambil nilai baris pertama / setelah titik dua (:)
+    let rawBw = row["BANDWITH"] || row["BANDWIDTH"] || "";
+    if (rawBw.includes(":")) {
+      rawBw = rawBw.split(":")[1].trim();
     }
-    if (row["TERMINATING"] || row["Terminating"]) {
-      document.getElementById("inTerminating").value = row["TERMINATING"] || row["Terminating"];
+    if (rawBw.includes("\n")) {
+      rawBw = rawBw.split("\n")[0].trim();
     }
-    if (row["PERANGKAT"] || row["Perangkat"]) {
-      document.getElementById("inPerangkat").value = row["PERANGKAT"] || row["Perangkat"];
+    if (rawBw) {
+      document.getElementById("inBw").value = rawBw;
+    }
+
+    if (row["PERANGKAT"]) {
+      document.getElementById("inPerangkat").value = row["PERANGKAT"];
     }
 
     updateBA();
   }
 
-  // 4. Update tampilan preview cetak Berita Acara secara realtime
+  // 3. Update tampilan preview cetak Berita Acara secara realtime
   function updateBA() {
-    document.getElementById("outTglTerbilang").innerText = document.getElementById("inTglTerbilang").value;
+    document.getElementById("outTglTerbilang").innerText = tglTerbilangText;
     document.getElementById("outLayanan1").innerText = document.getElementById("inLayanan").value;
     document.getElementById("outLayanan2").innerText = document.getElementById("inLayanan").value;
     document.getElementById("outPelanggan1").innerText = document.getElementById("inPelanggan").value;
@@ -440,8 +494,10 @@
     document.getElementById("outInterface").innerText = document.getElementById("inInterface").value;
     document.getElementById("outBw").innerText = document.getElementById("inBw").value;
     document.getElementById("outNoSO").innerText = document.getElementById("inNoSO").value;
-    document.getElementById("outOriginating").innerText = document.getElementById("inOriginating").value;
     document.getElementById("outTerminating").innerText = document.getElementById("inTerminating").value;
+    document.getElementById("outPop").innerText = document.getElementById("inPop").value;
+    document.getElementById("outKoorPop").innerText = document.getElementById("inKoorPop").value;
+    document.getElementById("outPerangkatPop").innerText = document.getElementById("inPerangkatPop").value;
     document.getElementById("outPerangkat").innerText = document.getElementById("inPerangkat").value;
     document.getElementById("outWakilNama").innerText = document.getElementById("inWakilNama").value;
     document.getElementById("outWakilNamaTTD").innerText = document.getElementById("inWakilNama").value;
@@ -450,7 +506,7 @@
     document.getElementById("outPmNameTTD").innerText = document.getElementById("inPmName").value;
   }
 
-  // 5. Ekspor ke format PDF
+  // 4. Ekspor ke format PDF
   function downloadBAIPDF() {
     document.body.classList.add("exporting-pdf");
     const element = document.getElementById("areaCetakDokumen");
@@ -467,6 +523,11 @@
   }
 
   window.addEventListener("DOMContentLoaded", () => {
+    // Set default datepicker ke hari ini
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById("inTglPicker").value = today;
+    tglTerbilangText = formatTanggalTerbilang(today);
+    
     fetchSheetListData();
   });
 </script>
