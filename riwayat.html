@@ -23,7 +23,7 @@
           },
           colors: {
             crm: {
-              active: '#1e4a42',       // Warna hijau gelap persis dari screenshot
+              active: '#1e4a42',       // Hijau gelap khas iCRM
               activeHover: '#163b35',
               blue: '#00529b',         // Biru logo iCRM
               textMuted: '#52606d',    // Warna teks menu inaktif
@@ -52,7 +52,7 @@
 
 <div class="flex min-h-screen">
 
-  <!-- SideNavBar (Tema Putih Bersih dengan Aksen Hijau Gelap iCRM) -->
+  <!-- SideNavBar -->
   <aside class="hidden md:flex fixed h-screen left-0 top-0 w-64 bg-white flex-col border-r border-crm-border z-40">
     
     <!-- Logo Brand Section -->
@@ -71,17 +71,30 @@
 
     <!-- Navigation Menu Items -->
     <nav class="flex-1 px-3 py-4 space-y-1.5 overflow-y-auto">
-      
-      <!-- Inactive Item: CONVEN -->
-      <a href="conven.html" class="flex items-center justify-between text-crm-textMuted hover:text-slate-900 hover:bg-slate-100/80 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-all group">
+      <a href="dashboard.html" class="flex items-center justify-between text-crm-textMuted hover:text-slate-900 hover:bg-slate-100/80 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-all group">
         <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-slate-800">cable</span>
-          <span>CONVEN</span>
+          <span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-slate-800">home</span>
+          <span>Dashboard</span>
         </div>
         <span class="material-symbols-outlined text-[18px] text-slate-400 group-hover:translate-x-0.5 transition-transform">chevron_right</span>
       </a>
 
-      <!-- Inactive Item: FTTH -->
+      <a href="smart-rab.html" class="flex items-center justify-between text-crm-textMuted hover:text-slate-900 hover:bg-slate-100/80 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-all group">
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-slate-800">auto_awesome</span>
+          <span>Smart RAB (Otomatis)</span>
+        </div>
+        <span class="material-symbols-outlined text-[18px] text-slate-400 group-hover:translate-x-0.5 transition-transform">chevron_right</span>
+      </a>
+
+      <a href="conven.html" class="flex items-center justify-between text-crm-textMuted hover:text-slate-900 hover:bg-slate-100/80 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-all group">
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-slate-800">cable</span>
+          <span>Conven</span>
+        </div>
+        <span class="material-symbols-outlined text-[18px] text-slate-400 group-hover:translate-x-0.5 transition-transform">chevron_right</span>
+      </a>
+
       <a href="ftth.html" class="flex items-center justify-between text-crm-textMuted hover:text-slate-900 hover:bg-slate-100/80 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-all group">
         <div class="flex items-center gap-3">
           <span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-slate-800">router</span>
@@ -90,16 +103,14 @@
         <span class="material-symbols-outlined text-[18px] text-slate-400 group-hover:translate-x-0.5 transition-transform">chevron_right</span>
       </a>
 
-      <!-- Inactive Item: FTTH X CONVEN -->
       <a href="ftthxconven.html" class="flex items-center justify-between text-crm-textMuted hover:text-slate-900 hover:bg-slate-100/80 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-all group">
         <div class="flex items-center gap-3">
           <span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-slate-800">hub</span>
-          <span>FTTH X CONVEN</span>
+          <span>FTTH X Conven</span>
         </div>
         <span class="material-symbols-outlined text-[18px] text-slate-400 group-hover:translate-x-0.5 transition-transform">chevron_right</span>
       </a>
 
-      <!-- ACTIVE Item: RIWAYAT RAB (Model Tombol Hijau Gelap Sesuai Gambar) -->
       <a href="riwayat.html" class="flex items-center justify-between bg-crm-active text-white rounded-lg px-3.5 py-2.5 text-sm font-medium shadow-sm transition-all">
         <div class="flex items-center gap-3">
           <span class="material-symbols-outlined text-[20px] text-white">history</span>
@@ -253,7 +264,6 @@
     return String(tglStr).split("T")[0];
   }
 
-  // Deteksi Link Google Drive
   function temukanLinkDrive(item) {
     for (let key in item) {
       const val = String(item[key] || "").trim();
@@ -275,7 +285,6 @@
     return null;
   }
 
-  // Normalisasi Tipe RAB
   function normalisasiTipe(strRaw) {
     if (!strRaw) return "";
     const s = String(strRaw).toUpperCase();
@@ -290,9 +299,7 @@
     return "";
   }
 
-  // Deteksi Tipe RAB
   function temukanTipeRab(item) {
-    // 1. Cek kolom bertipe 'tipe', 'jenis', atau 'kategori'
     for (let key in item) {
       const k = key.toLowerCase();
       if (k.includes("tipe") || k.includes("jenis") || k.includes("kategori")) {
@@ -301,7 +308,6 @@
       }
     }
 
-    // 2. Fallback periksa seluruh baris teks
     for (let key in item) {
       const hasil = normalisasiTipe(item[key]);
       if (hasil) return hasil;
