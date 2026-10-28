@@ -26,7 +26,7 @@
           },
           colors: {
             crm: {
-              active: '#1e4a42',       // Hijau gelap khas iCRM (dari screenshot)
+              active: '#1e4a42',       // Hijau gelap khas iCRM
               activeHover: '#163b35',
               blue: '#00529b',         // Biru logo iCRM
               textMuted: '#52606d',    // Warna teks menu inaktif
@@ -157,7 +157,7 @@
 
 <div class="flex min-h-screen">
   
-  <!-- SideNavBar (Tema Putih Bersih dengan Aksen Hijau Gelap iCRM) -->
+  <!-- SideNavBar -->
   <aside class="no-print hidden md:flex fixed h-screen left-0 top-0 w-64 bg-white flex-col border-r border-crm-border z-40">
     
     <!-- Logo Brand Section -->
@@ -176,8 +176,6 @@
 
     <!-- Navigation Menu Items -->
     <nav class="flex-1 px-3 py-4 space-y-1.5 overflow-y-auto">
-      
-      <!-- Inactive: Dashboard -->
       <a href="dashboard.html" class="flex items-center justify-between text-crm-textMuted hover:text-slate-900 hover:bg-slate-100/80 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-all group">
         <div class="flex items-center gap-3">
           <span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-slate-800">home</span>
@@ -186,7 +184,14 @@
         <span class="material-symbols-outlined text-[18px] text-slate-400 group-hover:translate-x-0.5 transition-transform">chevron_right</span>
       </a>
 
-      <!-- Inactive: CONVEN -->
+      <a href="smart-rab.html" class="flex items-center justify-between text-crm-textMuted hover:text-slate-900 hover:bg-slate-100/80 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-all group">
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-slate-800">auto_awesome</span>
+          <span>Smart RAB (Otomatis)</span>
+        </div>
+        <span class="material-symbols-outlined text-[18px] text-slate-400 group-hover:translate-x-0.5 transition-transform">chevron_right</span>
+      </a>
+
       <a href="conven.html" class="flex items-center justify-between text-crm-textMuted hover:text-slate-900 hover:bg-slate-100/80 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-all group">
         <div class="flex items-center gap-3">
           <span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-slate-800">cable</span>
@@ -195,7 +200,6 @@
         <span class="material-symbols-outlined text-[18px] text-slate-400 group-hover:translate-x-0.5 transition-transform">chevron_right</span>
       </a>
 
-      <!-- Inactive: FTTH -->
       <a href="ftth.html" class="flex items-center justify-between text-crm-textMuted hover:text-slate-900 hover:bg-slate-100/80 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-all group">
         <div class="flex items-center gap-3">
           <span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-slate-800">router</span>
@@ -204,7 +208,6 @@
         <span class="material-symbols-outlined text-[18px] text-slate-400 group-hover:translate-x-0.5 transition-transform">chevron_right</span>
       </a>
 
-      <!-- ACTIVE Item: FTTH X CONVEN (Sesuai Tombol Hijau Screenshot) -->
       <a href="ftthxconven.html" class="flex items-center justify-between bg-crm-active text-white rounded-lg px-3.5 py-2.5 text-sm font-medium shadow-sm transition-all">
         <div class="flex items-center gap-3">
           <span class="material-symbols-outlined text-[20px] text-white">hub</span>
@@ -212,7 +215,6 @@
         </div>
       </a>
 
-      <!-- Inactive: RIWAYAT RAB -->
       <a href="riwayat.html" class="flex items-center justify-between text-crm-textMuted hover:text-slate-900 hover:bg-slate-100/80 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-all group">
         <div class="flex items-center gap-3">
           <span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-slate-800">history</span>
@@ -265,7 +267,7 @@
       </div>
     </div>
 
-    <!-- Print Only Header (Header Resmi di dalam Dokumen PDF) -->
+    <!-- Print Only Header -->
     <div class="hidden print-only mb-6 text-center border-b-2 border-slate-900 pb-4">
       <h1 class="text-2xl font-bold uppercase text-slate-900" id="print-title">RAB AKTIVASI VIA FTTHXCONVEN</h1>
       <p class="uppercase font-semibold text-slate-600 tracking-widest text-xs mt-1" id="print-subtitle">Technical Activation Cost Estimation</p>
@@ -575,13 +577,9 @@
         document.getElementById('grand-total').innerText = formatIDR(subTotalInstall + subTotalHardware);
     }
 
-    // Initial calculation based on default value
     applyFormulas(600);
     renderTables();
 
-    // =========================================================================
-    // FUNGSI SIMPAN KE GOOGLE DRIVE & RIWAYAT ONLINE
-    // =========================================================================
     const GAS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxhcvWu9rQ2Fu8RCBzGLUJ3r22b3E3owWM8SOzjqsoJL5zMvuQhBzb6MzATZf2I7C-DIA/exec";
 
     async function simpanRAB(tipe) {
