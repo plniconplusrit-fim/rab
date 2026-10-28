@@ -148,7 +148,8 @@
   function filterSidebarMenu(session) {
     if (!session || !session.role) return;
 
-    var links = document.querySelectorAll('aside nav a[href]');
+    // Menggunakan 'aside a[href]' agar semua tautan di sidebar terpindai
+    var links = document.querySelectorAll('aside a[href]');
     links.forEach(function (link) {
       var href = link.getAttribute('href');
       if (!href) return;
@@ -198,4 +199,17 @@
     }
 
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded
+      document.addEventListener('DOMContentLoaded', paint);
+    } else {
+      paint();
+    }
+  }
+
+  /* Helper global untuk dipakai halaman lain bila perlu */
+  window.rabitLogout  = logout;
+  window.rabitSession = readSession;
+
+  /* Pengecekan akses dijalankan SINKRON di <head>, sebelum body dirender.
+     Ini mencegah konten terproteksi sempat tampil sebelum redirect. */
+  boot();
+})();
