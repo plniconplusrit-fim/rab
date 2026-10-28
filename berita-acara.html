@@ -45,17 +45,17 @@
     .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 350, 'GRAD' 0, 'opsz' 22; vertical-align: middle; }
     
     @media print {
-      @page { size: A4; margin: 15mm; }
+      @page { size: A4; margin: 10mm; }
       .no-print { display: none !important; }
-      body { background: white !important; margin: 0; padding: 0; color: #000; font-size: 11pt; }
+      body { background: white !important; margin: 0; padding: 0; color: #000; font-size: 10.5pt; }
       .print-only { display: block !important; }
       .content-canvas { margin: 0 !important; padding: 0 !important; width: 100% !important; max-width: 100% !important; }
       table { width: 100% !important; border-collapse: collapse !important; }
-      td, th { padding: 4px 6px !important; color: #000 !important; }
+      td, th { padding: 3px 5px !important; color: #000 !important; }
     }
 
     body.exporting-pdf aside, body.exporting-pdf .no-print { display: none !important; }
-    body.exporting-pdf main { margin: 0 !important; padding: 10px !important; width: 100% !important; max-width: 100% !important; }
+    body.exporting-pdf main { margin: 0 !important; padding: 0 !important; width: 100% !important; max-width: 100% !important; }
     body.exporting-pdf .print-only { display: block !important; }
   </style>
   <script src="auth-guard.js"></script>
@@ -206,7 +206,7 @@
         <!-- POP Manual Fill -->
         <div>
           <label class="block text-xs font-semibold text-slate-600 mb-1">Alamat / Lokasi POP (Manual):</label>
-          <input type="text" id="inPop" value="" oninput="updateBA()" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-xs text-slate-800"/>
+          <input type="text" id="inPop" value="ULP ENREKANG" oninput="updateBA()" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-xs text-slate-800"/>
         </div>
 
         <div>
@@ -216,7 +216,7 @@
 
         <div>
           <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Perangkat POP (Manual):</label>
-          <input type="text" id="inPerangkatPop" value="" oninput="updateBA()" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-xs font-mono text-slate-800"/>
+          <input type="text" id="inPerangkatPop" value="RIT-RAYON.ENREKANG-ZYXEL.MGS3520-CPE-01 PORT 14" oninput="updateBA()" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-xs font-mono text-slate-800"/>
         </div>
 
         <div class="md:col-span-3">
@@ -226,117 +226,109 @@
 
         <div>
           <label class="block text-xs font-semibold text-slate-600 mb-1">Wakil Pelanggan (Nama):</label>
-          <input type="text" id="inWakilNama" value="" oninput="updateBA()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800"/>
+          <input type="text" id="inWakilNama" value="A M Zulkarnaen Eka Putra" oninput="updateBA()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800"/>
         </div>
 
         <div>
           <label class="block text-xs font-semibold text-slate-600 mb-1">Wakil Pelanggan (Jabatan):</label>
-          <input type="text" id="inWakilJabatan" value="" oninput="updateBA()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800"/>
-        </div>
-
-        <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">Project Manager PLN Icon Plus:</label>
-          <input type="text" id="inPmName" value="Fadhil Ilham" oninput="updateBA()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800"/>
+          <input type="text" id="inWakilJabatan" value="Direktur" oninput="updateBA()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800"/>
         </div>
 
       </div>
     </div>
 
-    <!-- PREVIEW DOKUMEN BERITA ACARA -->
-    <div id="areaCetakDokumen" class="bg-white p-8 md:p-12 rounded-xl border border-crm-border shadow-md text-slate-900 leading-relaxed text-[13px]">
+    <!-- PREVIEW DOKUMEN BERITA ACARA (TANPA BINGKAI & DIPRESISIKAN UNTUK 1 HALAMAN) -->
+    <div id="areaCetakDokumen" class="bg-white pt-6 px-6 pb-4 text-slate-900 leading-relaxed text-[12px]">
       
-   <!-- Kop Logo Header -->
-<div class="flex flex-col items-center justify-center text-center border-b pb-4 mb-6">
-  <!-- Gambar Logo Asli PLN Icon Plus dari Folder aset (Tengah) -->
-  <img src="aset/logo_iconplus.png" alt="Logo PLN Icon Plus" class="h-14 w-auto object-contain mb-3">
-  
-  <!-- Judul Berita Acara (Tengah Di Bawah Logo) -->
-  <div>
-    <h2 class="text-base font-bold uppercase tracking-wide text-slate-900">Berita Acara Instalasi - Aktivasi</h2>
-    <p class="text-xs font-semibold text-slate-600 mt-0.5">(BAI – BAA)</p>
-  </div>
-</div>
+      <!-- Kop Logo Header (Tengah dengan Margin Atas yang Pas) -->
+      <div class="flex flex-col items-center justify-center text-center border-b border-slate-300 pb-3 mb-4">
+        <img src="aset/logo_iconplus.png" alt="Logo PLN Icon Plus" class="h-12 w-auto object-contain mb-2">
+        <div>
+          <h2 class="text-sm font-bold uppercase tracking-wide text-slate-900">Berita Acara Instalasi - Aktivasi</h2>
+          <p class="text-[11px] font-semibold text-slate-600 mt-0.5">(BAI – BAA)</p>
+        </div>
+      </div>
 
       <!-- Pembuka -->
-      <p class="mb-4">
+      <p class="mb-3 text-[12px]">
         Pada Hari <span id="outTglTerbilang" class="font-medium">Jumat , Tanggal Sembilan Januari Tahun Dua Ribu Dua Puluh Enam</span> telah dilakukan pekerjaan Aktivasi Layanan <strong id="outLayanan1">METRONET</strong> yang disewa oleh <strong id="outPelanggan1">PT CITRA PRIMA MEDIA</strong> Dengan hasil <strong>BAIK</strong>, adapun spesifikasi sebagai berikut :
       </p>
 
       <!-- Tabel Spesifikasi -->
-      <table class="w-full mb-6 border-collapse">
+      <table class="w-full mb-4 border-collapse text-[12px]">
         <tbody>
           <tr>
-            <td class="py-1 w-44 font-semibold">Nama Layanan</td>
-            <td class="py-1 w-4 text-center">:</td>
-            <td class="py-1" id="outLayanan2">METRONET</td>
+            <td class="py-0.5 w-40 font-semibold">Nama Layanan</td>
+            <td class="py-0.5 w-4 text-center">:</td>
+            <td class="py-0.5" id="outLayanan2">METRONET</td>
           </tr>
           <tr>
-            <td class="py-1 font-semibold">Service ID</td>
-            <td class="py-1 text-center">:</td>
-            <td class="py-1 font-mono" id="outServiceID">411202000703</td>
+            <td class="py-0.5 font-semibold">Service ID</td>
+            <td class="py-0.5 text-center">:</td>
+            <td class="py-0.5 font-mono" id="outServiceID">411202000703</td>
           </tr>
           <tr>
-            <td class="py-1 font-semibold">Interface</td>
-            <td class="py-1 text-center">:</td>
-            <td class="py-1" id="outInterface">Ethernet</td>
+            <td class="py-0.5 font-semibold">Interface</td>
+            <td class="py-0.5 text-center">:</td>
+            <td class="py-0.5" id="outInterface">Ethernet</td>
           </tr>
           <tr>
-            <td class="py-1 font-semibold">Bandwidth</td>
-            <td class="py-1 text-center">:</td>
-            <td class="py-1 font-semibold" id="outBw">650Mbps</td>
+            <td class="py-0.5 font-semibold">Bandwidth</td>
+            <td class="py-0.5 text-center">:</td>
+            <td class="py-0.5 font-semibold" id="outBw">650Mbps</td>
           </tr>
           <tr>
-            <td class="py-1 font-semibold align-top">Terminating</td>
-            <td class="py-1 text-center align-top">:</td>
-            <td class="py-1 uppercase" id="outTerminating">CQQF+32Q JUPPANDANG, KABUPATEN ENREKANG, SULAWESI SELATAN</td>
+            <td class="py-0.5 font-semibold align-top">Terminating</td>
+            <td class="py-0.5 text-center align-top">:</td>
+            <td class="py-0.5 uppercase" id="outTerminating">CQQF+32Q JUPPANDANG, KABUPATEN ENREKANG, SULAWESI SELATAN</td>
           </tr>
           <tr>
-            <td class="py-1 font-semibold">No Sales Order</td>
-            <td class="py-1 text-center">:</td>
-            <td class="py-1 font-mono" id="outNoSO">A411202000728</td>
+            <td class="py-0.5 font-semibold">No Sales Order</td>
+            <td class="py-0.5 text-center">:</td>
+            <td class="py-0.5 font-mono" id="outNoSO">A411202000728</td>
           </tr>
           <tr>
-            <td class="py-1 font-semibold">No Berita Acara</td>
-            <td class="py-1 text-center">:</td>
-            <td class="py-1 font-mono" id="outNoBA">-</td>
+            <td class="py-0.5 font-semibold">No Berita Acara</td>
+            <td class="py-0.5 text-center">:</td>
+            <td class="py-0.5 font-mono" id="outNoBA">-</td>
           </tr>
           <tr>
-            <td class="py-1 font-semibold">Nama Pelanggan</td>
-            <td class="py-1 text-center">:</td>
-            <td class="py-1 font-bold" id="outPelanggan2">PT CITRA PRIMA MEDIA</td>
+            <td class="py-0.5 font-semibold">Nama Pelanggan</td>
+            <td class="py-0.5 text-center">:</td>
+            <td class="py-0.5 font-bold" id="outPelanggan2">PT CITRA PRIMA MEDIA</td>
           </tr>
           <tr>
-            <td class="py-1 font-semibold align-top">Nama Perangkat</td>
-            <td class="py-1 text-center align-top">:</td>
-            <td class="py-1 font-mono text-xs whitespace-pre-line" id="outPerangkat">SWCH,ISCOM S2600-8T4S-AC,,RAISECOM | 1500A24C12A0219G&#10;SWCH,SFP-BIDI 1.25G,1310nm,40KM,,ZTT | OKF90902349&#10;SWCH,SFP-BIDI 1.25G,1550nm,40KM,,ZTT | OKF90903972</td>
+            <td class="py-0.5 font-semibold align-top">Nama Perangkat</td>
+            <td class="py-0.5 text-center align-top">:</td>
+            <td class="py-0.5 font-mono text-[11px] whitespace-pre-line" id="outPerangkat">SWCH,ISCOM S2600-8T4S-AC,,RAISECOM | 1500A24C12A0219G&#10;SWCH,SFP-BIDI 1.25G,1310nm,40KM,,ZTT | OKF90902349&#10;SWCH,SFP-BIDI 1.25G,1550nm,40KM,,ZTT | OKF90903972</td>
           </tr>
           <tr>
-            <td class="py-1 font-semibold">Alamat/Lokasi POP</td>
-            <td class="py-1 text-center">:</td>
-            <td class="py-1" id="outPop">ULP ENREKANG</td>
+            <td class="py-0.5 font-semibold">Alamat/Lokasi POP</td>
+            <td class="py-0.5 text-center">:</td>
+            <td class="py-0.5" id="outPop">ULP ENREKANG</td>
           </tr>
           <tr>
-            <td class="py-1 font-semibold">Koordinat POP</td>
-            <td class="py-1 text-center">:</td>
-            <td class="py-1" id="outKoorPop">EXISTING</td>
+            <td class="py-0.5 font-semibold">Koordinat POP</td>
+            <td class="py-0.5 text-center">:</td>
+            <td class="py-0.5" id="outKoorPop">EXISTING</td>
           </tr>
           <tr>
-            <td class="py-1 font-semibold">Nama Perangkat POP</td>
-            <td class="py-1 text-center">:</td>
-            <td class="py-1 font-mono text-xs" id="outPerangkatPop">RIT-RAYON.ENREKANG-ZYXEL.MGS3520-CPE-01 PORT 14</td>
+            <td class="py-0.5 font-semibold">Nama Perangkat POP</td>
+            <td class="py-0.5 text-center">:</td>
+            <td class="py-0.5 font-mono text-[11px]" id="outPerangkatPop">RIT-RAYON.ENREKANG-ZYXEL.MGS3520-CPE-01 PORT 14</td>
           </tr>
           <tr>
-            <td class="py-1 font-semibold">Jarak OTDR</td>
-            <td class="py-1 text-center">:</td>
-            <td class="py-1" id="outOtdr">-</td>
+            <td class="py-0.5 font-semibold">Jarak OTDR</td>
+            <td class="py-0.5 text-center">:</td>
+            <td class="py-0.5" id="outOtdr">-</td>
           </tr>
         </tbody>
       </table>
 
       <!-- Yang Diwakili -->
-      <div class="mb-6 space-y-1">
+      <div class="mb-4 space-y-0.5 text-[12px]">
         <p class="font-bold">Yang Diwakili oleh Pelanggan</p>
-        <div class="grid grid-cols-[140px_10px_1fr] text-xs">
+        <div class="grid grid-cols-[130px_10px_1fr] text-[11px]">
           <span>Nama</span><span>:</span><span id="outWakilNama" class="font-semibold">A M Zulkarnaen Eka Putra</span>
           <span>Jabatan</span><span>:</span><span id="outWakilJabatan">Direktur</span>
           <span>Alamat Kantor</span><span>:</span><span id="outWakilAlamat">Jl. A P Pettarani Ruko Diamond No 7 Makassar</span>
@@ -344,23 +336,19 @@
         </div>
       </div>
 
-      <p class="mb-8">
-        Dan Penyedia Layanan PT Indonesia Comnets Plus Project Manager : <strong id="outPmName">Fadhil Ilham</strong>
-      </p>
-
-      <p class="mb-10 text-xs text-slate-600">
+      <p class="mb-6 text-[11px] text-slate-600">
         Demikian Berita Acara ini dibuat dalam rangkap 2 (dua) asli, yang sama bunyinya dan mempunyai kekuatan Hukum yang sama setelah ditandatangi kedua belah pihak.
       </p>
 
-      <!-- Tanda Tangan (PLN ICON PLUS CLEAN / TANPA WATERMARK) -->
-      <div class="grid grid-cols-2 text-center text-xs font-bold pt-4">
+      <!-- Tanda Tangan (Clean & Tanpa Stempel/Watermark) -->
+      <div class="grid grid-cols-2 text-center text-[11px] font-bold pt-2">
         <div>
-          <p class="mb-24 uppercase" id="outPelangganTTD">PT CITRA PRIMA MEDIA</p>
-          <p>( <span id="outWakilNamaTTD">A M Zulkarnaen Eka Putr</span> )</p>
+          <p class="mb-20 uppercase" id="outPelangganTTD">PT CITRA PRIMA MEDIA</p>
+          <p>( <span id="outWakilNamaTTD">A M Zulkarnaen Eka Putra</span> )</p>
         </div>
         <div>
-          <p class="mb-24">PLN ICON PLUS</p>
-          <p>( <span id="outPmNameTTD">Fadhil Ilham</span> )</p>
+          <p class="mb-20">PLN ICON PLUS</p>
+          <p>( ..................................................... )</p>
         </div>
       </div>
 
@@ -368,14 +356,13 @@
   </main>
 </div>
 
-<!-- LOGIKA KONEKSI GOOGLE SHEETS & TANGGAL TERBILANG AUTOMATION -->
+<!-- LOGIKA KONEKSI GOOGLE SHEETS & AUTOMATION -->
 <script>
   const GAS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzbYtKsqtQvhjJVpVQ3doy0VCrjgVP4_JKq6CTNbDdSN1xSs3lArA9OiEV4u2pwR0pJJQ/exec";
 
   let listDataAktivasi = [];
   let tglTerbilangText = "Jumat , Tanggal Sembilan Januari Tahun Dua Ribu Dua Puluh Enam";
 
-  // Helper: Angka ke Kalimat Terbilang
   function angkaKeTerbilang(n) {
     const satuan = ["", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas"];
     if (n < 12) return satuan[n];
@@ -388,7 +375,6 @@
     return n.toString();
   }
 
-  // Helper: Format Tanggal DatePicker ke Terbilang
   function formatTanggalTerbilang(dateStr) {
     if (!dateStr) return "";
     const dt = new Date(dateStr + "T00:00:00");
@@ -408,7 +394,6 @@
     }
   }
 
-  // 1. Ambil data dari Google Sheets saat halaman dimuat
   async function fetchSheetListData() {
     const selectEl = document.getElementById("selectDataSheet");
     selectEl.innerHTML = `<option value="">⏳ Sync data Google Sheets...</option>`;
@@ -435,13 +420,11 @@
     }
   }
 
-  // 2. Auto-fill form berdasarkan pilihan baris sheet
   function loadDataSelectedSheet(index) {
     if (index === "" || !listDataAktivasi[index]) return;
 
     const row = listDataAktivasi[index];
 
-    // Pemetaan Header Sesuai Struktur Sheet
     if (row["SERVICE"] || row["SERVICE_NAME"]) {
       document.getElementById("inLayanan").value = row["SERVICE"] || row["SERVICE_NAME"];
     }
@@ -458,7 +441,6 @@
       document.getElementById("inTerminating").value = row["TERMINATING"] || row["ALAMAT_TERMINATING"];
     }
 
-    // Ekstraksi Bandwidth: Ambil nilai baris pertama / setelah titik dua (:)
     let rawBw = row["BANDWITH"] || row["BANDWIDTH"] || "";
     if (rawBw.includes(":")) {
       rawBw = rawBw.split(":")[1].trim();
@@ -477,7 +459,6 @@
     updateBA();
   }
 
-  // 3. Update tampilan preview cetak Berita Acara secara realtime
   function updateBA() {
     document.getElementById("outTglTerbilang").innerText = tglTerbilangText;
     document.getElementById("outLayanan1").innerText = document.getElementById("inLayanan").value;
@@ -497,16 +478,13 @@
     document.getElementById("outWakilNama").innerText = document.getElementById("inWakilNama").value;
     document.getElementById("outWakilNamaTTD").innerText = document.getElementById("inWakilNama").value;
     document.getElementById("outWakilJabatan").innerText = document.getElementById("inWakilJabatan").value;
-    document.getElementById("outPmName").innerText = document.getElementById("inPmName").value;
-    document.getElementById("outPmNameTTD").innerText = document.getElementById("inPmName").value;
   }
 
-  // 4. Ekspor ke format PDF
   function downloadBAIPDF() {
     document.body.classList.add("exporting-pdf");
     const element = document.getElementById("areaCetakDokumen");
     const opt = {
-      margin: [10, 10, 10, 10],
+      margin: [8, 8, 8, 8],
       filename: `BAI_${document.getElementById("inPelanggan").value.replace(/\s+/g, '_')}.pdf`,
       image: { type: 'jpeg', quality: 0.98 },
       html2canvas: { scale: 2 },
@@ -518,7 +496,6 @@
   }
 
   window.addEventListener("DOMContentLoaded", () => {
-    // Set default datepicker ke hari ini
     const today = new Date().toISOString().split('T')[0];
     document.getElementById("inTglPicker").value = today;
     tglTerbilangText = formatTanggalTerbilang(today);
