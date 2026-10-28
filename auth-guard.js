@@ -148,8 +148,7 @@
   function filterSidebarMenu(session) {
     if (!session || !session.role) return;
 
-    // Menggunakan 'aside a[href]' agar semua tautan di sidebar terpindai
-    var links = document.querySelectorAll('aside a[href]');
+    var links = document.querySelectorAll('aside nav a[href]');
     links.forEach(function (link) {
       var href = link.getAttribute('href');
       if (!href) return;
@@ -161,6 +160,13 @@
         link.style.display = 'none';
       }
     });
+
+    // Alihkan link logo brand ke halaman utama role masing-masing (Smart RAB untuk smart_rab_only)
+    var brandLink = document.querySelector('aside a[href="dashboard.html"]');
+    if (brandLink && session.role !== 'admin') {
+      brandLink.setAttribute('href', homeFor(session.role));
+      brandLink.style.display = '';
+    }
   }
 
   function boot() {
