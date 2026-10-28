@@ -144,6 +144,24 @@
     document.body.appendChild(wrap);
   }
 
+  /* Sembunyikan elemen menu sidebar yang tidak berhak diakses oleh role saat ini */
+  function filterSidebarMenu(session) {
+    if (!session || !session.role) return;
+
+    var links = document.querySelectorAll('aside nav a[href]');
+    links.forEach(function (link) {
+      var href = link.getAttribute('href');
+      if (!href) return;
+
+      var pageName = href.split('/').pop().split('?')[0].split('#')[0];
+      var allowed = PAGE_ACCESS[pageName];
+
+      if (allowed && allowed.indexOf(session.role) === -1) {
+        link.style.display = 'none';
+      }
+    });
+  }
+
   function boot() {
     var page = currentPage();
 
@@ -176,20 +194,8 @@
     function paint() {
       document.documentElement.style.visibility = '';
       renderUserChip(session);
+      filterSidebarMenu(session);
     }
 
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', paint);
-    } else {
-      paint();
-    }
-  }
-
-  /* Helper global untuk dipakai halaman lain bila perlu */
-  window.rabitLogout  = logout;
-  window.rabitSession = readSession;
-
-  /* Pengecekan akses dijalankan SINKRON di <head>, sebelum body dirender.
-     Ini mencegah konten terproteksi sempat tampil sebelum redirect. */
-  boot();
-})();
+      document.addEventListener('DOMContentLoaded
