@@ -148,13 +148,12 @@
           <span class="material-symbols-outlined text-crm-active text-2xl">table_chart</span>
           <div>
             <h3 class="text-xs font-bold uppercase text-slate-800">Tarik Data dari Google Sheets</h3>
-            <p class="text-[11px] text-slate-600">Pilih ID RAB / Nomor SO untuk mengisi form secara otomatis</p>
+            <p class="text-[11px] text-slate-600">Pilih ID PA / Nomor SO untuk mengisi form secara otomatis</p>
           </div>
         </div>
         <div class="flex items-center gap-2">
-          <select id="selectDataSheet" onchange="loadDataSelectedSheet(this.value)" class="bg-white border border-slate-300 rounded-lg p-2 text-xs font-semibold text-slate-800 focus:ring-1 focus:ring-crm-active">
-            <option value="">-- Pilih Data Aktivasi / RAB --</option>
-            <option value="SAMPLE1">A411202000728 - PT CITRA PRIMA MEDIA</option>
+          <select id="selectDataSheet" onchange="loadDataSelectedSheet(this.value)" class="bg-white border border-slate-300 rounded-lg p-2 text-xs font-semibold text-slate-800 focus:ring-1 focus:ring-crm-active min-w-[240px]">
+            <option value="">-- Memuat data sheet... --</option>
           </select>
           <button onclick="fetchSheetListData()" class="bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 px-3 py-2 rounded-lg text-xs font-medium inline-flex items-center gap-1">
             <span class="material-symbols-outlined text-sm">refresh</span> Sync
@@ -170,4 +169,307 @@
         </div>
         <div>
           <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Layanan:</label>
-          <input type="text" id="inLayanan" value="METRONET" oninput="updateBA()" class="w-full bg-slate-50 border border-slate-200
+          <input type="text" id="inLayanan" value="METRONET" oninput="updateBA()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800"/>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Service ID (SID):</label>
+          <input type="text" id="inServiceID" value="411202000703" oninput="updateBA()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800 font-mono"/>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Pelanggan:</label>
+          <input type="text" id="inPelanggan" value="PT CITRA PRIMA MEDIA" oninput="updateBA()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800 font-bold"/>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">No Sales Order / ID PA:</label>
+          <input type="text" id="inNoSO" value="A411202000728" oninput="updateBA()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800 font-mono"/>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Bandwidth & Interface:</label>
+          <div class="flex gap-2">
+            <input type="text" id="inBw" value="650Mbps" oninput="updateBA()" class="w-1/2 bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800"/>
+            <input type="text" id="inInterface" value="Ethernet" oninput="updateBA()" class="w-1/2 bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800"/>
+          </div>
+        </div>
+        <div class="md:col-span-3">
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Originating (Alamat Asal/CPE):</label>
+          <input type="text" id="inOriginating" value="JL. A. P. PETTARANI NO.7, MASALE, KEC. PANAKKUKANG, KOTA MAKASSAR, SULAWESI SELATAN 90231" oninput="updateBA()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800"/>
+        </div>
+        <div class="md:col-span-3">
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Terminating (Alamat Tujuan):</label>
+          <input type="text" id="inTerminating" value="CQQF+32Q JUPPANDANG, KABUPATEN ENREKANG, SULAWESI SELATAN" oninput="updateBA()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800"/>
+        </div>
+        <div class="md:col-span-3">
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Perangkat & SFP (Satu Per Baris):</label>
+          <textarea id="inPerangkat" rows="3" oninput="updateBA()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800 font-mono">SWCH,ISCOM S2600-8T4S-AC,,RAISECOM | 1500A24C12A0219G&#10;SWCH,SFP-BIDI 1.25G,1310nm,40KM,,ZTT | OKF90902349&#10;SWCH,SFP-BIDI 1.25G,1550nm,40KM,,ZTT | OKF90903972</textarea>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Wakil Pelanggan (Nama):</label>
+          <input type="text" id="inWakilNama" value="A M Zulkarnaen Eka Putra" oninput="updateBA()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800"/>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Wakil Pelanggan (Jabatan):</label>
+          <input type="text" id="inWakilJabatan" value="Direktur" oninput="updateBA()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800"/>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Project Manager PLN Icon Plus:</label>
+          <input type="text" id="inPmName" value="Fadhil Ilham" oninput="updateBA()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- PREVIEW DOKUMEN BERITA ACARA -->
+    <div id="areaCetakDokumen" class="bg-white p-8 md:p-12 rounded-xl border border-crm-border shadow-md text-slate-900 leading-relaxed text-[13px]">
+      
+      <!-- Kop Logo Header -->
+      <div class="flex items-center justify-between border-b pb-4 mb-6">
+        <div class="flex items-center gap-3">
+          <div class="bg-yellow-400 p-2 border border-yellow-500 rounded font-bold text-red-600 text-2xl tracking-tighter flex items-center justify-center w-12 h-12">
+            ⚡
+          </div>
+          <div>
+            <div class="text-2xl font-extrabold text-[#00a2e8] tracking-tight leading-none">PLN</div>
+            <div class="text-sm font-semibold text-[#1e4a42] tracking-wider">Icon Plus</div>
+          </div>
+        </div>
+        <div class="text-right">
+          <h2 class="text-base font-bold uppercase tracking-wide text-slate-900">Berita Acara Instalasi - Aktivasi</h2>
+          <p class="text-xs font-semibold text-slate-600">(BAI – BAA)</p>
+        </div>
+      </div>
+
+      <!-- Pembuka -->
+      <p class="mb-4">
+        Pada Hari <span id="outTglTerbilang" class="font-medium">Jumat , Tanggal Sembilan Januari Tahun Dua Ribu Dua Puluh Enam</span> telah dilakukan pekerjaan Aktivasi Layanan <strong id="outLayanan1">METRONET</strong> yang disewa oleh <strong id="outPelanggan1">PT CITRA PRIMA MEDIA</strong> Dengan hasil <strong>BAIK</strong>, adapun spesifikasi sebagai berikut :
+      </p>
+
+      <!-- Tabel Spesifikasi -->
+      <table class="w-full mb-6 border-collapse">
+        <tbody>
+          <tr>
+            <td class="py-1 w-44 font-semibold">Nama Layanan</td>
+            <td class="py-1 w-4 text-center">:</td>
+            <td class="py-1" id="outLayanan2">METRONET</td>
+          </tr>
+          <tr>
+            <td class="py-1 font-semibold">Service ID</td>
+            <td class="py-1 text-center">:</td>
+            <td class="py-1 font-mono" id="outServiceID">411202000703</td>
+          </tr>
+          <tr>
+            <td class="py-1 font-semibold">Interface</td>
+            <td class="py-1 text-center">:</td>
+            <td class="py-1" id="outInterface">Ethernet</td>
+          </tr>
+          <tr>
+            <td class="py-1 font-semibold">Bandwidth</td>
+            <td class="py-1 text-center">:</td>
+            <td class="py-1 font-semibold" id="outBw">650Mbps</td>
+          </tr>
+          <tr>
+            <td class="py-1 font-semibold align-top">Originating</td>
+            <td class="py-1 text-center align-top">:</td>
+            <td class="py-1 uppercase" id="outOriginating">JL. A. P. PETTARANI NO.7, MASALE, KEC. PANAKKUKANG, KOTA MAKASSAR, SULAWESI SELATAN 90231</td>
+          </tr>
+          <tr>
+            <td class="py-1 font-semibold align-top">Terminating</td>
+            <td class="py-1 text-center align-top">:</td>
+            <td class="py-1 uppercase" id="outTerminating">CQQF+32Q JUPPANDANG, KABUPATEN ENREKANG, SULAWESI SELATAN</td>
+          </tr>
+          <tr>
+            <td class="py-1 font-semibold">No Sales Order</td>
+            <td class="py-1 text-center">:</td>
+            <td class="py-1 font-mono" id="outNoSO">A411202000728</td>
+          </tr>
+          <tr>
+            <td class="py-1 font-semibold">No Berita Acara</td>
+            <td class="py-1 text-center">:</td>
+            <td class="py-1 font-mono" id="outNoBA">-</td>
+          </tr>
+          <tr>
+            <td class="py-1 font-semibold">Nama Pelanggan</td>
+            <td class="py-1 text-center">:</td>
+            <td class="py-1 font-bold" id="outPelanggan2">PT CITRA PRIMA MEDIA</td>
+          </tr>
+          <tr>
+            <td class="py-1 font-semibold align-top">Nama Perangkat</td>
+            <td class="py-1 text-center align-top">:</td>
+            <td class="py-1 font-mono text-xs whitespace-pre-line" id="outPerangkat">SWCH,ISCOM S2600-8T4S-AC,,RAISECOM | 1500A24C12A0219G&#10;SWCH,SFP-BIDI 1.25G,1310nm,40KM,,ZTT | OKF90902349&#10;SWCH,SFP-BIDI 1.25G,1550nm,40KM,,ZTT | OKF90903972</td>
+          </tr>
+          <tr>
+            <td class="py-1 font-semibold">Alamat/Lokasi POP</td>
+            <td class="py-1 text-center">:</td>
+            <td class="py-1" id="outPop">ULP ENREKANG</td>
+          </tr>
+          <tr>
+            <td class="py-1 font-semibold">Koordinat POP</td>
+            <td class="py-1 text-center">:</td>
+            <td class="py-1" id="outKoorPop">EXISTING</td>
+          </tr>
+          <tr>
+            <td class="py-1 font-semibold">Nama Perangkat POP</td>
+            <td class="py-1 text-center">:</td>
+            <td class="py-1 font-mono text-xs" id="outPerangkatPop">RIT-RAYON.ENREKANG-ZYXEL.MGS3520-CPE-01 PORT 14</td>
+          </tr>
+          <tr>
+            <td class="py-1 font-semibold">Jarak OTDR</td>
+            <td class="py-1 text-center">:</td>
+            <td class="py-1" id="outOtdr">-</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Yang Diwakili -->
+      <div class="mb-6 space-y-1">
+        <p class="font-bold">Yang Diwakili oleh Pelanggan</p>
+        <div class="grid grid-cols-[140px_10px_1fr] text-xs">
+          <span>Nama</span><span>:</span><span id="outWakilNama" class="font-semibold">A M Zulkarnaen Eka Putra</span>
+          <span>Jabatan</span><span>:</span><span id="outWakilJabatan">Direktur</span>
+          <span>Alamat Kantor</span><span>:</span><span id="outWakilAlamat">Jl. A P Pettarani Ruko Diamond No 7 Makassar</span>
+          <span>Nomor Telp/HP/Email</span><span>:</span><span id="outWakilKontak">+62 812-4210-3321</span>
+        </div>
+      </div>
+
+      <p class="mb-8">
+        Dan Penyedia Layanan PT Indonesia Comnets Plus Project Manager : <strong id="outPmName">Fadhil Ilham</strong>
+      </p>
+
+      <p class="mb-10 text-xs text-slate-600">
+        Demikian Berita Acara ini dibuat dalam rangkap 2 (dua) asli, yang sama bunyinya dan mempunyai kekuatan Hukum yang sama setelah ditandatangi kedua belah pihak.
+      </p>
+
+      <!-- Tanda Tangan -->
+      <div class="grid grid-cols-2 text-center text-xs font-bold pt-4">
+        <div>
+          <p class="mb-20 uppercase" id="outPelangganTTD">PT CITRA PRIMA MEDIA</p>
+          <p>( <span id="outWakilNamaTTD">A M Zulkarnaen Eka Putra</span> )</p>
+        </div>
+        <div>
+          <p class="mb-12">PLN ICON PLUS</p>
+          <!-- Stempel & Tanda Tangan Digital -->
+          <div class="flex justify-center -my-8 relative">
+            <div class="w-32 h-20 border-2 border-blue-700 text-blue-700 rounded-full flex items-center justify-center text-[10px] font-black transform -rotate-12 opacity-80">
+              PT INDONESIA COMNETS PLUS
+            </div>
+          </div>
+          <p class="mt-8">( <span id="outPmNameTTD">Fadhil Ilham</span> )</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- LOGIKA KONEKSI GOOGLE SHEETS & AUTOFILL REALTIME -->
+<script>
+  // 1. URL Web App Apps Script milik Anda
+  const GAS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzbYtKsqtQvhjJVpVQ3doy0VCrjgVP4_JKq6CTNbDdSN1xSs3lArA9OiEV4u2pwR0pJJQ/exec";
+
+  let listDataAktivasi = [];
+
+  // 2. Ambil data dari Google Sheets saat halaman dimuat
+  async function fetchSheetListData() {
+    const selectEl = document.getElementById("selectDataSheet");
+    selectEl.innerHTML = `<option value="">⏳ Sync data Google Sheets...</option>`;
+
+    try {
+      const response = await fetch(GAS_WEBAPP_URL);
+      const data = await response.json();
+
+      listDataAktivasi = data;
+      selectEl.innerHTML = `<option value="">-- Pilih ID PA / Pelanggan --</option>`;
+
+      if (Array.isArray(data) && data.length > 0) {
+        data.forEach((item, index) => {
+          const idPa = item["ID_PA"] || item["ID PA"] || item["NO_SO"] || item["No SO"] || `ROW-${index + 1}`;
+          const namaPelanggan = item["NAMA_PELANGGAN"] || item["Nama Pelanggan"] || "Pelanggan";
+          selectEl.innerHTML += `<option value="${index}">${idPa} - ${namaPelanggan}</option>`;
+        });
+      } else {
+        selectEl.innerHTML = `<option value="">(Tidak ada data di sheet)</option>`;
+      }
+    } catch (error) {
+      console.error("Gagal koneksi Google Sheets:", error);
+      selectEl.innerHTML = `<option value="">❌ Gagal muat sheet (Cek koneksi)</option>`;
+    }
+  }
+
+  // 3. Auto-fill form berdasarkan pilihan baris sheet
+  function loadDataSelectedSheet(index) {
+    if (index === "" || !listDataAktivasi[index]) return;
+
+    const row = listDataAktivasi[index];
+
+    // Pemetaan header kolom Google Sheets ke Input Form
+    if (row["NAMA_LAYANAN"] || row["Layanan"]) {
+      document.getElementById("inLayanan").value = row["NAMA_LAYANAN"] || row["Layanan"];
+    }
+    if (row["SERVICE_ID"] || row["SID"] || row["Service ID"]) {
+      document.getElementById("inServiceID").value = row["SERVICE_ID"] || row["SID"] || row["Service ID"];
+    }
+    if (row["NAMA_PELANGGAN"] || row["Nama Pelanggan"]) {
+      document.getElementById("inPelanggan").value = row["NAMA_PELANGGAN"] || row["Nama Pelanggan"];
+    }
+    if (row["BANDWIDTH"] || row["Bandwidth"]) {
+      document.getElementById("inBw").value = row["BANDWIDTH"] || row["Bandwidth"];
+    }
+    if (row["NO_SO"] || row["No SO"] || row["ID_PA"] || row["ID PA"]) {
+      document.getElementById("inNoSO").value = row["NO_SO"] || row["No SO"] || row["ID_PA"] || row["ID PA"];
+    }
+    if (row["ORIGINATING"] || row["Originating"]) {
+      document.getElementById("inOriginating").value = row["ORIGINATING"] || row["Originating"];
+    }
+    if (row["TERMINATING"] || row["Terminating"]) {
+      document.getElementById("inTerminating").value = row["TERMINATING"] || row["Terminating"];
+    }
+    if (row["PERANGKAT"] || row["Perangkat"]) {
+      document.getElementById("inPerangkat").value = row["PERANGKAT"] || row["Perangkat"];
+    }
+
+    updateBA();
+  }
+
+  // 4. Update tampilan preview cetak Berita Acara secara realtime
+  function updateBA() {
+    document.getElementById("outTglTerbilang").innerText = document.getElementById("inTglTerbilang").value;
+    document.getElementById("outLayanan1").innerText = document.getElementById("inLayanan").value;
+    document.getElementById("outLayanan2").innerText = document.getElementById("inLayanan").value;
+    document.getElementById("outPelanggan1").innerText = document.getElementById("inPelanggan").value;
+    document.getElementById("outPelanggan2").innerText = document.getElementById("inPelanggan").value;
+    document.getElementById("outPelangganTTD").innerText = document.getElementById("inPelanggan").value;
+    document.getElementById("outServiceID").innerText = document.getElementById("inServiceID").value;
+    document.getElementById("outInterface").innerText = document.getElementById("inInterface").value;
+    document.getElementById("outBw").innerText = document.getElementById("inBw").value;
+    document.getElementById("outNoSO").innerText = document.getElementById("inNoSO").value;
+    document.getElementById("outOriginating").innerText = document.getElementById("inOriginating").value;
+    document.getElementById("outTerminating").innerText = document.getElementById("inTerminating").value;
+    document.getElementById("outPerangkat").innerText = document.getElementById("inPerangkat").value;
+    document.getElementById("outWakilNama").innerText = document.getElementById("inWakilNama").value;
+    document.getElementById("outWakilNamaTTD").innerText = document.getElementById("inWakilNama").value;
+    document.getElementById("outWakilJabatan").innerText = document.getElementById("inWakilJabatan").value;
+    document.getElementById("outPmName").innerText = document.getElementById("inPmName").value;
+    document.getElementById("outPmNameTTD").innerText = document.getElementById("inPmName").value;
+  }
+
+  // 5. Ekspor ke format PDF
+  function downloadBAIPDF() {
+    document.body.classList.add("exporting-pdf");
+    const element = document.getElementById("areaCetakDokumen");
+    const opt = {
+      margin: [10, 10, 10, 10],
+      filename: `BAI_${document.getElementById("inPelanggan").value.replace(/\s+/g, '_')}.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+    html2pdf().set(opt).from(element).save().then(() => {
+      document.body.classList.remove("exporting-pdf");
+    });
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    fetchSheetListData();
+  });
+</script>
+
+</body>
+</html>
