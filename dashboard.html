@@ -72,6 +72,12 @@
           Smart RAB
           <span class="text-[9px] font-bold uppercase bg-emerald-600 text-white px-1.5 py-0.2 rounded">AUTO</span>
         </a>
+        <!-- MENU BARU: BERITA ACARA -->
+        <a href="berita-acara.html" class="px-3.5 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded-lg transition-colors flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-slate-500 text-[16px]">description</span>
+          Berita Acara (BA)
+          <span class="text-[9px] font-bold uppercase bg-blue-600 text-white px-1.5 py-0.2 rounded">NEW</span>
+        </a>
         <a href="conven.html" class="px-3.5 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded-lg transition-colors">
           Conven
         </a>
@@ -121,7 +127,7 @@
             Smart RAB Estimator Otomatis
           </h1>
           <p class="text-xs md:text-sm text-slate-300 leading-relaxed mb-6 max-w-3xl">
-            Cukup pilih KP/KR dan masukkan Tikor pelanggan dari Google Maps. Jarak otomatis diukur melalui rute jalan raya riil, transport $\ge 100\text{ km}$, joint box, dan material dropwire langsung terhitung siap ekspor ke PDF.
+            Cukup pilih KP/KR dan masukkan Tikor pelanggan dari Google Maps. Jarak otomatis diukur melalui rute jalan raya riil, transport &ge; 100 km, joint box, dan material dropwire langsung terhitung siap ekspor ke PDF.
           </p>
           <div>
             <a href="smart-rab.html" class="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 px-5 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all shadow-md">
@@ -135,14 +141,36 @@
         </div>
       </section>
 
-      <!-- SECTION: FORM INPUT MANUAL DETAIL (3 KARTU MELEBAR PENUH) -->
+      <!-- SECTION: KARTU NAVIGASI UTAMA & DOKUMEN -->
       <div class="w-full">
         <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 px-1">
-          Atau Pilih Form Input Manual Detail:
+          Pilih Layanan & Form Generator:
         </h3>
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 w-full">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 w-full">
           
+          <!-- Kartu Barus: Generator Berita Acara (BA) -->
+          <a href="berita-acara.html" class="group bg-white border border-blue-200/80 rounded-xl p-6 hover:border-crm-blue hover:shadow-md transition-all duration-200 flex flex-col justify-between bg-gradient-to-br from-white to-sky-50/30">
+            <div>
+              <div class="w-11 h-11 rounded-lg bg-sky-50 text-crm-blue flex items-center justify-center mb-4 group-hover:scale-105 transition-transform border border-sky-100">
+                <span class="material-symbols-outlined text-[22px]">description</span>
+              </div>
+              <div class="flex items-center gap-2 mb-1.5">
+                <h3 class="text-base font-bold text-slate-900 group-hover:text-crm-blue transition-colors">
+                  Berita Acara (BA)
+                </h3>
+                <span class="text-[9px] font-bold uppercase bg-blue-600 text-white px-1.5 py-0.2 rounded">AUTO</span>
+              </div>
+              <p class="text-xs text-crm-textMuted leading-relaxed">
+                Generator dokumen Berita Acara (BAI - BAA) otomatis terkoneksi ke database Google Sheets.
+              </p>
+            </div>
+            <div class="mt-5 pt-3 border-t border-sky-100 flex items-center justify-between text-xs font-semibold text-crm-blue">
+              <span>Buka Generator BA</span>
+              <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+            </div>
+          </a>
+
           <!-- Kartu 1: RAB Conven -->
           <a href="conven.html" class="group bg-white border border-crm-border rounded-xl p-6 hover:border-crm-active hover:shadow-md transition-all duration-200 flex flex-col justify-between">
             <div>
