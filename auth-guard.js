@@ -3,6 +3,9 @@
    Penegak akses berbasis role untuk semua halaman terproteksi.
    Dimuat sebelum </head> di setiap halaman (kecuali index.html / login).
    Sesi disimpan di localStorage key 'rabit_auth' oleh index.html.
+   Catatan cache: setiap kali file ini diubah, naikkan '?v=' pada tag
+   <script src="auth-guard.js?v=N"> di SEMUA halaman agar browser tidak
+   menyajikan versi lama (GitHub Pages cache max-age=600).
    ========================================================================== */
 (function () {
   'use strict';
