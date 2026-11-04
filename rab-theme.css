@@ -139,11 +139,18 @@ a.rounded-lg.border,
 
 /* ---------- 6. Aksen sekunder: sky / blue / rose / amber ---------- */
 .bg-sky-50, .bg-sky-50\/30 { background-color: rgba(56, 189, 248, .10) !important; }
-.border-sky-100, .border-sky-200 { border-color: rgba(56, 189, 248, .28) !important; }
+.border-sky-100, .border-sky-200,
+.border-blue-200\/80 { border-color: rgba(56, 189, 248, .28) !important; }
+/* Kartu ber-gradient terang (kartu BA dashboard: from-white -> to-sky-50/30)
+   — background-image menutupi background-color, jadi stop gradient ikut digelapkan. */
+.bg-gradient-to-br.from-white { background-image: linear-gradient(to bottom right, var(--rk-surface), rgba(56, 189, 248, .10)) !important; }
+.bg-gradient-to-r.from-white { background-image: linear-gradient(to right, var(--rk-surface), rgba(56, 189, 248, .10)) !important; }
+.bg-gradient-to-b.from-white { background-image: linear-gradient(to bottom, var(--rk-surface), rgba(56, 189, 248, .10)) !important; }
 .bg-blue-600 { background-color: var(--rk-info) !important; color: #05202e !important; }
 .text-rose-600 { color: #fb7185 !important; }
 .hover\:text-rose-600:hover { color: var(--rk-danger) !important; }
 .bg-rose-50 { background-color: rgba(244, 63, 94, .12) !important; }
+.border-rose-200 { border-color: rgba(244, 63, 94, .30) !important; }
 
 /* ---------- 7. Hover netral ---------- */
 .hover\:bg-slate-50:hover,
