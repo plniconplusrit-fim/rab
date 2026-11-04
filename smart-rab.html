@@ -192,19 +192,28 @@
           1. Pilih Metode Tarikan:
         </label>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <label class="flex items-center gap-2.5 px-4 py-3 rounded-lg border cursor-pointer transition-all border-slate-200 hover:bg-slate-50" id="label-metode-conven">
-            <input type="radio" name="metodeTarikan" value="CONVEN" checked onchange="gantiMetode('CONVEN')" class="text-crm-active focus:ring-crm-active"/>
-            <span class="text-xs font-bold text-slate-900 tracking-wide">CONVEN</span>
+          <label class="flex items-start gap-2.5 px-4 py-3 rounded-lg border cursor-pointer transition-all border-slate-200 hover:bg-slate-50" id="label-metode-conven">
+            <input type="radio" name="metodeTarikan" value="CONVEN" checked onchange="gantiMetode('CONVEN')" class="mt-0.5 text-crm-active focus:ring-crm-active"/>
+            <span class="flex flex-col gap-0.5">
+              <span class="text-xs font-bold text-slate-900 tracking-wide">CONVEN</span>
+              <span class="text-[10px] text-crm-textMuted leading-snug">Penarikan FO kabel besar 6-48 Core. Ideal untuk proyek backbone, inter-city, dan jaringan korporat.</span>
+            </span>
           </label>
 
-          <label class="flex items-center gap-2.5 px-4 py-3 rounded-lg border cursor-pointer transition-all border-slate-200 hover:bg-slate-50" id="label-metode-ftth">
-            <input type="radio" name="metodeTarikan" value="FTTH" onchange="gantiMetode('FTTH')" class="text-crm-active focus:ring-crm-active"/>
-            <span class="text-xs font-bold text-slate-900 tracking-wide">FTTH</span>
+          <label class="flex items-start gap-2.5 px-4 py-3 rounded-lg border cursor-pointer transition-all border-slate-200 hover:bg-slate-50" id="label-metode-ftth">
+            <input type="radio" name="metodeTarikan" value="FTTH" onchange="gantiMetode('FTTH')" class="mt-0.5 text-crm-active focus:ring-crm-active"/>
+            <span class="flex flex-col gap-0.5">
+              <span class="text-xs font-bold text-slate-900 tracking-wide">FTTH</span>
+              <span class="text-[10px] text-crm-textMuted leading-snug">Penarikan kabel Dropwire 50-250m khusus distribusi ritel pelanggan dan aktivasi modem ONT.</span>
+            </span>
           </label>
 
-          <label class="flex items-center gap-2.5 px-4 py-3 rounded-lg border cursor-pointer transition-all border-slate-200 hover:bg-slate-50" id="label-metode-ftthxconven">
-            <input type="radio" name="metodeTarikan" value="FTTH X CONVEN" onchange="gantiMetode('FTTH X CONVEN')" class="text-crm-active focus:ring-crm-active"/>
-            <span class="text-xs font-bold text-slate-900 tracking-wide">FTTH X CONVEN</span>
+          <label class="flex items-start gap-2.5 px-4 py-3 rounded-lg border cursor-pointer transition-all border-slate-200 hover:bg-slate-50" id="label-metode-ftthxconven">
+            <input type="radio" name="metodeTarikan" value="FTTH X CONVEN" onchange="gantiMetode('FTTH X CONVEN')" class="mt-0.5 text-crm-active focus:ring-crm-active"/>
+            <span class="flex flex-col gap-0.5">
+              <span class="text-xs font-bold text-slate-900 tracking-wide">FTTH X CONVEN</span>
+              <span class="text-[10px] text-crm-textMuted leading-snug">Kombinasi kabel 6 Core dari ODP untuk efisiensi kluster baru dengan ONT pelanggan.</span>
+            </span>
           </label>
         </div>
       </div>
