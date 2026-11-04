@@ -1,0 +1,263 @@
+/* ==========================================================================
+   RABIT — DARK THEME LAYER
+   Satu sumber tema untuk seluruh halaman. Dimuat SETELAH gaya halaman.
+   Mengganti palet terang (Tailwind slate/white + token crm) menjadi gelap,
+   menambah kedalaman (gradien, glow, transisi) tanpa mengubah markup.
+
+   Prinsip:
+   1. Dokumen cetak (body.exporting-pdf, @media print) DIKEMBALIKAN ke putih.
+   2. Palet diambil dari token yang sama agar konsisten di semua halaman.
+   3. Tidak ada !important kecuali untuk menimpa warna terang bawaan.
+   ========================================================================== */
+
+:root {
+  --rk-bg:          #0b1220;
+  --rk-bg-2:        #0e1728;
+  --rk-surface:     #131c2e;
+  --rk-surface-2:   #182236;
+  --rk-surface-3:   #1e2a41;
+  --rk-border:      #263349;
+  --rk-border-soft: #1d2839;
+  --rk-text:        #e6edf7;
+  --rk-text-2:      #aab8cd;
+  --rk-muted:       #7d8ca3;
+  --rk-accent:      #2dd4bf;
+  --rk-accent-2:    #34d399;
+  --rk-accent-ink:  #06231f;
+  --rk-info:        #38bdf8;
+  --rk-danger:      #f43f5e;
+  --rk-warn:        #fbbf24;
+  --rk-radius:      12px;
+}
+
+/* ---------- 1. Dasar halaman ---------- */
+html { color-scheme: dark; }
+body,
+body.bg-crm-bgCanvas {
+  background:
+    radial-gradient(1100px 520px at 88% -12%, rgba(45, 212, 191, .10), transparent 60%),
+    radial-gradient(900px 480px at 4% 0%, rgba(56, 189, 248, .08), transparent 55%),
+    var(--rk-bg) !important;
+  background-attachment: fixed !important;
+  color: var(--rk-text) !important;
+}
+::selection { background: rgba(45, 212, 191, .32); color: #ffffff; }
+
+/* Scrollbar gelap */
+* { scrollbar-color: #33415a transparent; scrollbar-width: thin; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: #2f3d55;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover { background: #3d4f6d; background-clip: content-box; }
+
+/* ---------- 2. Permukaan (kartu, panel, tabel) ---------- */
+.bg-white,
+.bg-slate-50,
+.bg-slate-100,
+.bg-slate-50\/80,
+.bg-slate-100\/80,
+.bg-slate-50\/60 {
+  background-color: var(--rk-surface) !important;
+}
+.bg-slate-200 { background-color: var(--rk-surface-3) !important; }
+.bg-crm-card  { background-color: var(--rk-surface) !important; }
+
+/* Kartu: kedalaman + garis atas halus */
+.rounded-xl.border,
+.rounded-lg.border,
+.rounded-2xl.border {
+  border-color: var(--rk-border) !important;
+}
+a.rounded-xl.border:hover,
+a.rounded-lg.border:hover {
+  border-color: rgba(45, 212, 191, .55) !important;
+  background-color: var(--rk-surface-2) !important;
+  box-shadow: 0 10px 30px -12px rgba(45, 212, 191, .35);
+  transform: translateY(-2px);
+}
+a.rounded-xl.border,
+a.rounded-lg.border,
+.bg-white {
+  transition: background-color .18s ease, border-color .18s ease,
+              box-shadow .18s ease, transform .18s ease;
+}
+
+/* ---------- 3. Border & pembagi ---------- */
+.border-slate-100,
+.border-slate-200,
+.border-slate-300,
+.border-crm-border,
+.border-crm-border\/60,
+.divide-slate-100 > :not([hidden]) ~ :not([hidden]),
+.divide-y > :not([hidden]) ~ :not([hidden]) {
+  border-color: var(--rk-border) !important;
+}
+.border-t, .border-b, .border-l, .border-r { border-color: var(--rk-border-soft); }
+.border-white\/20 { border-color: rgba(255,255,255,.14) !important; }
+
+/* ---------- 4. Teks ---------- */
+.text-slate-900 { color: #f1f6ff !important; }
+.text-slate-800 { color: var(--rk-text) !important; }
+.text-slate-700 { color: #cad6e6 !important; }
+.text-slate-600 { color: var(--rk-text-2) !important; }
+.text-slate-500 { color: #93a3ba !important; }
+.text-slate-400 { color: var(--rk-muted) !important; }
+.text-crm-textMuted { color: var(--rk-text-2) !important; }
+.text-crm-active { color: var(--rk-accent) !important; }
+.text-crm-active\/80 { color: rgba(45, 212, 191, .85) !important; }
+.text-crm-blue { color: var(--rk-info) !important; }
+.text-emerald-800, .text-emerald-900 { color: #a7f3d0 !important; }
+
+/* ---------- 5. Aksen (emerald/crm) ---------- */
+.bg-crm-active { background-color: var(--rk-accent) !important; color: var(--rk-accent-ink) !important; }
+.hover\:bg-crm-activeHover:hover { background-color: var(--rk-accent-2) !important; }
+.hover\:bg-crm-active:hover { background-color: var(--rk-accent) !important; color: var(--rk-accent-ink) !important; }
+.border-crm-active { border-color: var(--rk-accent) !important; }
+.hover\:border-crm-active:hover { border-color: var(--rk-accent) !important; }
+.hover\:text-crm-active:hover { color: var(--rk-accent) !important; }
+.bg-emerald-50, .bg-emerald-50\/50, .bg-emerald-50\/60, .bg-emerald-50\/70,
+.bg-emerald-100, .bg-emerald-100\/80 {
+  background-color: rgba(45, 212, 191, .12) !important;
+}
+.bg-emerald-500, .bg-emerald-600 { background-color: var(--rk-accent) !important; color: var(--rk-accent-ink) !important; }
+.hover\:bg-emerald-400:hover, .hover\:bg-emerald-500:hover, .hover\:bg-emerald-100:hover {
+  background-color: var(--rk-accent-2) !important; color: var(--rk-accent-ink) !important;
+}
+.border-emerald-100, .border-emerald-200, .border-emerald-200\/80 {
+  border-color: rgba(45, 212, 191, .32) !important;
+}
+.text-emerald-300 { color: #6ee7d7 !important; }
+.text-emerald-600, .text-emerald-700 { color: var(--rk-accent) !important; }
+.text-emerald-100 { color: #ccfbf1 !important; }
+.text-emerald-100\/70 { color: rgba(204,251,241,.72) !important; }
+.text-emerald-200\/60 { color: rgba(167,243,208,.6) !important; }
+
+/* ---------- 6. Aksen sekunder: sky / blue / rose / amber ---------- */
+.bg-sky-50, .bg-sky-50\/30 { background-color: rgba(56, 189, 248, .10) !important; }
+.border-sky-100, .border-sky-200 { border-color: rgba(56, 189, 248, .28) !important; }
+.bg-blue-600 { background-color: var(--rk-info) !important; color: #05202e !important; }
+.text-rose-600 { color: #fb7185 !important; }
+.hover\:text-rose-600:hover { color: var(--rk-danger) !important; }
+.bg-rose-50 { background-color: rgba(244, 63, 94, .12) !important; }
+
+/* ---------- 7. Hover netral ---------- */
+.hover\:bg-slate-50:hover,
+.hover\:bg-slate-100:hover,
+.hover\:bg-slate-100\/80:hover,
+.hover\:bg-slate-100\/60:hover { background-color: var(--rk-surface-2) !important; }
+.hover\:bg-slate-200:hover { background-color: var(--rk-surface-3) !important; }
+.hover\:bg-white:hover { background-color: var(--rk-surface-2) !important; }
+.hover\:text-slate-900:hover { color: #ffffff !important; }
+.hover\:text-slate-800:hover { color: #e8eefb !important; }
+.hover\:text-slate-600:hover { color: #cfdaea !important; }
+
+/* ---------- 8. Form control ---------- */
+input, select, textarea {
+  background-color: var(--rk-surface-2) !important;
+  border-color: var(--rk-border) !important;
+  color: var(--rk-text) !important;
+  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease;
+}
+input::placeholder, textarea::placeholder { color: #6b7c94 !important; }
+input:focus, select:focus, textarea:focus {
+  background-color: var(--rk-surface-3) !important;
+  border-color: var(--rk-accent) !important;
+  box-shadow: 0 0 0 3px rgba(45, 212, 191, .18) !important;
+}
+.focus\:bg-white:focus { background-color: var(--rk-surface-3) !important; }
+option { background-color: var(--rk-surface-2); color: var(--rk-text); }
+input[type="radio"], input[type="checkbox"] { accent-color: var(--rk-accent); }
+
+/* ---------- 9. Tabel ---------- */
+table { color: var(--rk-text); }
+thead th, thead td {
+  background-color: var(--rk-surface-2) !important;
+  color: var(--rk-text-2) !important;
+  border-color: var(--rk-border) !important;
+}
+tbody tr:hover { background-color: rgba(45, 212, 191, .06) !important; }
+tbody td { border-color: var(--rk-border-soft) !important; }
+
+/* ---------- 10. Bayangan & kedalaman ---------- */
+.shadow-xs, .shadow-sm, .shadow-md, .shadow-lg {
+  box-shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 32px -18px rgba(0,0,0,.9) !important;
+}
+
+/* ---------- 11. Sidebar & header ---------- */
+aside.bg-white { background-color: var(--rk-bg-2) !important; border-color: var(--rk-border) !important; }
+header.bg-white { background-color: rgba(11, 18, 32, .88) !important; backdrop-filter: blur(12px); }
+header.border-b { border-color: var(--rk-border) !important; }
+
+/* ---------- 12. Chip identitas (auth-guard) ---------- */
+#rabit-user-chip {
+  background: var(--rk-surface-2) !important;
+  border-color: var(--rk-border) !important;
+  color: var(--rk-text) !important;
+  box-shadow: 0 18px 40px -16px rgba(0,0,0,.95) !important;
+  backdrop-filter: blur(10px);
+  animation: rk-rise .35s ease-out both;
+}
+#rabit-user-chip span { color: inherit; }
+#rabit-user-chip > div > span:first-child { color: #f1f6ff !important; }
+
+/* ---------- 13. Animasi: hemat & hormati prefers-reduced-motion ---------- */
+@keyframes rk-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes rk-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes rk-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(45, 212, 191, .35); }
+  50%      { box-shadow: 0 0 0 6px rgba(45, 212, 191, 0); }
+}
+
+main > div > * { animation: rk-fade .35s ease-out both; }
+nav a { transition: background-color .16s ease, color .16s ease, transform .16s ease; }
+nav a:hover { transform: translateX(2px); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+  nav a:hover, a.rounded-xl.border:hover, a.rounded-lg.border:hover { transform: none; }
+}
+
+/* ==========================================================================
+   14. DOKUMEN CETAK — selalu terang.
+   Tema gelap hanya untuk layar; PDF/print harus putih agar hemat tinta
+   dan sesuai standar dokumen resmi RAB.
+   ========================================================================== */
+@media print {
+  :root {
+    --rk-bg: #ffffff; --rk-surface: #ffffff; --rk-surface-2: #ffffff;
+    --rk-surface-3: #f8fafc; --rk-border: #e2e8f0; --rk-border-soft: #eef2f7;
+    --rk-text: #0f172a; --rk-text-2: #475569; --rk-muted: #94a3b8;
+  }
+  html { color-scheme: light; }
+  body, body.bg-crm-bgCanvas { background: #ffffff !important; color: #0f172a !important; }
+  .text-slate-900, .text-slate-800, .text-slate-700, .text-slate-600,
+  .text-slate-500, .text-slate-400, .text-crm-textMuted { color: #0f172a !important; }
+  .bg-white, .bg-slate-50, .bg-slate-50\/80 { background-color: #ffffff !important; }
+  thead th { background-color: #f1f5f9 !important; color: #0f172a !important; }
+  * { box-shadow: none !important; animation: none !important; }
+}
+
+body.exporting-pdf { background: #ffffff !important; color: #0f172a !important; }
+body.exporting-pdf main,
+body.exporting-pdf .print-only,
+body.exporting-pdf section,
+body.exporting-pdf table,
+body.exporting-pdf .bg-white {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+}
+body.exporting-pdf * {
+  color: inherit !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: none !important;
+  animation: none !important;
+  opacity: 1 !important;
+}
+body.exporting-pdf thead th { background-color: #f1f5f9 !important; color: #0f172a !important; }
+body.exporting-pdf h1, body.exporting-pdf h2, body.exporting-pdf h3,
+body.exporting-pdf h4, body.exporting-pdf strong { color: #0f172a !important; }

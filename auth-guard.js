@@ -91,17 +91,17 @@
     wrap.style.cssText = [
       'position:fixed', 'right:16px', 'bottom:16px', 'z-index:9999',
       'display:flex', 'align-items:center', 'gap:10px',
-      'background:#ffffff', 'border:1px solid #e2e8f0',
+      'background:#131c2e', 'border:1px solid #263349',
       'border-radius:12px', 'padding:8px 10px',
-      'box-shadow:0 8px 24px rgba(15,23,42,.10)',
+      'box-shadow:0 18px 40px -16px rgba(0,0,0,.9)',
       'font-family:Inter,system-ui,sans-serif', 'font-size:11px',
-      'line-height:1.2', 'color:#334155'
+      'line-height:1.2', 'color:#aab8cd'
     ].join(';');
 
     var avatar = document.createElement('div');
     avatar.style.cssText = [
       'width:28px', 'height:28px', 'border-radius:50%',
-      'background:#1e4a42', 'color:#ffffff',
+      'background:linear-gradient(135deg,#0d9488,#34d399)', 'color:#06231f',
       'display:flex', 'align-items:center', 'justify-content:center',
       'font-weight:700', 'font-size:11px', 'flex-shrink:0'
     ].join(';');
@@ -111,11 +111,11 @@
     info.style.cssText = 'display:flex;flex-direction:column;gap:1px';
 
     var nameEl = document.createElement('span');
-    nameEl.style.cssText = 'font-weight:700;color:#0f172a;font-size:11px';
+    nameEl.style.cssText = 'font-weight:700;color:#f1f6ff;font-size:11px';
     nameEl.textContent = session.name || session.username || 'User';
 
     var roleEl = document.createElement('span');
-    roleEl.style.cssText = 'color:#94a3b8;font-size:10px';
+    roleEl.style.cssText = 'color:#7d8ca3;font-size:10px';
     roleEl.textContent = LABEL_BY_ROLE[session.role] || session.role;
 
     info.appendChild(nameEl);
@@ -125,20 +125,20 @@
     btn.type = 'button';
     btn.textContent = 'Keluar';
     btn.style.cssText = [
-      'margin-left:4px', 'border:1px solid #e2e8f0', 'background:#f8fafc',
-      'color:#475569', 'font-size:10px', 'font-weight:700',
+      'margin-left:4px', 'border:1px solid #263349', 'background:#182236',
+      'color:#aab8cd', 'font-size:10px', 'font-weight:700',
       'padding:5px 9px', 'border-radius:8px', 'cursor:pointer',
       'font-family:inherit', 'transition:all .15s', 'line-height:1.4'
     ].join(';');
     btn.onmouseenter = function () {
-      btn.style.background = '#fee2e2';
-      btn.style.borderColor = '#fecaca';
-      btn.style.color = '#b91c1c';
+      btn.style.background = 'rgba(248,113,113,.16)';
+      btn.style.borderColor = 'rgba(248,113,113,.4)';
+      btn.style.color = '#fca5a5';
     };
     btn.onmouseleave = function () {
-      btn.style.background = '#f8fafc';
-      btn.style.borderColor = '#e2e8f0';
-      btn.style.color = '#475569';
+      btn.style.background = '#182236';
+      btn.style.borderColor = '#263349';
+      btn.style.color = '#aab8cd';
     };
     btn.addEventListener('click', logout);
 
