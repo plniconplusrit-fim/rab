@@ -18,12 +18,13 @@
 
   /* Matriks akses: file -> daftar role yang boleh membukanya */
   var PAGE_ACCESS = {
-    'dashboard.html':   ['admin'],
-    'conven.html':      ['admin'],
-    'ftth.html':        ['admin'],
-    'ftthxconven.html': ['admin'],
-    'riwayat.html':     ['admin'],
-    'smart-rab.html':   ['admin', 'smart_rab_only']
+    'dashboard.html':    ['admin'],
+    'conven.html':       ['admin'],
+    'ftth.html':         ['admin'],
+    'ftthxconven.html':  ['admin'],
+    'riwayat.html':      ['admin'],
+    'berita-acara.html': ['admin'],
+    'smart-rab.html':    ['admin', 'smart_rab_only']
   };
 
   var LABEL_BY_ROLE = {
@@ -165,8 +166,13 @@
       }
     });
 
+    /* Logo/brand di header sidebar: selalu tampil; untuk role non-admin
+       diarahkan ke home role-nya. Link di dalam <nav> (menu) TIDAK disentuh
+       di sini — visibilitasnya sudah diatur loop di atas dan tidak boleh
+       dibalikkan. */
     var brandLinks = document.querySelectorAll('aside a[href*="dashboard"]');
     brandLinks.forEach(function (brandLink) {
+      if (brandLink.closest('nav')) return;
       brandLink.style.display = '';
       if (session.role !== 'admin') {
         brandLink.setAttribute('href', homeFor(session.role));
