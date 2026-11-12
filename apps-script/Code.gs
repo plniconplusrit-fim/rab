@@ -99,7 +99,8 @@ function secret() {
   var s = PropertiesService.getScriptProperties().getProperty(SECRET_PROP);
   if (!s) {
     throw new Error(
-      'RABIT_SECRET belum diset di Project Settings > Script properties.'
+      'Properti "' + SECRET_PROP + '" belum diset di Project Settings > Script properties. ' +
+      '(Nama harus tepat RABIT_SECRET, tanpa spasi.)'
     );
   }
   return s;
@@ -107,6 +108,15 @@ function secret() {
 
 function base64UrlEncode(str) {
   return Utilities.base64EncodeWebSafe(str, Utilities.Charset.UTF_8).replace(/=+$/, '');
+}
+
+/**
+ * Ubah byte array (hasil HMAC) menjadi base64url tanpa padding.
+ * WAJIB dipakai untuk signature: computeHmacSha256Signature mengembalikan
+ * number[], dan base64EncodeWebSafe menolak kombinasi (number[], Charset).
+ */
+function bytesToBase64Url(bytes) {
+  return Utilities.base64EncodeWebSafe(bytes).replace(/=+$/, '');
 }
 
 function base64UrlDecode(str) {
@@ -129,7 +139,7 @@ function buatToken(username) {
   };
 
   var body = base64UrlEncode(JSON.stringify(payload));
-  var sig = base64UrlEncode(Utilities.computeHmacSha256Signature(body, secret()));
+  var sig = bytesToBase64Url(Utilities.computeHmacSha256Signature(body, secret()));
   return body + '.' + sig;
 }
 
@@ -146,7 +156,7 @@ function verifikasiToken(token) {
   // Bila RABIT_SECRET belum diset, tolak dengan aman (jangan lempar error).
   var expected;
   try {
-    expected = base64UrlEncode(Utilities.computeHmacSha256Signature(body, secret()));
+    expected = bytesToBase64Url(Utilities.computeHmacSha256Signature(body, secret()));
   } catch (e) {
     return null;
   }

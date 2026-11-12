@@ -30,8 +30,17 @@ global.Utilities = {
     const buf = crypto.createHmac('sha256', key).update(value, 'utf8').digest();
     return Array.from(buf).map(b => (b > 127 ? b - 256 : b));
   },
-  base64EncodeWebSafe(str) {
-    return Buffer.from(String(str), 'utf8').toString('base64')
+  base64EncodeWebSafe(data, charset) {
+    // Meniru Apps Script: array byte + Charset TIDAK valid -> lempar error.
+    // Ini menangkap bug pemakaian computeHmacSha256Signature (number[]).
+    if (Array.isArray(data) && charset) {
+      throw new Error('Parameter (number[],Utilities.Charset) tidak cocok dengan tanda tangan metode untuk Utilities.base64EncodeWebSafe.');
+    }
+    if (Array.isArray(data)) {
+      var buf = Buffer.from(data.map(function (b) { return b < 0 ? b + 256 : b; }));
+      return buf.toString('base64').replace(/\+/g, '-').replace(/\//g, '_');
+    }
+    return Buffer.from(String(data), 'utf8').toString('base64')
       .replace(/\+/g, '-').replace(/\//g, '_');
   },
   base64DecodeWebSafe(str) {
