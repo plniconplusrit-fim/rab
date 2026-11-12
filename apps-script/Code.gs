@@ -1,23 +1,25 @@
 /**
- * RABIT — Auth & API Server (Google Apps Script)
+ * RABIT — Server (Google Apps Script)
  * ============================================================================
- * Tempel file ini ke editor Apps Script (script.google.com) pada project yang
- * SAMA dengan yang selama ini menangani simpan RAB ke Drive/Sheets, lalu
- * Deploy > Manage deployments > Edit > Version: New version > Deploy.
+ * GABUNGAN kode asli (simpan PDF ke Drive + catat riwayat ke Sheets) dengan
+ * lapisan autentikasi baru (login hash + token bertanda tangan).
  *
- * Yang berubah dibanding versi lama:
- *   1. Password TIDAK lagi disimpan di HTML. Daftar user ada di sini, disimpan
- *      sebagai hash SHA-256 + salt. Nilai plaintext tidak pernah ada di repo.
- *   2. doPost('login') menerbitkan token bertanda tangan (HMAC-SHA256) berlaku
- *      8 jam. Token inilah yang dipakai untuk semua operasi sesudahnya.
- *   3. Setiap operasi data (simpan RAB, baca riwayat) WAJIB menyertakan token
- *      yang valid. Tanpa token -> ditolak.
+ * CARA PASANG:
+ *   1. Buka project Apps Script yang sudah berjalan.
+ *   2. Backup dulu: File > Make a copy.
+ *   3. Ganti SELURUH isi Code.gs dengan file ini.
+ *   4. Project Settings > Script properties > tambah RABIT_SECRET (wajib).
+ *   5. Deploy > Manage deployments > pensil > Version: New version > Deploy
+ *      (Execute as: Me, Who has access: Anyone).
  *
- * KONFIGURASI AWAL (wajib, sekali):
- *   Buka Project Settings > Script properties, tambahkan:
- *     RABIT_SECRET  = <string acak panjang>   (dipakai untuk tanda tangan token)
- *   Buat dengan: bash -c "openssl rand -hex 32"
- *   JANGAN taruh secret ini di kode atau di repo.
+ * YANG DIPERTAHANKAN DARI KODE ASLI (perilaku tidak diubah):
+ *   - FOLDER_ID Anda: 1Y9maql4IUTnGljkSVSd_t89QL0RxQOB2
+ *   - File PDF di-share ANYONE_WITH_LINK agar preview web berjalan
+ *   - previewUrl berformat /preview (dipakai iframe di riwayat.html)
+ *   - Urutan riwayat: terbaru -> terlama
+ *   - Filter pencarian q pada Nomor RAB / Judul / Lokasi
+ *   - Format tanggal simpan: yyyy-MM-dd HH:mm zona GMT+8
+ *   - Bentuk respons: { status, data } dan { status, message, fileId, previewUrl }
  * ============================================================================
  */
 
@@ -25,33 +27,21 @@
 // KONFIGURASI
 // ---------------------------------------------------------------------------
 
+/** Folder Drive tujuan PDF (dari kode asli, jangan diubah). */
+var FOLDER_ID = '1Y9maql4IUTnGljkSVSd_t89QL0RxQOB2';
+
 /** Umur token (detik). 8 jam. */
 var TOKEN_TTL_SECONDS = 8 * 60 * 60;
 
-/** Nama Script Property yang menyimpan kunci tanda tangan. */
+/** Nama Script Property yang menyimpan kunci tanda tangan token. */
 var SECRET_PROP = 'RABIT_SECRET';
-
-/** ID Spreadsheet riwayat. Kosongkan bila skrip terikat (bound) ke Sheet. */
-var SPREADSHEET_ID = '';
-
-/** Nama sheet riwayat. */
-var SHEET_NAME = 'Riwayat';
-
-/** Folder Drive tujuan PDF. Kosongkan = root Drive. */
-var DRIVE_FOLDER_ID = '';
 
 // ---------------------------------------------------------------------------
 // DAFTAR USER
 // ---------------------------------------------------------------------------
-// Format: username -> { name, role, salt, hash }
-// hash = SHA-256(salt + ':' + password) dalam hex.
-//
-// Password sudah diganti (tidak lagi 'admin', 'rabit123', '12345').
-// Untuk membuat hash password baru, jalankan buatHashPassword('passwordbaru')
-// dari editor Apps Script, atau (lebih mudah) jalankan di terminal repo:
-//   node apps-script/siapkan-user.js
-//
-// Akun yang terdaftar saat ini: 'boge' (admin) dan 'iconmks' (smart RAB saja).
+// hash = SHA-256(salt + ':' + password) dalam bentuk hex.
+// Password plaintext TIDAK pernah disimpan di sini.
+// Tambah akun dengan: node apps-script/siapkan-user.js
 var USERS = {
   'boge': {
     name: 'boge',
@@ -67,9 +57,19 @@ var USERS = {
   }
 };
 
-// ---------------------------------------------------------------------------
-// UTIL KRIPTO
-// ---------------------------------------------------------------------------
+// ===========================================================================
+// UTIL: RESPONS
+// ===========================================================================
+
+function jsonRes(obj) {
+  return ContentService
+    .createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+// ===========================================================================
+// UTIL: KRIPTO
+// ===========================================================================
 
 function sha256Hex(text) {
   var raw = Utilities.computeDigest(
@@ -114,7 +114,7 @@ function base64UrlDecode(str) {
   return Utilities.newBlob(Utilities.base64DecodeWebSafe(str + pad)).getDataAsString();
 }
 
-/** Buat token: base64(payload) + '.' + base64(hmac) */
+/** Buat token: base64url(payload) + '.' + base64url(hmac) */
 function buatToken(username) {
   var user = USERS[username];
   if (!user) throw new Error('User tidak dikenal');
@@ -143,7 +143,14 @@ function verifikasiToken(token) {
   var body = parts[0];
   var sig = parts[1];
 
-  var expected = base64UrlEncode(Utilities.computeHmacSha256Signature(body, secret()));
+  // Bila RABIT_SECRET belum diset, tolak dengan aman (jangan lempar error).
+  var expected;
+  try {
+    expected = base64UrlEncode(Utilities.computeHmacSha256Signature(body, secret()));
+  } catch (e) {
+    return null;
+  }
+
   if (!safeEquals(sig, expected)) return null;
 
   var payload;
@@ -154,16 +161,76 @@ function verifikasiToken(token) {
   }
 
   var now = Math.floor(Date.now() / 1000);
-  if (!payload.exp || payload.exp < now) return null;
-  if (!payload.u || !USERS[payload.u]) return null;
+  if (!payload.exp || payload.exp < now) return null;   // kedaluwarsa
+  if (!payload.u || !USERS[payload.u]) return null;      // user sudah dihapus
 
   return payload;
 }
 
-// ---------------------------------------------------------------------------
-// ENTRY POINT
-// ---------------------------------------------------------------------------
+/**
+ * Ambil token dari request. Menerima beberapa bentuk agar kompatibel:
+ *   1. body.token             -> POST (dipakai rab-auth.js)
+ *   2. e.parameter.token      -> GET  (?token=...)
+ */
+function tokenDariRequest(e, body) {
+  if (body && body.token) return String(body.token);
+  if (e && e.parameter && e.parameter.token) return String(e.parameter.token);
+  return '';
+}
 
+// ===========================================================================
+// GET — riwayat RAB (kini WAJIB token)
+// ===========================================================================
+function doGet(e) {
+  try {
+    var payload = verifikasiToken(tokenDariRequest(e, null));
+    if (!payload) {
+      return jsonRes({ status: 'error', message: 'Unauthorized' });
+    }
+
+    // ---- sisa logika kode asli, perilaku tidak diubah ----
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var rows = sheet.getDataRange().getValues();
+
+    if (rows.length <= 1) {
+      return jsonRes({ status: 'success', data: [] });
+    }
+
+    var headers = rows[0];
+    var data = [];
+
+    // Ambil data dari baris terbaru ke terlama
+    for (var i = rows.length - 1; i >= 1; i--) {
+      var item = {};
+      for (var j = 0; j < headers.length; j++) {
+        item[headers[j]] = rows[i][j];
+      }
+      data.push(item);
+    }
+
+    // Jika ada filter pencarian (q)
+    var q = (e && e.parameter && e.parameter.q)
+      ? String(e.parameter.q).toLowerCase()
+      : null;
+    var filtered = data;
+    if (q) {
+      filtered = data.filter(function (it) {
+        return String(it['Nomor RAB']).toLowerCase().indexOf(q) > -1 ||
+               String(it['Judul']).toLowerCase().indexOf(q) > -1 ||
+               String(it['Lokasi']).toLowerCase().indexOf(q) > -1;
+      });
+    }
+
+    return jsonRes({ status: 'success', data: filtered });
+
+  } catch (error) {
+    return jsonRes({ status: 'error', message: error.toString() });
+  }
+}
+
+// ===========================================================================
+// POST — login + simpan RAB
+// ===========================================================================
 function doPost(e) {
   try {
     var body = {};
@@ -173,9 +240,17 @@ function doPost(e) {
 
     var action = body.action || 'simpanRab';
 
+    // Login tidak butuh token (justru menghasilkan token).
+    if (action === 'login') {
+      return jsonRes(handleLogin(body));
+    }
+
+    // Aksi lain wajib token.
+    if (!verifikasiToken(tokenDariRequest(e, body))) {
+      return jsonRes({ status: 'error', message: 'Unauthorized' });
+    }
+
     switch (action) {
-      case 'login':
-        return jsonRes(handleLogin(body));
       case 'riwayat':
         return jsonRes(handleRiwayat(body));
       case 'simpanRab':
@@ -183,32 +258,15 @@ function doPost(e) {
       default:
         return jsonRes({ status: 'error', message: 'Action tidak dikenal' });
     }
+
   } catch (err) {
-    return jsonRes({ status: 'error', message: String(err && err.message || err) });
+    return jsonRes({ status: 'error', message: String((err && err.message) || err) });
   }
 }
 
-/** GET tetap dipertahankan untuk kompatibilitas, tapi kini WAJIB token. */
-function doGet(e) {
-  var token = (e && e.parameter && e.parameter.token) || '';
-  var payload = verifikasiToken(token);
-
-  if (!payload) {
-    return jsonRes({ status: 'error', message: 'Unauthorized' });
-  }
-  return jsonRes(handleRiwayat({ token: token }));
-}
-
-function jsonRes(obj) {
-  return ContentService
-    .createTextOutput(JSON.stringify(obj))
-    .setMimeType(ContentService.MimeType.JSON);
-}
-
-// ---------------------------------------------------------------------------
-// HANDLER
-// ---------------------------------------------------------------------------
-
+// ===========================================================================
+// HANDLER: LOGIN
+// ===========================================================================
 function handleLogin(body) {
   var username = String(body.username || '').trim().toLowerCase();
   var password = String(body.password || '');
@@ -227,7 +285,7 @@ function handleLogin(body) {
     }
   }
 
-  // Pesan error seragam: jangan bocorkan apakah username ada atau tidak.
+  // Pesan seragam: jangan bocorkan apakah username terdaftar atau tidak.
   var GAGAL = { status: 'error', message: 'Username atau password salah' };
   if (!user) return GAGAL;
 
@@ -242,109 +300,132 @@ function handleLogin(body) {
   };
 }
 
+// ===========================================================================
+// HANDLER: RIWAYAT (untuk POST action=riwayat)
+// ===========================================================================
+// Catatan: fungsi ini mengembalikan OBJEK data, bukan ContentService output.
+// doGet() sudah membungkus sendiri hasilnya, jadi tidak boleh didelegasikan
+// langsung — kalau didelegasikan, respons jadi {status: undefined}.
 function handleRiwayat(body) {
-  var payload = verifikasiToken(body.token);
+  var payload = verifikasiToken(body && body.token);
   if (!payload) {
     return { status: 'error', message: 'Unauthorized' };
   }
 
-  var sheet = ambilSheet();
-  var values = sheet.getDataRange().getValues();
-  if (values.length < 2) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var rows = sheet.getDataRange().getValues();
+
+  if (rows.length <= 1) {
     return { status: 'success', data: [] };
   }
 
-  var headers = values[0];
-  var rows = values.slice(1).map(function (row) {
-    var obj = {};
-    headers.forEach(function (h, i) { obj[h] = row[i]; });
-    return obj;
-  });
+  var headers = rows[0];
+  var data = [];
 
-  return { status: 'success', data: rows };
+  // Urutan sama seperti kode asli: terbaru -> terlama
+  for (var i = rows.length - 1; i >= 1; i--) {
+    var item = {};
+    for (var j = 0; j < headers.length; j++) {
+      item[headers[j]] = rows[i][j];
+    }
+    data.push(item);
+  }
+
+  var q = body.q ? String(body.q).toLowerCase() : null;
+  var filtered = data;
+  if (q) {
+    filtered = data.filter(function (it) {
+      return String(it['Nomor RAB']).toLowerCase().indexOf(q) > -1 ||
+             String(it['Judul']).toLowerCase().indexOf(q) > -1 ||
+             String(it['Lokasi']).toLowerCase().indexOf(q) > -1;
+    });
+  }
+
+  return { status: 'success', data: filtered };
 }
 
+// ===========================================================================
+// HANDLER: SIMPAN RAB (logika kode asli dipertahankan)
+// ===========================================================================
 function handleSimpanRab(body) {
-  var payload = verifikasiToken(body.token);
-  if (!payload) {
-    return { status: 'error', message: 'Unauthorized' };
+  var nomorRab = body.nomorRab;
+  var judul = body.judul;
+  var lokasi = body.lokasi;
+  var tipeRab = body.tipeRab;
+  var tanggal = body.tanggal;
+  var totalBiaya = body.totalBiaya;
+  var pdfBase64 = body.pdfBase64;
+  var fileName = body.fileName;
+
+  if (!pdfBase64) {
+    return { status: 'error', message: 'Data PDF kosong' };
   }
 
-  if (!body.pdfBase64 || !body.fileName) {
-    return { status: 'error', message: 'Data tidak lengkap' };
-  }
-
-  // Simpan PDF ke Drive
-  var base64 = String(body.pdfBase64).replace(/^data:application\/pdf;base64,/, '');
+  // A. Simpan file PDF ke Folder Google Drive
+  var folder = DriveApp.getFolderById(FOLDER_ID);
+  var cleanBase64 = String(pdfBase64).replace(/^data:application\/pdf;base64,/, '');
+  var decodedBytes = Utilities.base64Decode(cleanBase64);
   var blob = Utilities.newBlob(
-    Utilities.base64Decode(base64),
+    decodedBytes,
     'application/pdf',
-    body.fileName
+    fileName || ('RAB_' + nomorRab + '.pdf')
   );
-
-  var folder = DRIVE_FOLDER_ID ? DriveApp.getFolderById(DRIVE_FOLDER_ID) : DriveApp.getRootFolder();
   var file = folder.createFile(blob);
-  file.setSharing(DriveApp.Access.DOMAIN_WITH_LINK, DriveApp.Permission.VIEW);
 
-  // Catat ke Sheets
-  var sheet = ambilSheet();
+  // Set izin agar file bisa dilihat melalui preview web
+  file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+
+  var fileId = file.getId();
+  var previewUrl = 'https://drive.google.com/file/d/' + fileId + '/preview';
+
+  // B. Catat Riwayat ke Spreadsheet
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   sheet.appendRow([
-    body.nomorRab || '',
-    body.judul || '',
-    body.lokasi || '',
-    body.tipeRab || '',
-    new Date(),
-    Number(body.totalBiaya) || 0,
-    file.getId(),
-    'https://drive.google.com/file/d/' + file.getId() + '/view',
-    payload.u
+    nomorRab || '-',
+    judul || '-',
+    lokasi || '-',
+    tipeRab || '-',
+    tanggal || Utilities.formatDate(new Date(), 'GMT+8', 'yyyy-MM-dd HH:mm'),
+    totalBiaya || 0,
+    fileId,
+    previewUrl
   ]);
 
   return {
     status: 'success',
-    message: 'Tersimpan',
-    fileId: file.getId(),
-    url: 'https://drive.google.com/file/d/' + file.getId() + '/view'
+    message: 'Berhasil disimpan ke Google Drive dan Riwayat!',
+    fileId: fileId,
+    previewUrl: previewUrl
   };
 }
 
-function ambilSheet() {
-  var ss = SPREADSHEET_ID
-    ? SpreadsheetApp.openById(SPREADSHEET_ID)
-    : SpreadsheetApp.getActiveSpreadsheet();
+// ===========================================================================
+// ALAT BANTU (jalankan manual dari editor Apps Script)
+// ===========================================================================
 
-  var sheet = ss.getSheetByName(SHEET_NAME);
-  if (!sheet) {
-    sheet = ss.insertSheet(SHEET_NAME);
-    sheet.appendRow([
-      'Nomor RAB', 'Judul', 'Lokasi', 'Tipe RAB (CONVEN / FTTH / FTTH 6 CORE)',
-      'Tanggal', 'Total Biaya', 'File ID', 'URL Drive', 'Dibuat Oleh'
-    ]);
+/** Uji cepat: token dibuat & diverifikasi dengan benar? */
+function tesToken() {
+  var nama = Object.keys(USERS);
+  if (!nama.length) {
+    Logger.log('USERS kosong');
+    return;
   }
-  return sheet;
+  var t = buatToken(nama[0]);
+  var p = verifikasiToken(t);
+  Logger.log('Akun terdaftar: ' + nama.join(', '));
+  Logger.log('token valid = ' + (p ? 'YA (' + p.u + ', role=' + p.r + ')' : 'TIDAK'));
 }
 
-// ---------------------------------------------------------------------------
-// ALAT BANTU PEMBUATAN USER (jalankan manual dari editor)
-// ---------------------------------------------------------------------------
+/** Uji bahwa akses tanpa token ditolak. */
+function tesTanpaToken() {
+  var hasil = doGet({ parameter: {} });
+  Logger.log('tanpa token -> ' + hasil.getContent());
+}
 
-/**
- * Jalankan dari editor Apps Script untuk membuat salt+hash password baru.
- * Hasilnya disalin ke objek USERS di atas.
- *
- * Contoh: buatHashPassword('PasswordBaruYangKuat123!')
- */
+/** Buat salt+hash password baru tanpa perlu Node.js. */
 function buatHashPassword(password) {
   var salt = Utilities.getUuid();
   var hash = sha256Hex(salt + ':' + password);
-  var hasil = { salt: salt, hash: hash };
-  Logger.log(JSON.stringify(hasil, null, 2));
-  return hasil;
-}
-
-/** Uji cepat: pastikan token dibuat & diverifikasi dengan benar. */
-function tesToken() {
-  var t = buatToken(Object.keys(USERS)[0]);
-  var p = verifikasiToken(t);
-  Logger.log('token valid = ' + (p ? 'YA (' + p.u + ')' : 'TIDAK'));
+  Logger.log(JSON.stringify({ salt: salt, hash: hash }, null, 2));
+  return { salt: salt, hash: hash };
 }

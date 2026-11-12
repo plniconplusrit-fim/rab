@@ -70,7 +70,12 @@
       // Format baru: { token, user }
       if (data && data.token) {
         var p = decodePayload(data.token);
-        if (!p || !p.exp) return null;
+        // Token tidak bisa dibaca (rusak/dipotong) -> buang sesinya,
+        // jangan biarkan tersimpan dan gagal berulang di setiap muat halaman.
+        if (!p || !p.exp) {
+          localStorage.removeItem(SESSION_KEY);
+          return null;
+        }
         if (p.exp * 1000 < Date.now()) {
           localStorage.removeItem(SESSION_KEY);
           return null;
