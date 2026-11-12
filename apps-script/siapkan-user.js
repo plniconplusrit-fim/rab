@@ -45,9 +45,20 @@ async function tanya(q) {
   return String(v).trim();
 }
 
-/* Password: di TTY disembunyikan; saat dipipe dibaca seperti baris biasa. */
+/* Password: disembunyikan hanya bila terminal benar-benar mendukung raw mode.
+   Di Command Prompt (cmd) Windows, setRawMode tidak berfungsi walau isTTY=true,
+   sehingga ketikan hilang dan skrip menganggap password kosong. */
 async function tanyaPassword(q) {
-  if (!process.stdin.isTTY) {
+  var bisaRaw = false;
+  try {
+    bisaRaw = process.stdin.isTTY &&
+              typeof process.stdin.setRawMode === 'function' &&
+              process.platform !== 'win32';   // cmd/PowerShell: pakai input biasa
+  } catch (e) {
+    bisaRaw = false;
+  }
+
+  if (!bisaRaw) {
     return tanya(q);
   }
 
