@@ -14,32 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..24,300..500,0..1,-50..200" rel="stylesheet"/>
 
   <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
-
-  <script>
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-          },
-          colors: {
-            crm: {
-              active: '#1e4a42',       // Hijau gelap khas iCRM
-              activeHover: '#163b35',
-              blue: '#00529b',         // Biru logo iCRM
-              textMuted: '#52606d',    // Warna teks menu inaktif
-              border: '#e2e8f0',       // Border slate halus
-              bgCanvas: '#f8fafc',     // Latar belakang halaman
-              card: '#ffffff'
-            }
-          }
-        }
-      }
-    }
-  </script>
-  
+  <link rel="stylesheet" href="aset/tailwind.css?v=1"/>
   <style>
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -361,6 +336,7 @@
 </div>
 
 <!-- Script Logika & Simpan RAB -->
+<script src="rab-core.js?v=1"></script>
 <script>
     let installationItems = [
         { id: 1, desc: "PEMBUATAN DOKUMENTASI TEKNIS", unit: "LOT", qty: 1, price: 383030, formula: null, editing: false, isCalculated: false },
@@ -376,287 +352,54 @@
         { id: 4, desc: "FOC,DropWire3SlgSC-UPC,1F,250m,FIBERHOME", unit: "U", qty: 1, price: 132248, editing: false, isCalculated: false },
         { id: 5, desc: "GPON,ONT HG6045D1 2*GE+1*POTS,FIBERHOME", unit: "U", qty: 0, price: 299000, editing: false, isCalculated: false }
     ];
-
-    function toggleHeaderEdit(show) {
-        const display = document.getElementById('header-display');
-        const edit = document.getElementById('header-edit');
-        const inputTitle = document.getElementById('input-title');
-        const inputSubtitle = document.getElementById('input-subtitle');
-
-        if (show) {
-            inputTitle.value = document.getElementById('title-text').innerText;
-            inputSubtitle.value = document.getElementById('subtitle-text').innerText;
-            display.classList.add('hidden');
-            edit.classList.remove('hidden');
-            edit.classList.add('flex');
-            inputTitle.focus();
-        } else {
-            edit.classList.add('hidden');
-            edit.classList.remove('flex');
-            display.classList.remove('hidden');
+    // =====================================================================
+    // Konfigurasi halaman — satu-satunya bagian yang berbeda antar halaman.
+    // =====================================================================
+    const KONFIG = {
+        tipe: "FTTH",
+        defaultTitle: "RAB AKTIVASI VIA FTTH",
+        defaultSubtitle: "TECHNICAL ACTIVATION COST ESTIMATION",
+    formulaTrigger: null,
+        formula: null,
+        ids: {
+            tbodyInstall: "installation-body",
+            tbodyHardware: "hardware-body",
+            subtotalInstall: "subtotal-installation",
+            subtotalHardware: "subtotal-hardware",
+            grandTotal: "grand-total"
         }
-    }
-
-    function saveHeader() {
-        const title = document.getElementById('input-title').value.trim() || "RAB AKTIVASI VIA FTTH";
-        const subtitle = document.getElementById('input-subtitle').value.trim() || "TECHNICAL ACTIVATION COST ESTIMATION";
-        document.getElementById('title-text').innerText = title;
-        document.getElementById('subtitle-text').innerText = subtitle;
-        document.getElementById('print-title').innerText = title;
-        document.getElementById('print-subtitle').innerText = subtitle;
-        toggleHeaderEdit(false);
-    }
-
-    function formatIDR(num) {
-        return "Rp " + Math.round(num).toLocaleString('id-ID');
-    }
-
-    function renderTables() {
-        renderTable('installation-body', installationItems, 'install');
-        renderTable('hardware-body', hardwareItems, 'hardware');
-        updateTotals();
-    }
-
-    function renderTable(tbodyId, items, type) {
-        const tbody = document.getElementById(tbodyId);
-        tbody.innerHTML = '';
-
-        items.forEach((item, index) => {
-            const total = item.qty * item.price;
-            const isStriped = index % 2 !== 0 ? 'bg-slate-50/50' : 'bg-white';
-            const rowClass = `${isStriped} hover:bg-slate-100/60 transition-colors ${item.editing ? 'bg-emerald-50/30' : ''}`;
-            
-            let contentCells = '';
-            let actionButtons = '';
-
-            if (item.editing) {
-                const qtyInput = item.isCalculated 
-                    ? `<div class="w-16 mx-auto block p-1 bg-slate-100 border border-slate-200 rounded text-xs text-center font-mono text-slate-400">${item.qty}</div>`
-                    : `<input type="number" value="${item.qty}" onchange="updateItemQty('${type}', ${item.id}, this.value)" class="w-16 mx-auto block p-1 bg-white border border-slate-200 rounded text-xs text-center font-mono focus:ring-1 focus:ring-crm-active focus:border-crm-active"/>`;
-
-                contentCells = `
-                    <td class="px-4 py-2.5"><input type="text" value="${item.desc}" onchange="updateItemField('${type}', ${item.id}, 'desc', this.value)" class="w-full p-1 bg-white border border-slate-200 rounded text-xs focus:ring-1 focus:ring-crm-active focus:border-crm-active"/></td>
-                    <td class="px-4 py-2.5"><input type="text" value="${item.unit}" onchange="updateItemField('${type}', ${item.id}, 'unit', this.value)" class="w-16 mx-auto block p-1 bg-white border border-slate-200 rounded text-xs text-center focus:ring-1 focus:ring-crm-active focus:border-crm-active"/></td>
-                    <td class="px-4 py-2.5">${qtyInput}</td>
-                    <td class="px-4 py-2.5"><input type="number" value="${item.price}" onchange="updateItemField('${type}', ${item.id}, 'price', parseFloat(this.value))" class="w-28 ml-auto block p-1 bg-white border border-slate-200 rounded text-xs text-right font-mono focus:ring-1 focus:ring-crm-active focus:border-crm-active"/></td>
-                `;
-                actionButtons = `
-                    <button onclick="toggleEdit('${type}', ${item.id}, false)" class="text-crm-active hover:bg-emerald-50 p-1 rounded-md transition-colors" title="Simpan">
-                        <span class="material-symbols-outlined text-base">check</span>
-                    </button>
-                `;
-            } else {
-                const qtyDisplay = item.isCalculated 
-                    ? `<span class="inline-flex items-center gap-1 text-crm-active/80 font-mono text-xs" title="Otomatis terhitung"><span class="material-symbols-outlined text-[11px]">functions</span>${item.qty}</span>`
-                    : `<span class="font-mono text-xs">${item.qty}</span>`;
-
-                contentCells = `
-                    <td class="px-4 py-3 font-medium text-slate-800 text-xs">${item.desc}</td>
-                    <td class="px-4 py-3 text-center text-slate-500 text-xs">${item.unit}</td>
-                    <td class="px-4 py-3 text-center">${qtyDisplay}</td>
-                    <td class="px-4 py-3 text-right font-mono text-slate-600 text-xs">${formatIDR(item.price)}</td>
-                `;
-                actionButtons = `
-                    <button onclick="toggleEdit('${type}', ${item.id}, true)" class="text-slate-400 hover:text-crm-active p-1 rounded-md transition-colors" title="Edit">
-                        <span class="material-symbols-outlined text-[17px]">edit</span>
-                    </button>
-                    <button onclick="removeItem('${type}', ${item.id})" class="text-slate-400 hover:text-rose-600 p-1 rounded-md transition-colors" title="Hapus">
-                        <span class="material-symbols-outlined text-[17px]">delete</span>
-                    </button>
-                `;
-            }
-
-            tbody.innerHTML += `
-                <tr class="${rowClass}">
-                    <td class="px-4 py-3 text-center text-slate-400 font-mono text-xs">${index + 1}</td>
-                    ${contentCells}
-                    <td class="px-4 py-3 text-right font-mono font-semibold text-slate-900 text-xs">${formatIDR(total)}</td>
-                    <td class="no-print px-4 py-3">
-                        <div class="flex items-center justify-center gap-1">
-                            ${actionButtons}
-                        </div>
-                    </td>
-                </tr>
-            `;
-        });
-    }
-
-    function updateItemField(type, id, field, val) {
-        const list = type === 'install' ? installationItems : hardwareItems;
-        const item = list.find(i => i.id === id);
-        if (item) {
-            item[field] = val;
-            if (field === 'price' || field === 'qty') updateTotals();
-        }
-    }
-
-    function updateItemQty(type, id, val) {
-        const newQty = parseFloat(val) || 0;
-        const list = type === 'install' ? installationItems : hardwareItems;
-        const item = list.find(i => i.id === id);
-        
-        if (item) {
-            item.qty = newQty;
-            if (type === 'install' && item.id === 4) {
-                applyFormulas(newQty);
-            }
-            renderTables();
-        }
-    }
-
-    function applyFormulas(qty) {
-        // Logika formula FTTH
-    }
-
-    function toggleEdit(type, id, state) {
-        const list = type === 'install' ? installationItems : hardwareItems;
-        const item = list.find(i => i.id === id);
-        if (item) {
-            item.editing = state;
-            renderTables();
-        }
-    }
-
-    function addItem(type) {
-        const list = type === 'install' ? installationItems : hardwareItems;
-        const newId = list.length > 0 ? Math.max(...list.map(i => i.id)) + 1 : 1;
-        const newItem = {
-            id: newId,
-            desc: "Item Baru",
-            unit: "U",
-            qty: 1,
-            price: 0,
-            editing: true,
-            isCalculated: false
-        };
-        list.push(newItem);
-        renderTables();
-    }
-
-    function removeItem(type, id) {
-        if (confirm('Hapus item ini?')) {
-            if (type === 'install') {
-                installationItems = installationItems.filter(i => i.id !== id);
-            } else {
-                hardwareItems = hardwareItems.filter(i => i.id !== id);
-            }
-            renderTables();
-        }
-    }
-
-    function updateTotals() {
-        const subTotalInstall = installationItems.reduce((acc, item) => acc + (item.qty * item.price), 0);
-        const subTotalHardware = hardwareItems.reduce((acc, item) => acc + (item.qty * item.price), 0);
-        
-        document.getElementById('subtotal-installation').innerText = formatIDR(subTotalInstall);
-        document.getElementById('subtotal-hardware').innerText = formatIDR(subTotalHardware);
-        document.getElementById('grand-total').innerText = formatIDR(subTotalInstall + subTotalHardware);
-    }
-
-    renderTables();
+    };
 
     const GAS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxhcvWu9rQ2Fu8RCBzGLUJ3r22b3E3owWM8SOzjqsoJL5zMvuQhBzb6MzATZf2I7C-DIA/exec";
 
-    async function simpanRAB(tipe) {
-        const inputTitle = document.getElementById('input-title');
-        const displayTitle = document.getElementById('title-text');
-        const judul = (inputTitle && inputTitle.value.trim()) ? inputTitle.value.trim() : (displayTitle ? displayTitle.innerText.trim() : `RAB AKTIVASI VIA ${tipe}`);
-
-        const inputSubtitle = document.getElementById('input-subtitle');
-        const displaySubtitle = document.getElementById('subtitle-text');
-        let subNama = (inputSubtitle && inputSubtitle.value.trim()) ? inputSubtitle.value.trim() : (displaySubtitle ? displaySubtitle.innerText.trim() : "Pelanggan");
-
-        const subNamaBersih = subNama.replace(/[\\/:*?"<>|]/g, "_");
-        const tipeClean = tipe.replace(/\s+/g, '');
-        const defaultFileName = `RAB_${tipeClean}_${subNamaBersih}`;
-
-        const customName = prompt("Konfirmasi / Edit nama file PDF sebelum disimpan:", defaultFileName);
-
-        if (!customName || customName.trim() === "") {
-            return;
-        }
-
-        const finalFileName = customName.trim().endsWith(".pdf") ? customName.trim() : `${customName.trim()}.pdf`;
-        const namaDokumen = finalFileName.replace(/\.pdf$/i, "");
-
-        const btn = event.currentTarget;
-        const originalText = btn.innerHTML;
-
-        const grandTotalEl = document.getElementById('grand-total');
-        const grandTotalAngka = grandTotalEl ? grandTotalEl.innerText.replace(/[^0-9]/g, "") : 0;
-
-        btn.disabled = true;
-        btn.innerHTML = `<span class="material-symbols-outlined animate-spin text-base">progress_activity</span> Memproses PDF...`;
-
-        const printTitle = document.getElementById('print-title');
-        const printSubtitle = document.getElementById('print-subtitle');
-        if (printTitle) printTitle.innerText = judul;
-        if (printSubtitle) printSubtitle.innerText = subNama;
-
-        document.body.classList.add('exporting-pdf');
-        await new Promise(r => setTimeout(r, 100));
-
-        const element = document.querySelector('main');
-
-        const opt = {
-            margin: [8, 8, 8, 8],
-            filename: finalFileName,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { 
-                scale: 2, 
-                useCORS: true,
-                scrollY: 0
-            },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-            pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+    function buatKonteks() {
+        return {
+            items: { install: installationItems, hardware: hardwareItems },
+            config: KONFIG,
+            gasUrl: GAS_WEBAPP_URL
         };
-
-        try {
-            btn.innerHTML = `<span class="material-symbols-outlined animate-spin text-base">cloud_upload</span> Mengunggah ke Drive...`;
-
-            const pdfBlob = await html2pdf().set(opt).from(element).output('blob');
-            html2pdf().set(opt).from(element).save();
-
-            const base64Data = await new Promise((resolve) => {
-                const reader = new FileReader();
-                reader.onloadend = () => resolve(reader.result);
-                reader.readAsDataURL(pdfBlob);
-            });
-
-            const payload = {
-                nomorRab: namaDokumen,
-                judul: judul,
-                lokasi: subNama,
-                tipeRab: tipe,
-                tanggal: new Date().toLocaleDateString('id-ID', { year: 'numeric', month: 'short', day: 'numeric' }),
-                totalBiaya: grandTotalAngka,
-                fileName: finalFileName,
-                pdfBase64: base64Data
-            };
-
-            const res = await fetch(GAS_WEBAPP_URL, {
-                method: "POST",
-                headers: { "Content-Type": "text/plain;charset=utf-8" },
-                body: JSON.stringify(payload)
-            });
-
-            const result = await res.json();
-
-            if (result.status === "success") {
-                alert(`✓ Sukses!\nFile "${finalFileName}" berhasil disimpan ke Google Drive & dicatat ke Riwayat.`);
-            } else {
-                alert("PDF terunduh, tapi gagal masuk ke Google Drive: " + result.message);
-            }
-
-        } catch (err) {
-            console.error(err);
-            alert("Terjadi kesalahan saat kirim ke Drive: " + err.message);
-        } finally {
-            document.body.classList.remove('exporting-pdf');
-            btn.disabled = false;
-            btn.innerHTML = originalText;
-        }
     }
+
+    // =====================================================================
+    // Jembatan ke RabCore — nama fungsi lama tetap dipakai agar atribut
+    // onclick di HTML tidak perlu diubah.
+    // =====================================================================
+    const formatIDR        = (n) => RabCore.formatIDR(n);
+    const renderTables     = () => RabCore.renderTables(buatKonteks());
+    const updateTotals     = () => RabCore.updateTotals(buatKonteks());
+    const applyFormulas    = (qty) => RabCore.applyFormulas(buatKonteks(), qty);
+    const updateItemField  = (t, id, f, v) => RabCore.updateItemField(buatKonteks(), t, id, f, v);
+    const updateItemQty    = (t, id, v) => RabCore.updateItemQty(buatKonteks(), t, id, v);
+    const toggleEdit       = (t, id, show) => RabCore.toggleEdit(buatKonteks(), t, id, show);
+    const addItem          = (t) => RabCore.addItem(buatKonteks(), t);
+    const removeItem       = (t, id) => RabCore.removeItem(buatKonteks(), t, id);
+    const toggleHeaderEdit = (show) => RabCore.toggleHeaderEdit(show);
+    const saveHeader       = () => RabCore.saveHeader(buatKonteks());
+    const simpanRAB        = (tipe) => RabCore.simpanRAB(buatKonteks(), tipe || KONFIG.tipe, event);
+
+    // Render awal saat halaman dimuat.
+    renderTables();
+
 </script>
 </body>
 </html>
