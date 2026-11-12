@@ -268,41 +268,132 @@ nav a:hover { transform: translateX(2px); }
 }
 
 /* ==========================================================================
-   14. DOKUMEN CETAK — selalu terang.
-   Tema gelap hanya untuk layar; PDF/print harus putih agar hemat tinta
-   dan sesuai standar dokumen resmi RAB.
+   14. DOKUMEN CETAK / EXPORT PDF — selalu PUTIH + HITAM.
+   Tema gelap hanya untuk layar. PDF/print harus putih bersih dengan teks
+   hitam agar hemat tinta dan sesuai standar dokumen resmi RAB.
    ========================================================================== */
 @media print {
   :root {
     --rk-bg: #ffffff; --rk-surface: #ffffff; --rk-surface-2: #ffffff;
-    --rk-surface-3: #f8fafc; --rk-border: #e2e8f0; --rk-border-soft: #eef2f7;
-    --rk-text: #0f172a; --rk-text-2: #475569; --rk-muted: #94a3b8;
+    --rk-surface-3: #ffffff; --rk-border: #000000; --rk-border-soft: #d1d5db;
+    --rk-text: #000000; --rk-text-2: #000000; --rk-muted: #000000;
+    --rk-accent: #000000; --rk-accent-2: #000000; --rk-info: #000000;
   }
   html { color-scheme: light; }
-  body, body.bg-crm-bgCanvas { background: #ffffff !important; color: #0f172a !important; }
-  .text-slate-900, .text-slate-800, .text-slate-700, .text-slate-600,
-  .text-slate-500, .text-slate-400, .text-crm-textMuted { color: #0f172a !important; }
-  .bg-white, .bg-slate-50, .bg-slate-50\/80 { background-color: #ffffff !important; }
-  thead th { background-color: #f1f5f9 !important; color: #0f172a !important; }
-  * { box-shadow: none !important; animation: none !important; }
+  body, body.bg-crm-bgCanvas {
+    background: #ffffff !important;
+    background-image: none !important;
+    color: #000000 !important;
+  }
+  * {
+    color: #000000 !important;
+    background-image: none !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  /* Semua latar jadi putih — termasuk badge, chip, kartu, baris zebra. */
+  *,
+  .bg-white, .bg-slate-50, .bg-slate-100, .bg-slate-200,
+  .bg-slate-50\/80, .bg-slate-100\/80, .bg-slate-50\/60, .bg-slate-50\/50,
+  .bg-slate-100\/60, .bg-emerald-50, .bg-sky-50, .bg-rose-50,
+  .bg-crm-card, .bg-crm-active, .bg-emerald-500, .bg-emerald-600,
+  .bg-blue-600, tbody tr, thead, tfoot {
+    background-color: #ffffff !important;
+  }
+  thead th, thead td, tfoot td, tfoot th {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border-color: #000000 !important;
+  }
+  h1, h2, h3, h4, h5, h6, strong, b, p, span, td, th, li, div, a, label,
+  small, em, i, u, caption {
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+    background-image: none !important;
+    -webkit-background-clip: border-box !important;
+    background-clip: border-box !important;
+  }
+  table, th, td, section, div { border-color: #000000 !important; }
+  /* Sembunyikan elemen yang tidak boleh tercetak. */
+  aside, .no-print, nav, #rabit-user-chip { display: none !important; }
+  a { text-decoration: none !important; }
 }
 
-body.exporting-pdf { background: #ffffff !important; color: #0f172a !important; }
+/* html2pdf.js merender di layar (bukan @media print), jadi aturan eksplisit. */
+body.exporting-pdf {
+  background: #ffffff !important;
+  background-image: none !important;
+  color: #000000 !important;
+}
+body.exporting-pdf #areaCetakDokumen,
 body.exporting-pdf main,
 body.exporting-pdf .print-only,
 body.exporting-pdf section,
 body.exporting-pdf table,
-body.exporting-pdf .bg-white {
+body.exporting-pdf thead,
+body.exporting-pdf tbody,
+body.exporting-pdf tfoot,
+body.exporting-pdf tr,
+body.exporting-pdf td,
+body.exporting-pdf th,
+body.exporting-pdf div,
+body.exporting-pdf .bg-white,
+body.exporting-pdf .bg-slate-50,
+body.exporting-pdf .bg-slate-100,
+body.exporting-pdf .bg-slate-200,
+body.exporting-pdf .bg-crm-card {
   background-color: #ffffff !important;
-  color: #0f172a !important;
-}
-body.exporting-pdf * {
-  color: inherit !important;
-  border-color: #e2e8f0 !important;
+  background-image: none !important;
+  color: #000000 !important;
+  border-color: #000000 !important;
   box-shadow: none !important;
   animation: none !important;
   opacity: 1 !important;
 }
-body.exporting-pdf thead th { background-color: #f1f5f9 !important; color: #0f172a !important; }
 body.exporting-pdf h1, body.exporting-pdf h2, body.exporting-pdf h3,
-body.exporting-pdf h4, body.exporting-pdf strong { color: #0f172a !important; }
+body.exporting-pdf h4, body.exporting-pdf h5, body.exporting-pdf h6,
+body.exporting-pdf strong, body.exporting-pdf b,
+body.exporting-pdf p, body.exporting-pdf span,
+body.exporting-pdf td, body.exporting-pdf th,
+body.exporting-pdf li, body.exporting-pdf label,
+body.exporting-pdf small, body.exporting-pdf em, body.exporting-pdf i,
+body.exporting-pdf u, body.exporting-pdf font, body.exporting-pdf caption {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  background-image: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+/* Jaring pengaman: apa pun yang masih transparan/gradient-text jadi hitam. */
+body.exporting-pdf * {
+  -webkit-text-fill-color: #000000 !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+}
+/* Badge / label berwarna latar (AUTO, NEW, chip) dibuat putih + garis hitam. */
+body.exporting-pdf [class*="bg-emerald"],
+body.exporting-pdf [class*="bg-blue"],
+body.exporting-pdf [class*="bg-sky"],
+body.exporting-pdf [class*="bg-rose"],
+body.exporting-pdf [class*="bg-crm-active"] {
+  background-color: #ffffff !important;
+  background-image: none !important;
+  color: #000000 !important;
+  border: 1px solid #000000 !important;
+}
+/* Grafik/ikon berwarna jadi hitam; gambar tetap tampil. */
+body.exporting-pdf svg,
+body.exporting-pdf .material-symbols-outlined { color: #000000 !important; fill: #000000 !important; }
+body.exporting-pdf img { filter: none !important; }
+/* Sembunyikan navigasi, sidebar, chip identitas saat export. */
+body.exporting-pdf aside,
+body.exporting-pdf nav,
+body.exporting-pdf #rabit-user-chip,
+body.exporting-pdf .no-print { display: none !important; }
