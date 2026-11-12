@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deploy Keamanan RABIT</title>
+<style>
+  :root {
+    --bg: #0b1220; --surface: #131c2e; --surface2: #182236; --border: #263349;
+    --text: #e6edf7; --muted: #aab8cd; --accent: #2dd4bf; --ink: #06231f;
+    --warn: #fbbf24; --danger: #f43f5e;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 32px 20px 80px;
+    background: radial-gradient(900px 480px at 80% -10%, rgba(45,212,191,.10), transparent 60%), var(--bg);
+    color: var(--text);
+    font-family: Inter, system-ui, -apple-system, sans-serif;
+    font-size: 14px; line-height: 1.65;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; }
+  h1 { font-size: 24px; margin: 0 0 6px; letter-spacing: -.02em; }
+  .sub { color: var(--muted); margin: 0 0 26px; font-size: 13px; }
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px 22px; margin-bottom: 16px;
+  }
+  .step { display: flex; gap: 14px; align-items: flex-start; }
+  .num {
+    flex: 0 0 30px; height: 30px; border-radius: 50%;
+    background: var(--surface2); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 13px; color: var(--accent);
+  }
+  .step.done .num { background: var(--accent); color: var(--ink); border-color: var(--accent); }
+  .body { flex: 1; min-width: 0; }
+  h2 { font-size: 15px; margin: 4px 0 10px; font-weight: 700; }
+  p { margin: 0 0 10px; color: var(--muted); }
+  code {
+    background: var(--surface2); padding: 2px 6px; border-radius: 5px;
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 12.5px; color: #c7f0e8; border: 1px solid var(--border);
+  }
+  pre {
+    background: #0a111d; border: 1px solid var(--border); border-radius: 9px;
+    padding: 13px 15px; overflow-x: auto; margin: 10px 0;
+    font-family: ui-monospace, Consolas, monospace; font-size: 12.5px; color: #cfe3f5;
+  }
+  .copy {
+    float: right; margin-top: -6px; margin-bottom: 6px;
+    background: var(--surface2); color: var(--muted); border: 1px solid var(--border);
+    border-radius: 7px; padding: 4px 10px; font-size: 11px; font-weight: 600;
+    cursor: pointer; font-family: inherit; transition: .15s;
+  }
+  .copy:hover { color: var(--accent); border-color: var(--accent); }
+  .copy.ok { color: var(--accent); border-color: var(--accent); }
+  .note {
+    border-left: 3px solid var(--warn); background: rgba(251,191,36,.07);
+    padding: 10px 14px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 13px;
+  }
+  .note.danger { border-color: var(--danger); background: rgba(244,63,94,.08); }
+  .note b { color: var(--text); }
+  .check { display: flex; align-items: center; gap: 9px; margin-top: 12px; font-size: 13px; color: var(--muted); cursor: pointer; }
+  .check input { width: 16px; height: 16px; accent-color: var(--accent); cursor: pointer; }
+  ol { margin: 10px 0; padding-left: 20px; color: var(--muted); }
+  ol li { margin-bottom: 6px; }
+  .tag {
+    display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .06em; padding: 2px 8px; border-radius: 5px; margin-left: 8px;
+    background: rgba(45,212,191,.14); color: var(--accent); vertical-align: middle;
+  }
+  .tag.danger { background: rgba(244,63,94,.16); color: #fda4af; }
+  .tag.warn { background: rgba(251,191,36,.15); color: var(--warn); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Deploy Keamanan RABIT</h1>
+  <p class="sub">5 langkah, sekitar 10 menit. Ikuti berurutan — login akan gagal sampai langkah 5 selesai.</p>
+
+  <!-- 1 -->
+  <div class="card step" id="s1">
+    <div class="num">1</div>
+    <div class="body">
+      <h2>Backup project Apps Script</h2>
+      <p>Buka <a href="https://script.google.com" target="_blank" style="color:var(--accent)">script.google.com</a>, pilih project yang menangani RAB, lalu:</p>
+      <ol>
+        <li>Menu <code>File</code></li>
+        <li><code>Make a copy</code></li>
+      </ol>
+      <p>Ini titik balik kalau ada masalah. Jangan dilewati.</p>
+      <label class="check"><input type="checkbox" data-s="s1"> Sudah membuat salinan</label>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="card step" id="s2">
+    <div class="num">2</div>
+    <div class="body">
+      <h2>Set secret keamanan <span class="tag danger">Wajib</span></h2>
+      <p>Secret ini dibuat sekali di sini. <b>Jangan taruh di kode atau di chat.</b></p>
+      <pre id="secret">63a69b5f92b46b05d0b690b7fde52a5a45bf1bd8d06062ad064af729b7f58503</pre>
+      <button class="copy" data-copy="secret">Salin</button>
+      <p>Tempel ke: <code>Project Settings</code> (ikon gerigi) → <code>Script properties</code> → <code>Add script property</code></p>
+      <ol>
+        <li>Property: <code>RABIT_SECRET</code></li>
+        <li>Value: string di atas</li>
+      </ol>
+      <div class="note">Kalau secret ini bocor, siapa pun bisa membuat token palsu. Simpan hanya di Script properties.</div>
+      <label class="check"><input type="checkbox" data-s="s2"> RABIT_SECRET sudah tersimpan</label>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="card step" id="s3">
+    <div class="num">3</div>
+    <div class="body">
+      <h2>Buat hash password</h2>
+      <p>Jalankan di terminal (folder repo):</p>
+      <pre id="cmd3">node apps-script/siapkan-user.js</pre>
+      <button class="copy" data-copy="cmd3">Salin</button>
+      <p>Skrip akan menanyakan username, nama, role, dan password. Di akhir ia mencetak blok <code>var USERS = { ... }</code> yang siap ditempel. Password tidak disimpan ke disk.</p>
+      <div class="note">Password minimal 10 karakter. Skrip menolak yang lebih pendek.</div>
+      <label class="check"><input type="checkbox" data-s="s3"> Blok USERS sudah didapat</label>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="card step" id="s4">
+    <div class="num">4</div>
+    <div class="body">
+      <h2>Tempel kode ke Apps Script <span class="tag warn">Hati-hati</span></h2>
+      <p>Isi <code>apps-script/Code.gs</code> dari repo. Ambil isinya dengan:</p>
+      <pre id="cmd4">cat apps-script/Code.gs</pre>
+      <button class="copy" data-copy="cmd4">Salin</button>
+      <p>Lalu di editor Apps Script:</p>
+      <ol>
+        <li>Ganti isi <code>Code.gs</code> dengan isi tadi</li>
+        <li>Ganti blok <code>var USERS = {...}</code> dengan hasil langkah 3</li>
+        <li>Simpan</li>
+      </ol>
+      <div class="note danger">
+        <b>Jangan menimpa fungsi lama Anda.</b> Kalau project punya fungsi lain (misalnya <code>doGet</code> untuk data aktivasi Berita Acara), gabungkan: pertahankan fungsi lama, tapi tambahkan pengecekan <code>verifikasiToken()</code> di awal setiap <code>doGet</code>/<code>doPost</code>.
+      </div>
+      <label class="check"><input type="checkbox" data-s="s4"> Kode & USERS sudah ditempel</label>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="card step" id="s5">
+    <div class="num">5</div>
+    <div class="body">
+      <h2>Deploy ulang &amp; verifikasi</h2>
+      <p>Di Apps Script: <code>Deploy</code> → <code>Manage deployments</code> → ikon pensil → <code>Version: New version</code> → <code>Deploy</code>.</p>
+      <ol>
+        <li>Execute as: <code>Me</code></li>
+        <li>Who has access: <code>Anyone</code></li>
+      </ol>
+      <div class="note">Akses harus <b>Anyone</b> — browser memanggil tanpa login Google. Keamanan datang dari token, bukan dari pembatasan akses.</div>
+      <p>Verifikasi di terminal:</p>
+      <pre id="cmd5">curl -sL "https://script.google.com/macros/s/AKfycbxhcvWu9rQ2Fu8RCBzGLUJ3r22b3E3owWM8SOzjqsoJL5zMvuQhBzb6MzATZf2I7C-DIA/exec"</pre>
+      <button class="copy" data-copy="cmd5">Salin</button>
+      <p>Harus membalas: <code>{"status":"error","message":"Unauthorized"}</code></p>
+      <div class="note danger">Kalau masih membalas daftar RAB, token belum diwajibkan — ulangi langkah 4 dan 5.</div>
+      <label class="check"><input type="checkbox" data-s="s5"> Endpoint membalas Unauthorized</label>
+    </div>
+  </div>
+
+  <!-- 6 -->
+  <div class="card step" id="s6">
+    <div class="num">6</div>
+    <div class="body">
+      <h2>Uji login</h2>
+      <p>Buka aplikasi, login dengan akun baru. Bila berhasil masuk dashboard, selesai.</p>
+      <p>Bagikan password ke pengguna lewat jalur aman (WhatsApp/email langsung, bukan grup).</p>
+      <div class="note">Akun lama <code>admin</code>/<code>admin</code> sudah dihapus dari kode dan tidak akan berfungsi lagi.</div>
+      <label class="check"><input type="checkbox" data-s="s6"> Login berhasil</label>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0">Kalau macet</h2>
+    <p style="margin-bottom:0">Error <code>RABIT_SECRET belum diset</code> → langkah 2 belum selesai.<br>
+    Login selalu "Username atau password salah" → hash di <code>USERS</code> belum cocok; ulangi langkah 3 lalu 4.<br>
+    Endpoint masih membalas data → deployment belum versi baru.</p>
+  </div>
+</div>
+
+<script>
+  // Copy button
+  document.querySelectorAll('.copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var el = document.getElementById(btn.dataset.copy);
+      var text = el.textContent.trim();
+      navigator.clipboard.writeText(text).then(function () {
+        btn.textContent = 'Tersalin';
+        btn.classList.add('ok');
+        setTimeout(function () { btn.textContent = 'Salin'; btn.classList.remove('ok'); }, 1600);
+      }).catch(function () {
+        // Fallback
+        var r = document.createRange();
+        r.selectNodeContents(el);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(r);
+        btn.textContent = 'Pilih manual';
+      });
+    });
+  });
+
+  // Progress checkbox
+  var boxes = document.querySelectorAll('.check input');
+  function refresh() {
+    boxes.forEach(function (b) {
+      b.closest('.step').classList.toggle('done', b.checked);
+    });
+    var n = Array.from(boxes).filter(function (b) { return b.checked; }).length;
+    document.title = 'Deploy RABIT (' + n + '/' + boxes.length + ')';
+  }
+  boxes.forEach(function (b) { b.addEventListener('change', refresh); });
+  refresh();
+</script>
+</body>
+</html>
