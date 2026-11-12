@@ -48,22 +48,22 @@ var DRIVE_FOLDER_ID = '';
 //
 // Password sudah diganti (tidak lagi 'admin', 'rabit123', '12345').
 // Untuk membuat hash password baru, jalankan buatHashPassword('passwordbaru')
-// dari editor Apps Script lalu salin hasilnya ke sini.
+// dari editor Apps Script, atau (lebih mudah) jalankan di terminal repo:
+//   node apps-script/siapkan-user.js
 //
-// CATATAN: nilai hash di bawah adalah PLACEHOLDER. Ganti dengan hasil
-// generate Anda sendiri lewat fungsi buatHashPassword() — lihat README.
+// Akun yang terdaftar saat ini: 'boge' (admin) dan 'iconmks' (smart RAB saja).
 var USERS = {
-  'admin@rabit.com': {
-    name: 'Admin Pusat',
+  'boge': {
+    name: 'boge',
     role: 'admin',
-    salt: 'ISI_SALT_1',
-    hash: 'ISI_HASH_1'
+    salt: 'c13066f8-4d86-4971-ba54-b42d9857e00d',
+    hash: '26d0fb1e2c2e2306c6a321cb4c5cbf80e9ec0ae0c77564c221b13df714d54c04'
   },
-  'iconplusmks': {
-    name: 'Icon Plus Makassar',
+  'iconmks': {
+    name: 'iconmks',
     role: 'smart_rab_only',
-    salt: 'ISI_SALT_2',
-    hash: 'ISI_HASH_2'
+    salt: '80fb92c3-dfc5-4bd5-9a2b-94485db8f23e',
+    hash: 'fbf1a45b2ab1ba4facf38885ad0ec9b427e094de8092e449895861f52cdecd13'
   }
 };
 
