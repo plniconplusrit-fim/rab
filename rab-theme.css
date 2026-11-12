@@ -61,8 +61,31 @@ body.bg-crm-bgCanvas {
 .bg-slate-100,
 .bg-slate-50\/80,
 .bg-slate-100\/80,
-.bg-slate-50\/60 {
+.bg-slate-50\/60,
+.bg-slate-50\/50,
+.bg-slate-100\/50,
+.bg-slate-50\/40,
+.bg-slate-100\/40,
+.bg-slate-200\/50,
+.bg-slate-200\/60 {
   background-color: var(--rk-surface) !important;
+}
+/* Baris zebra tabel: warna aslinya putih 50% di atas navy = abu-abu pudar.
+   Ganti dengan permukaan gelap yang sedikit lebih terang dari kartu. */
+tbody tr.bg-slate-50\/50,
+tbody tr.bg-slate-100\/50,
+tbody tr.bg-slate-50\/60,
+tbody tr.bg-slate-100\/60 { background-color: var(--rk-surface-2) !important; }
+tbody tr.bg-white { background-color: var(--rk-surface) !important; }
+tbody tr:hover,
+tbody tr.hover\:bg-slate-100\/60:hover { background-color: rgba(45, 212, 191, .10) !important; }
+/* bg-white/<opacity> — sering dipakai sebagai lapisan tipis di atas navy. */
+.bg-white\/5, .bg-white\/10, .bg-white\/15, .bg-white\/20, .bg-white\/25 {
+  background-color: rgba(255, 255, 255, .06) !important;
+}
+/* Overlay gelap (modal backdrop) tetap gelap, sedikit lebih pekat. */
+.bg-slate-900\/60, .bg-slate-900\/70, .bg-slate-900\/80 {
+  background-color: rgba(4, 9, 18, .82) !important;
 }
 .bg-slate-200 { background-color: var(--rk-surface-3) !important; }
 .bg-crm-card  { background-color: var(--rk-surface) !important; }
@@ -189,6 +212,21 @@ thead th, thead td {
 }
 tbody tr:hover { background-color: rgba(45, 212, 191, .06) !important; }
 tbody td { border-color: var(--rk-border-soft) !important; }
+
+/* Sel tabel: teks abu-abu (slate-500/600/800) diganti warna terang yang menyatu
+   dengan latar gelap — bukan abu-abu pudar yang terbaca seperti kolom abu-abu. */
+tbody td.text-slate-500,
+tbody td.text-slate-600,
+tbody td.text-slate-700,
+tbody td.text-slate-800,
+tbody td.text-slate-900,
+tbody td.font-medium,
+tbody td.font-mono { color: #dfe8f5 !important; }
+tbody td.text-slate-400 { color: #9fb0c8 !important; }
+tbody td .text-slate-500,
+tbody td .text-slate-600,
+tbody td .text-slate-800 { color: #dfe8f5 !important; }
+tfoot td, tfoot th { color: #e6edf7 !important; background-color: var(--rk-surface-2) !important; }
 
 /* ---------- 10. Bayangan & kedalaman ---------- */
 .shadow-xs, .shadow-sm, .shadow-md, .shadow-lg {
