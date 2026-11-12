@@ -12,7 +12,6 @@
 
   var SESSION_KEY = 'rabit_auth';
   var LOGIN_PAGE  = 'index.html';
-
   /* Halaman default tiap role setelah login */
   var HOME_BY_ROLE = {
     admin:          'dashboard.html',
@@ -53,11 +52,13 @@
 
   function readSession() {
     try {
-      var raw = localStorage.getItem(SESSION_KEY);
-      if (!raw) return null;
-      var data = JSON.parse(raw);
-      if (!data || !data.role) return null;
-      return data;
+      /* Sesi kini berbentuk { token, user } dan divalidasi oleh RabAuth
+         (decode payload + cek kedaluwarsa). Objek sesi lama tanpa token
+         ditolak agar tidak bisa dipalsukan dengan menulis localStorage. */
+      if (window.RabAuth && typeof window.RabAuth.sesi === 'function') {
+        return window.RabAuth.sesi();
+      }
+      return null;
     } catch (e) {
       return null;
     }
@@ -69,7 +70,8 @@
 
   function logout() {
     try { localStorage.removeItem(SESSION_KEY); } catch (e) {}
-    window.location.replace(LOGIN_PAGE);
+    var base = window.location.pathname.replace(/[^/]*$/, '');
+    window.location.replace(base + LOGIN_PAGE);
   }
 
   function initials(name) {

@@ -360,18 +360,19 @@
         pdfBase64: base64Data
       };
 
-      const res = await fetch(ctx.gasUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify(payload)
-      });
-
-      const result = await res.json();
+      // Kirim lewat RabAuth.api — token sesi disertakan otomatis dan
+      // endpoint server menolak permintaan tanpa token valid.
+      let result;
+      if (global.RabAuth && typeof global.RabAuth.api === 'function') {
+        result = await global.RabAuth.api('simpanRab', payload);
+      } else {
+        result = { status: 'error', message: 'Modul autentikasi tidak termuat.' };
+      }
 
       if (result.status === 'success') {
         alert('\u2713 Sukses!\nFile "' + finalFileName + '" berhasil disimpan ke Google Drive & dicatat ke Riwayat.');
       } else {
-        alert('PDF terunduh, tapi gagal masuk ke Google Drive: ' + result.message);
+        alert('PDF terunduh, tapi gagal masuk ke Google Drive: ' + (result.message || 'kesalahan tidak diketahui'));
       }
     } catch (err) {
       console.error(err);

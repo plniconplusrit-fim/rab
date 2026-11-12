@@ -21,7 +21,10 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="rab-theme.css?v=5"/>
+  <link rel="stylesheet" href="rab-theme.css?v=6"/>
+  <!-- Endpoint Apps Script — dipakai klien autentikasi (rab-auth.js). -->
+  <meta name="rabit-gas-url" content="https://script.google.com/macros/s/AKfycbxhcvWu9rQ2Fu8RCBzGLUJ3r22b3E3owWM8SOzjqsoJL5zMvuQhBzb6MzATZf2I7C-DIA/exec"/>
+  <script src="rab-auth.js?v=1"></script>
 </head>
 <body class="bg-crm-bgCanvas text-slate-800 antialiased flex items-center justify-center min-h-screen p-4 selection:bg-crm-active selection:text-white">
 
@@ -82,6 +85,7 @@
       <!-- Tombol Sign In -->
       <button 
         type="submit" 
+        id="btn-login"
         class="w-full h-11 bg-crm-active hover:bg-crm-activeHover text-white text-sm font-semibold rounded-lg shadow-sm active:scale-[0.99] transition-all flex items-center justify-center gap-2 mt-2">
         <span>Masuk ke Sistem</span>
         <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
@@ -98,66 +102,64 @@
 
   <script>
     // =========================================================================
-    // DATABASE USER & PERMISSION ACCESS
+    // AUTENTIKASI — ditangani server (Google Apps Script).
+    // Password TIDAK lagi disimpan di halaman ini. Kredensial dikirim ke
+    // Apps Script yang memverifikasi hash dan membalas token bertanda tangan.
     // =========================================================================
-    const USERS_DB = [
-      {
-        username: "iconplusmks",
-        password: "12345",
-        name: "Icon Plus Makassar",
-        role: "smart_rab_only", // Khusus hanya bisa akses Smart RAB
-        redirectTo: "smart-rab.html"
-      },
-      {
-        username: "admin@rabit.com",
-        password: "rabit123",
-        name: "Admin Pusat",
-        role: "admin", // Full akses semua menu
-        redirectTo: "dashboard.html"
-      },
-      {
-        username: "admin",
-        password: "admin",
-        name: "Administrator",
-        role: "admin",
-        redirectTo: "dashboard.html"
-      }
-    ];
+    const HOME_BY_ROLE = {
+      admin: "dashboard.html",
+      smart_rab_only: "smart-rab.html"
+    };
 
-    function handleLogin(event) {
+    // Jika sudah punya sesi valid, langsung ke halaman sesuai role.
+    (function sudahLogin() {
+      try {
+        const s = window.RabAuth && window.RabAuth.sesi();
+        if (s && s.role) {
+          window.location.replace(HOME_BY_ROLE[s.role] || "index.html");
+        }
+      } catch (e) { /* abaikan */ }
+    })();
+
+    async function handleLogin(event) {
       event.preventDefault();
 
       const inputUser = document.getElementById('username').value.trim();
-      const inputPass = document.getElementById('password').value.trim();
+      const inputPass = document.getElementById('password').value;
       const errorMsg = document.getElementById('error-message');
+      const btn = document.getElementById('btn-login');
+      const labelAsli = btn ? btn.innerHTML : '';
 
-      // Validasi pencocokan user
-      const userFound = USERS_DB.find(u => 
-        u.username.toLowerCase() === inputUser.toLowerCase() && u.password === inputPass
-      );
+      if (!inputUser || !inputPass) {
+        errorMsg.textContent = 'Username dan password wajib diisi.';
+        errorMsg.classList.remove('hidden');
+        return;
+      }
 
-      if (userFound) {
-        errorMsg.classList.add('hidden');
-        
-        // Simpan sesi autentikasi ke localStorage
-        // Dibungkus try/catch: pada sebagian browser yang membuka file via
-        // file:// atau mode private ketat, localStorage bisa melempar error.
-        // Login tetap dilanjutkan meski penyimpanan sesi gagal.
-        try {
-          localStorage.setItem('rabit_auth', JSON.stringify({
-            username: userFound.username,
-            name: userFound.name,
-            role: userFound.role,
-            loginAt: new Date().toISOString()
-          }));
-        } catch (e) {
-          console.warn('[RABIT] Gagal menyimpan sesi:', e);
+      errorMsg.classList.add('hidden');
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<span class="material-symbols-outlined animate-spin text-base">progress_activity</span> Memeriksa...';
+      }
+
+      try {
+        const hasil = await window.RabAuth.login(inputUser, inputPass);
+
+        if (hasil.status === 'success' && hasil.token) {
+          window.location.href = HOME_BY_ROLE[hasil.user.role] || 'index.html';
+          return;
         }
 
-        // Arahkan ke halaman sesuai izin aksesnya
-        window.location.href = userFound.redirectTo;
-      } else {
+        errorMsg.textContent = hasil.message || 'Username atau password salah.';
         errorMsg.classList.remove('hidden');
+      } catch (err) {
+        errorMsg.textContent = 'Terjadi kesalahan: ' + err.message;
+        errorMsg.classList.remove('hidden');
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = labelAsli;
+        }
       }
     }
   </script>
