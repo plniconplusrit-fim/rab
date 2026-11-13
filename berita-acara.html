@@ -34,7 +34,7 @@
     body.exporting-pdf .print-only { display: block !important; }
   </style>
   <meta name="rabit-gas-url" content="https://script.google.com/macros/s/AKfycbz3eaTzjPnmwCUHwqVOxpO_rRZj4M7Qfpr7w_0p_RgV_GxtRwNfaOYt-jySVnpkc4vEUw/exec"/>
-  <script src="rab-auth.js?v=2"></script>
+  <script src="rab-auth.js?v=3"></script>
 
   <script src="auth-guard.js?v=4"></script>
   <link rel="stylesheet" href="rab-theme.css?v=6"/>
@@ -378,10 +378,22 @@
     selectEl.innerHTML = `<option value="">⏳ Sync data Google Sheets...</option>`;
 
     try {
-      // Data aktivasi diambil dengan token sesi (endpoint kini wajib token).
-      const data = await window.RabAuth.api('riwayat').then(function (r) {
-        return r.status === 'success' ? r.data : [];
-      });
+      // Ambil data aktivasi dari endpoint TERPISAH (GAS_WEBAPP_URL), dengan token sesi.
+      // Endpoint itu kini mewajibkan token yang sama (RABIT_SECRET identik).
+      const token = window.RabAuth && window.RabAuth.sesi() ? window.RabAuth.sesi().token : '';
+      const urlAktivasi = GAS_WEBAPP_URL + (GAS_WEBAPP_URL.indexOf('?') > -1 ? '&' : '?') +
+                          'token=' + encodeURIComponent(token);
+
+      const resp = await fetch(urlAktivasi, { method: 'GET', redirect: 'follow' });
+      const data = await resp.json();
+
+      // Endpoint membalas array polos; bila token ditolak, balasannya objek error.
+      if (!Array.isArray(data)) {
+        const pesan = (data && data.message) ? data.message : 'Format data tidak dikenal';
+        throw new Error(pesan === 'Unauthorized'
+          ? 'Sesi berakhir. Silakan login ulang untuk memuat data aktivasi.'
+          : pesan);
+      }
 
       listDataAktivasi = data;
       selectEl.innerHTML = `<option value="">-- Pilih ID PA / Pelanggan --</option>`;
