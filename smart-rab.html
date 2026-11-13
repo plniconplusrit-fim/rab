@@ -419,6 +419,7 @@
     kabel24Core: { desc: "FOC,ADSS SS 100m,24F/4T,FIBERHOME", unit: "M", price: 6040 },
     apIndoor: { desc: "MDM,RG-AP810-L,Indoor AP+PoE 3AF,,RUIJIE", unit: "U", price: 1197260 },
     routerMikrotik: { desc: "ROUT,RB951Ui-2HnD,5port,MIKROTIK", unit: "U", price: 836000 },
+    ruijieEg210: { desc: "ROUT,RG-EG210G-P-V3,,RUIJIE", unit: "U", price: 3100000 },
 
     ontHuawei: { desc: "GPON,ONT EG8021V5,2.4/5GHz Wi-Fi,,HUAWEI", unit: "U", price: 299200 },
     dropwire100: { desc: "FOC,DropWire3SlgSC-UPC,1F,100m,FIBERHOME", unit: "U", price: 63706 },
@@ -589,6 +590,14 @@
       if (totalAp > 0) {
         listMaterial.push({ ...MASTER_HARGA.apIndoor, qty: totalAp });
         listMaterial.push({ ...MASTER_HARGA.routerMikrotik, qty: 1 });
+
+        // Rule: Total AP 4-10 -> 1 unit Ruijie RG-EG210G-P-V3;
+        //       Total AP > 10 -> 2 unit. Di bawah 4 tidak perlu.
+        // Satuan tetap (tidak dikali jumlah AP).
+        if (totalAp >= 4) {
+          const qtyRuijie = totalAp > 10 ? 2 : 1;
+          listMaterial.push({ ...MASTER_HARGA.ruijieEg210, qty: qtyRuijie });
+        }
       }
     }
 
