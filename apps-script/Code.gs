@@ -252,7 +252,7 @@ function doPost(e) {
 
     // Login tidak butuh token (justru menghasilkan token).
     if (action === 'login') {
-      return jsonRes(handleLogin(body));
+      return jsonRes(handleLogin(body, e));
     }
 
     // Aksi lain wajib token.
@@ -275,14 +275,160 @@ function doPost(e) {
 }
 
 // ===========================================================================
+// RATE LIMITING LOGIN
+// ===========================================================================
+// Mencegah brute force password pada satu akun.
+//
+// BATASAN PENTING: Google Apps Script TIDAK mengekspos IP klien ke kode
+// (tidak ada e.clientIp / header X-Forwarded-For yang bisa dipercaya).
+// Karena itu pembatasan hanya bisa PER-USERNAME, bukan per-IP.
+//
+// Konsekuensi yang harus disadari:
+//   - Penyerang tetap bisa mencoba banyak username berbeda (satu per akun).
+//   - Penyerang yang tahu username Anda bisa mengunci akun itu 15 menit
+//     (denial of service). Dicegah sebagian dengan mengizinkan admin
+//     membuka kunci lewat fungsi bukaKunciLogin().
+//   - Batas 5 percobaan per 15 menit membuat tebakan acak tidak praktis,
+//     apalagi password minimal 10 karakter.
+//
+// Disimpan di Script Properties: bertahan antar eksekusi, tanpa Sheet.
+// Percobaan GAGAL menambah hitungan; percobaan BERHASIL menghapusnya.
+
+/** Batas percobaan gagal per username sebelum dikunci. */
+var LOGIN_MAX_GAGAL = 5;
+
+/** Lama penguncian / jendela hitung (detik). 15 menit. */
+var LOGIN_JENDELA_DETIK = 15 * 60;
+
+/** Awalan kunci di Script Properties. */
+var RL_PREFIX = 'RL_';
+
+/** Kunci rate limit untuk sebuah username (selalu huruf kecil). */
+function kunciLogin(username) {
+  return 'u_' + String(username || '').trim().toLowerCase();
+}
+
+/** Baca catatan rate limit. null bila belum ada / jendela sudah lewat. */
+function bacaRateLimit(kunci) {
+  var raw = PropertiesService.getScriptProperties().getProperty(RL_PREFIX + kunci);
+  if (!raw) return null;
+
+  var rec;
+  try {
+    rec = JSON.parse(raw);
+  } catch (e) {
+    return null;
+  }
+
+  var now = Math.floor(Date.now() / 1000);
+  if (!rec.mulai || (now - rec.mulai) > LOGIN_JENDELA_DETIK) return null;
+
+  return rec;
+}
+
+/** Simpan catatan rate limit (tahan error kuota). */
+function simpanRateLimit(kunci, rec) {
+  try {
+    PropertiesService.getScriptProperties().setProperty(
+      RL_PREFIX + kunci, JSON.stringify(rec)
+    );
+  } catch (e) {
+    // Kuota properti habis: jangan gagalkan login hanya karena pencatatan.
+    Logger.log('Gagal simpan rate limit: ' + e.message);
+  }
+}
+
+function hapusRateLimit(kunci) {
+  try {
+    PropertiesService.getScriptProperties().deleteProperty(RL_PREFIX + kunci);
+  } catch (e) {}
+}
+
+/**
+ * Periksa apakah login masih diizinkan untuk username ini.
+ * Mengembalikan null bila boleh, atau { sisaDetik } bila terkunci.
+ */
+function cekRateLimit(username) {
+  var rec = bacaRateLimit(kunciLogin(username));
+  if (!rec) return null;
+  if (rec.gagal < LOGIN_MAX_GAGAL) return null;
+
+  var sisa = LOGIN_JENDELA_DETIK - (Math.floor(Date.now() / 1000) - rec.mulai);
+  return sisa > 0 ? { sisaDetik: sisa } : null;
+}
+
+/** Catat satu percobaan gagal untuk username ini. */
+function catatGagalLogin(username) {
+  var k = kunciLogin(username);
+  var rec = bacaRateLimit(k) || { gagal: 0, mulai: Math.floor(Date.now() / 1000) };
+  rec.gagal = (rec.gagal || 0) + 1;
+  simpanRateLimit(k, rec);
+  return rec.gagal;
+}
+
+/** Hapus hitungan setelah login berhasil. */
+function resetRateLimit(username) {
+  hapusRateLimit(kunciLogin(username));
+}
+
+/** Pesan seragam saat akun terkunci. */
+function pesanTerkunci(sisaDetik) {
+  var menit = Math.ceil(sisaDetik / 60);
+  return {
+    status: 'error',
+    message: 'Terlalu banyak percobaan gagal. Coba lagi dalam ' + menit +
+             ' menit, atau minta admin membuka kunci.'
+  };
+}
+
+/**
+ * ADMIN: buka kunci sebuah akun.
+ * Jalankan dari editor Apps Script: bukaKunciLogin('boge')
+ */
+function bukaKunciLogin(username) {
+  hapusRateLimit(kunciLogin(username));
+  Logger.log('Kunci dibuka untuk: ' + username);
+  return true;
+}
+
+/** ADMIN: lihat semua akun yang sedang terkunci. */
+function lihatKunciLogin() {
+  var semua = PropertiesService.getScriptProperties().getProperties();
+  var now = Math.floor(Date.now() / 1000);
+  var hasil = [];
+
+  Object.keys(semua).forEach(function (k) {
+    if (k.indexOf(RL_PREFIX + 'u_') !== 0) return;
+    var raw = semua[k];
+    var rec;
+    try { rec = JSON.parse(raw); } catch (e) { return; }
+    if ((now - rec.mulai) > LOGIN_JENDELA_DETIK) return;
+    hasil.push({
+      username: k.slice((RL_PREFIX + 'u_').length),
+      gagal: rec.gagal,
+      sisaMenit: Math.ceil((LOGIN_JENDELA_DETIK - (now - rec.mulai)) / 60)
+    });
+  });
+
+  Logger.log(JSON.stringify(hasil, null, 2));
+  return hasil;
+}
+
+// ===========================================================================
 // HANDLER: LOGIN
 // ===========================================================================
-function handleLogin(body) {
+function handleLogin(body, e) {
   var username = String(body.username || '').trim().toLowerCase();
   var password = String(body.password || '');
 
   if (!username || !password) {
     return { status: 'error', message: 'Username dan password wajib diisi' };
+  }
+
+  // ---- lapis 1: cek penguncian (sebelum mencoba) ----
+  var terkunci = cekRateLimit(username);
+  if (terkunci) {
+    return pesanTerkunci(terkunci.sisaDetik);
   }
 
   var user = null;
@@ -297,10 +443,25 @@ function handleLogin(body) {
 
   // Pesan seragam: jangan bocorkan apakah username terdaftar atau tidak.
   var GAGAL = { status: 'error', message: 'Username atau password salah' };
-  if (!user) return GAGAL;
 
-  var hash = sha256Hex(user.salt + ':' + password);
-  if (!safeEquals(hash, user.hash)) return GAGAL;
+  var cocok = false;
+  if (user) {
+    var hash = sha256Hex(user.salt + ':' + password);
+    cocok = safeEquals(hash, user.hash);
+  }
+
+  if (!cocok) {
+    catatGagalLogin(username);
+    // Bila percobaan ini membuat hitungan menyentuh batas, beri tahu langsung.
+    var baruTerkunci = cekRateLimit(username);
+    if (baruTerkunci) {
+      return pesanTerkunci(baruTerkunci.sisaDetik);
+    }
+    return GAGAL;
+  }
+
+  // ---- login berhasil: bersihkan hitungan ----
+  resetRateLimit(username);
 
   return {
     status: 'success',
